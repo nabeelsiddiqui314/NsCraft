@@ -1,11 +1,16 @@
 #include "MenuState.h"
 #include <GL/glew.h>
+#include "SFML/Window/Event.hpp"
+#include "StateMachine.h"
+#include "GameState.h" 
 
-void MenuState::handleEvent(StateMachine& machine, const sf::Event& event) {
-
+void MenuState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
+	if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Enter) {
+		stateMachine.setState<GameState>();
+	}
 }
 
-void MenuState::update(StateMachine& machine, float deltaTime) {
+void MenuState::update(StateMachine& stateMachine, float deltaTime) {
 
 }
 

@@ -1,10 +1,10 @@
 #pragma once
 #include "IState.h"
 
-class MenuState : public IState {
+class GameState : public IState {
 public:
-	MenuState() = default;
-	~MenuState() = default;
+	GameState() = default;
+	~GameState() = default;
 public:
 	void handleEvent(StateMachine& stateMachine, const sf::Event& event) override;
 	void update(StateMachine& stateMachine, float deltaTime) override;
