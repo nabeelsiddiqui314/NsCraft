@@ -29,6 +29,7 @@
     <ClCompile Include="src\States\GameState.cpp" />
     <ClCompile Include="src\States\MenuState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
+    <ClCompile Include="src\World\Blocks\Block.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\States\IState.h" />
     <ClInclude Include="src\States\MenuState.h" />
     <ClInclude Include="src\States\StateMachine.h" />
+    <ClInclude Include="src\World\Blocks\Block.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
