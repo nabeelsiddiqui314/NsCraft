@@ -42,6 +42,7 @@
     <ClInclude Include="src\States\IState.h" />
     <ClInclude Include="src\States\MenuState.h" />
     <ClInclude Include="src\States\StateMachine.h" />
+    <ClInclude Include="src\Utility\Registry.h" />
     <ClInclude Include="src\World\Blocks\Block.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
