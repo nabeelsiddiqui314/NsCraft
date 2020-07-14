@@ -3,9 +3,9 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include "BlockDefs.h"
 
 class Block;
-typedef std::uint8_t Block_ID;
 
 class BlockRegistry {
 private:

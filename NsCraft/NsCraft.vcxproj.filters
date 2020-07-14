@@ -89,5 +89,8 @@
     <ClInclude Include="src\World\Blocks\BlockRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Blocks\BlockDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
