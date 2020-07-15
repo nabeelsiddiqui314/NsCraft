@@ -31,9 +31,11 @@
     <ClCompile Include="src\States\StateMachine.cpp" />
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
+    <ClCompile Include="src\World\Chunk\Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\OpenGL\IndexBuffer.h" />
     <ClInclude Include="src\OpenGL\Shader.h" />
     <ClInclude Include="src\OpenGL\Texture.h" />
@@ -46,6 +48,7 @@
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
+    <ClInclude Include="src\World\Chunk\Chunk.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
