@@ -45,9 +45,6 @@
     <ClCompile Include="src\OpenGL\VertexArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Blocks\Block.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -89,9 +86,6 @@
     <ClInclude Include="src\OpenGL\VertexArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Blocks\Block.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Blocks\BlockRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -102,6 +96,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Blocks\IBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

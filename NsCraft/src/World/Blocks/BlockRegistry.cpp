@@ -1,11 +1,10 @@
 #include "BlockRegistry.h"
-#include "Block.h"
+#include "IBlock.h"
 
-const BlockRegistry::BlockPtr& BlockRegistry::registerBlock(const std::string& name) {
+void BlockRegistry::registerBlock(const std::string& name, const BlockPtr& block) {
 	Block_ID id = static_cast<Block_ID>(m_blocks.size());
-	m_blocks.emplace_back(std::make_unique<Block>());
+	m_blocks.emplace_back(block);
 	m_nameToIDMap.emplace(std::make_pair(name, id));
-	return m_blocks.back();
 }
 
 const BlockRegistry::BlockPtr& BlockRegistry::getBlockFromID(Block_ID id) const {

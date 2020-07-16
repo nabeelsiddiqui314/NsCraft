@@ -5,16 +5,16 @@
 #include <memory>
 #include "BlockDefs.h"
 
-class Block;
+class IBlock;
 
 class BlockRegistry {
 private:
-	typedef std::unique_ptr<Block> BlockPtr;
+	typedef std::shared_ptr<IBlock> BlockPtr;
 public:
 	BlockRegistry() = default;
 	~BlockRegistry() = default;
 public:
-	const BlockPtr& registerBlock(const std::string& name);
+	void registerBlock(const std::string& name, const BlockPtr& block);
 
 	const BlockPtr& getBlockFromID(Block_ID id) const;
 	const BlockPtr& getBlockFromName(const std::string& name) const;
