@@ -49,6 +49,7 @@
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
     <ClInclude Include="src\World\Chunk\Chunk.h" />
+    <ClInclude Include="src\World\WorldGen\IChunkGenerator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

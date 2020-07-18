@@ -101,5 +101,8 @@
     <ClInclude Include="src\World\Blocks\IBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\WorldGen\IChunkGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
