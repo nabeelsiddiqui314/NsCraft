@@ -110,5 +110,8 @@
     <ClInclude Include="src\World\Chunk\World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Chunk\IWorldObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

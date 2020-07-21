@@ -50,6 +50,7 @@
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
     <ClInclude Include="src\World\Chunk\Chunk.h" />
+    <ClInclude Include="src\World\Chunk\IWorldObserver.h" />
     <ClInclude Include="src\World\Chunk\World.h" />
     <ClInclude Include="src\World\WorldGen\IChunkGenerator.h" />
   </ItemGroup>
