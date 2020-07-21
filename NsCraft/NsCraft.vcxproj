@@ -32,6 +32,7 @@
     <ClCompile Include="src\States\StateMachine.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
+    <ClCompile Include="src\World\Chunk\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
     <ClInclude Include="src\World\Chunk\Chunk.h" />
+    <ClInclude Include="src\World\Chunk\World.h" />
     <ClInclude Include="src\World\WorldGen\IChunkGenerator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
