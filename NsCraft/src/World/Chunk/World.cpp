@@ -12,10 +12,6 @@ void World::unloadChunk(const Vector3& position) {
 	m_chunkMap.erase(position);
 }
 
-const World::ChunkPtr& World::getChunk(const Vector3& position) const {
-	return m_chunkMap.at(position);
-}
-
 bool World::doesChunkExist(const Vector3& position) const {
 	return m_chunkMap.find(position) != m_chunkMap.end();
 }
