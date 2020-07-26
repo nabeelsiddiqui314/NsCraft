@@ -52,7 +52,7 @@
     <ClInclude Include="src\World\Chunk\Chunk.h" />
     <ClInclude Include="src\World\Chunk\IWorldObserver.h" />
     <ClInclude Include="src\World\Chunk\World.h" />
-    <ClInclude Include="src\World\WorldGen\IChunkGenerator.h" />
+    <ClInclude Include="src\World\ChunkGenerator\IChunkGenerator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
