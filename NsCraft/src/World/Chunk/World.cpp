@@ -1,6 +1,6 @@
 #include "World.h"
 #include "Chunk.h"
-#include "../WorldGen/IChunkGenerator.h"
+#include "../ChunkGenerator/IChunkGenerator.h"
 #include "IWorldObserver.h"
 
 void World::loadChunk(const Vector3& position) {
