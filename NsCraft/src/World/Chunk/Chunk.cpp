@@ -1,6 +1,10 @@
 #include "Chunk.h"
 #include "../../Math/Vector3.h"
 
+Chunk::Chunk() {
+	m_blocks.fill(0);
+}
+
 void Chunk::setBlock(const Vector3& position, Block_ID id) {
 	m_blocks[getIndex(position)] = id;
 }

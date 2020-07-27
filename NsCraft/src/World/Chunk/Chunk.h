@@ -8,7 +8,7 @@ class Chunk {
 public:
 	static constexpr int WIDTH = 16;
 public:
-	Chunk() = default;
+	Chunk();
 	~Chunk() = default;
 public:
 	void setBlock(const Vector3& position, Block_ID id);
