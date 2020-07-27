@@ -11,7 +11,12 @@ class IWorldObserver;
 class World {
 private:
 	typedef std::shared_ptr<Chunk> ChunkPtr;
-	typedef std::shared_ptr<IWorldObserver> WorldObserverPtr;
+	typedef std::weak_ptr<IWorldObserver> WorldObserverPtr;
+
+	enum class WorldEvent {
+		CHUNK_LOAD,
+		CHUNK_UNLOAD
+	};
 public:
 	World() = default;
 	~World() = default;
@@ -22,6 +27,7 @@ public:
 	void addObserver(const WorldObserverPtr& observer);
 private:
 	bool doesChunkExist(const Vector3& position) const;
+	void notifyObservers(const Vector3& position, const WorldEvent& event);
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
