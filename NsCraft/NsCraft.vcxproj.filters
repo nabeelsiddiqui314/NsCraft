@@ -57,6 +57,9 @@
     <ClCompile Include="src\World\Chunk\World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\ChunkGenerator\VoidChunkGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\ChunkGenerator\IChunkGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\ChunkGenerator\VoidChunkGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
