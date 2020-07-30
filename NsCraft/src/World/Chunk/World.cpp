@@ -4,6 +4,16 @@
 #include "IWorldObserver.h"
 #include <algorithm>
 
+World::World() {
+	m_chunkGenerator = m_chunkGeneratorfactory.createChunkGenerator(ChunkGeneratorType::VOID);
+}
+
+World::World(const ChunkGeneratorType& type) {
+	m_chunkGenerator = m_chunkGeneratorfactory.createChunkGenerator(type);
+}
+
+World::~World() {}
+
 void World::loadChunk(const Vector3& position) {
 	if (!doesChunkExist(position)) {
 		m_chunkMap.emplace(std::make_pair(position, m_chunkGenerator->generateChunk(position)));
