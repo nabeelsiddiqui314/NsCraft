@@ -128,10 +128,10 @@
     <ClInclude Include="src\World\ChunkGenerator\ChunkGeneratorType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\ChunkMesh.h">
+    <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\IMeshGenerator.h">
+    <ClInclude Include="src\Rendering\Mesh\ChunkMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
