@@ -60,6 +60,9 @@
     <ClInclude Include="src\World\Chunk\IWorldObserver.h" />
     <ClInclude Include="src\World\Chunk\World.h" />
     <ClInclude Include="src\World\ChunkGenerator\IChunkGenerator.h" />
+    <ClInclude Include="src\World\Events\ChunkLoadEvent.h" />
+    <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
+    <ClInclude Include="src\World\Events\IWorldEvent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
