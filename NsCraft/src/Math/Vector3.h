@@ -4,6 +4,9 @@
 struct Vector3 {
 	int x, y, z;
 public:
+	Vector3() = default;
+	Vector3(int _x, int _y, int _z);
+public:
 	const Vector3 operator+(const Vector3& other) const;
 	const Vector3 operator-(const Vector3& other) const;
 
