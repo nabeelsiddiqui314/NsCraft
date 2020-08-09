@@ -32,19 +32,19 @@ void World::unloadChunk(const Vector3& position) {
 	if (doesChunkExist(position)) {
 		m_chunkMap.erase(position);
 
-		ChunkLoadEvent event;
+		ChunkUnloadEvent event;
 		event.chunkPosition = position;
 
 		notifyObservers(event);
 	}
 }
 
-void World::addObserver(const WorldObserverPtr& observer) {
-	m_observers.emplace_back(observer);
-}
-
 bool World::doesChunkExist(const Vector3& position) const {
 	return m_chunkMap.find(position) != m_chunkMap.end();
+}
+
+void World::addObserver(const WorldObserverPtr& observer) {
+	m_observers.emplace_back(observer);
 }
 
 void World::notifyObservers(const IWorldEvent& event) {

@@ -21,10 +21,11 @@ public:
 public:
 	void loadChunk(const Vector3& position);
 	void unloadChunk(const Vector3& position);
+	
+	bool doesChunkExist(const Vector3& position) const;
 
 	void addObserver(const WorldObserverPtr& observer);
 private:
-	bool doesChunkExist(const Vector3& position) const;
 	void notifyObservers(const IWorldEvent& event);
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
