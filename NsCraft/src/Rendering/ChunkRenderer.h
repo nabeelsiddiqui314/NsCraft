@@ -1,14 +1,14 @@
 #pragma once
 #include <memory>
-#include "../../World/Chunk/IWorldObserver.h"
+#include "../World/Chunk/IWorldObserver.h"
 
 class World;
 class BlockRegistry;
 
-class ChunkMeshingSystem : public IWorldObserver {
+class ChunkRenderer : public IWorldObserver {
 public:
-	ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry);
-	~ChunkMeshingSystem() = default;
+	ChunkRenderer(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry);
+	~ChunkRenderer() = default;
 public:
 	void onWorldEvent(const ChunkLoadEvent& event) override;
 	void onWorldEvent(const ChunkUnloadEvent& event) override;
