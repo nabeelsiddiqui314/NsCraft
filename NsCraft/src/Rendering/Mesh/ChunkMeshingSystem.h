@@ -13,6 +13,8 @@ public:
 	void onWorldEvent(const ChunkLoadEvent& event) override;
 	void onWorldEvent(const ChunkUnloadEvent& event) override;
 private:
+	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
+private:
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<BlockRegistry> m_blockRegistry;
 };

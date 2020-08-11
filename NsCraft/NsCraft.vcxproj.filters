@@ -149,5 +149,8 @@
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Math\Directions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
