@@ -63,7 +63,7 @@
     <ClCompile Include="src\World\ChunkGenerator\ChunkGeneratorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\ChunkRenderer.cpp">
+    <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +149,7 @@
     <ClInclude Include="src\Math\Directions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\ChunkRenderer.h">
+    <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
