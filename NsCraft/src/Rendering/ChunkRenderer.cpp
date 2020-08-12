@@ -1,6 +1,6 @@
 #include "ChunkRenderer.h"
 
-void ChunkRenderer::addMesh(const Vector3& position, const std::shared_ptr<ChunkMesh>& mesh) {
+void ChunkRenderer::addMesh(const Vector3& position, const ChunkMesh& meshr) {
 
 }
 
