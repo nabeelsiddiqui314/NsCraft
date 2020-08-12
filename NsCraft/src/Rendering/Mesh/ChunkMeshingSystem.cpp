@@ -3,10 +3,14 @@
 #include "../../Math/Vector3.h"
 #include "../../World/Events/ChunkLoadEvent.h"
 #include "../../Math/Directions.h"
+#include "../ChunkRenderer.h"
 #include <vector>
 
-ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry)
-	: m_world(world), m_blockRegistry(blockRegistry) {}
+ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry,
+	const std::shared_ptr<ChunkRenderer>& renderer)
+	: m_world(world), 
+	  m_blockRegistry(blockRegistry),
+      m_renderer(renderer) {}
 
 void ChunkMeshingSystem::onWorldEvent(const ChunkLoadEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
