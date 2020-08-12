@@ -66,6 +66,9 @@
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\ChunkRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\ChunkRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
