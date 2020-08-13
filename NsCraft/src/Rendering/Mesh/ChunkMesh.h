@@ -2,6 +2,7 @@
 #include <vector>
 #include <GL/glew.h>
 #include "Quad.h"
+#include "../../OpenGL/VertexArray.h"
 
 struct Vector3;
 struct FloatRect;
@@ -15,10 +16,12 @@ public:
 	ChunkMesh& operator=(const ChunkMesh&) = delete;
 public:
 	void addQuad(const Vector3& position, const FloatRect& textureCoords, const Quad& quad);
+
+	VertexArray generateChunkVAO() const;
 private:
 	std::vector<GLfloat> m_vertices;
 	std::vector<GLfloat> m_textureCoords;
-	std::vector<GLint> m_indices;
+	std::vector<GLuint> m_indices;
 
-	int m_index;
+	std::uint32_t m_index;
 };

@@ -1,6 +1,8 @@
 #include "ChunkMesh.h"
 #include "../../Math/Vector3.h"
 #include "../../Math/FloatRect.h"
+#include "../../OpenGL/VertexBuffer.h"
+#include "../../OpenGL/IndexBuffer.h"
 
 ChunkMesh::ChunkMesh() 
 	: m_index(0) {}
@@ -29,4 +31,18 @@ void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords,
 			m_index + 3
 		});
 	m_index += 4;
+}
+
+VertexArray ChunkMesh::generateChunkVAO() const {
+	VertexArray vao;
+
+	auto verticesBuffer = std::make_shared<VertexBuffer>(&m_vertices.front(), m_vertices.size());
+	auto textureCoordBuffer = std::make_shared<VertexBuffer>(&m_textureCoords.front(), m_textureCoords.size());
+	auto indexBuffer = std::make_shared<IndexBuffer>(&m_indices.front(), m_indices.size());
+
+	vao.addVertexBuffer(verticesBuffer, 3);
+	vao.addVertexBuffer(textureCoordBuffer, 2);
+	vao.setIndexBuffer(indexBuffer);
+
+	return vao;
 }
