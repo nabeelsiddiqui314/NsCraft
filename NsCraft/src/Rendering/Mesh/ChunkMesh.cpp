@@ -5,7 +5,7 @@
 #include "../../OpenGL/IndexBuffer.h"
 
 ChunkMesh::ChunkMesh() 
-	: m_index(0) {}
+	: m_currentIndex(0) {}
 
 void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords, const Quad& quad) {
 	int faceIndex = 0;
@@ -23,14 +23,14 @@ void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords,
 		});
 
 	m_indices.insert(m_indices.end(), {
-			m_index,
-			m_index + 1,
-			m_index + 2,
-			m_index,
-			m_index + 2,
-			m_index + 3
+			m_currentIndex,
+			m_currentIndex + 1,
+			m_currentIndex + 2,
+			m_currentIndex,
+			m_currentIndex + 2,
+			m_currentIndex + 3
 		});
-	m_index += 4;
+	m_currentIndex += 4;
 }
 
 VertexArray ChunkMesh::generateChunkVAO() const {

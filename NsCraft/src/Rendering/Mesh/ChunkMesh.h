@@ -23,5 +23,5 @@ private:
 	std::vector<GLfloat> m_textureCoords;
 	std::vector<GLuint> m_indices;
 
-	std::uint32_t m_index;
+	GLuint m_currentIndex;
 };
