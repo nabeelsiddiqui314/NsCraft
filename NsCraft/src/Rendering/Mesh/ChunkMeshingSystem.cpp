@@ -2,8 +2,10 @@
 #include "../../World/Chunk/World.h"
 #include "../../Math/Vector3.h"
 #include "../../World/Events/ChunkLoadEvent.h"
+#include "../../World/Events/ChunkUnloadEvent.h"
 #include "../../Math/Directions.h"
 #include "../ChunkRenderer.h"
+#include "ChunkMesh.h"
 #include <vector>
 
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry,
@@ -26,13 +28,16 @@ void ChunkMeshingSystem::onWorldEvent(const ChunkLoadEvent& event) {
 
 	for (const auto& neighbor : neighbors) {
 		if (m_world->doesChunkExist(neighbor) && doesChunkHaveAllNeighbors(neighbor)) {
-			// perform meshing
+			ChunkMesh mesh;
+			// mesh gen here
+			m_renderer->addMesh(chunkPosition, mesh);
 		}
 	}
 }
 
 void ChunkMeshingSystem::onWorldEvent(const ChunkUnloadEvent& event) {
-	// remove from renderer
+	const auto& chunkPosiiton = event.chunkPosition;
+	m_renderer->removeMesh(chunkPosiiton);
 }
 
 bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {
