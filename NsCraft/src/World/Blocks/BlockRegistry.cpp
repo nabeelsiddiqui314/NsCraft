@@ -1,9 +1,9 @@
 #include "BlockRegistry.h"
-#include "IBlock.h"
+#include "Block.h"
 
 void BlockRegistry::registerBlock(const std::string& name, const BlockPtr& block) {
 	Block_ID id = static_cast<Block_ID>(m_blocks.size());
-	m_blocks.emplace_back(block);
+	m_blocks.push_back(block);
 	m_nameToIDMap.emplace(std::make_pair(name, id));
 }
 

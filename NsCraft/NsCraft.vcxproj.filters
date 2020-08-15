@@ -75,6 +75,9 @@
     <ClCompile Include="src\Math\FloatRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Blocks\Block.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -117,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Blocks\IBlock.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Chunk\World.h">
@@ -168,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\FloatRect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Blocks\Block.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

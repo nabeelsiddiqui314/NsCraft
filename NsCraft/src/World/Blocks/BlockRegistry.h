@@ -5,11 +5,11 @@
 #include <memory>
 #include "BlockDefs.h"
 
-class IBlock;
+class Block;
 
 class BlockRegistry {
 private:
-	typedef std::shared_ptr<IBlock> BlockPtr;
+	typedef std::shared_ptr<Block> BlockPtr;
 public:
 	BlockRegistry() = default;
 	~BlockRegistry() = default;
