@@ -33,16 +33,16 @@ void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords,
 	m_currentIndex += 4;
 }
 
-VertexArray ChunkMesh::generateChunkVAO() const {
-	VertexArray vao;
+std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
+	auto vao = std::make_shared<VertexArray>();
 
 	auto verticesBuffer = std::make_shared<VertexBuffer>(&m_vertices.front(), m_vertices.size());
 	auto textureCoordBuffer = std::make_shared<VertexBuffer>(&m_textureCoords.front(), m_textureCoords.size());
 	auto indexBuffer = std::make_shared<IndexBuffer>(&m_indices.front(), m_indices.size());
 
-	vao.addVertexBuffer(verticesBuffer, 3);
-	vao.addVertexBuffer(textureCoordBuffer, 2);
-	vao.setIndexBuffer(indexBuffer);
+	vao->addVertexBuffer(verticesBuffer, 3);
+	vao->addVertexBuffer(textureCoordBuffer, 2);
+	vao->setIndexBuffer(indexBuffer);
 
 	return vao;
 }

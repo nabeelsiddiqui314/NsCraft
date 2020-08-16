@@ -17,7 +17,7 @@ public:
 public:
 	void addQuad(const Vector3& position, const FloatRect& textureCoords, const Quad& quad);
 
-	VertexArray generateChunkVAO() const;
+	std::shared_ptr<VertexArray> generateChunkVAO() const;
 private:
 	std::vector<GLfloat> m_vertices;
 	std::vector<GLfloat> m_textureCoords;
