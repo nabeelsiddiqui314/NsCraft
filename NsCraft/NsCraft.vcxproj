@@ -54,6 +54,7 @@
     <ClInclude Include="src\Rendering\ChunkRenderer.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h" />
+    <ClInclude Include="src\Rendering\Mesh\CubeFaces.h" />
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
     <ClInclude Include="src\States\GameState.h" />
