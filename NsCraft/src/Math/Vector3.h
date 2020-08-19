@@ -9,6 +9,7 @@ public:
 public:
 	const Vector3 operator+(const Vector3& other) const;
 	const Vector3 operator-(const Vector3& other) const;
+	const Vector3 operator%(const Vector3& other) const;
 
 	void operator+=(const Vector3& other);
 	void operator-=(const Vector3& other);
