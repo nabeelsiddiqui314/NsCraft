@@ -4,6 +4,7 @@
 #include <vector>
 #include "../../Math/Vector3.h"
 #include "../ChunkGenerator/ChunkGeneratorFactory.h"
+#include "../Blocks/BlockDefs.h"
 
 class Chunk;
 class IChunkGenerator;
@@ -25,6 +26,8 @@ public:
 	bool doesChunkExist(const Vector3& position) const;
 
 	void addObserver(const WorldObserverPtr& observer);
+
+	Block_ID getBlockIDAt(const Vector3& position) const;
 private:
 	void notifyObservers(const IWorldEvent& event);
 private:

@@ -47,6 +47,18 @@ void World::addObserver(const WorldObserverPtr& observer) {
 	m_observers.emplace_back(observer);
 }
 
+Block_ID World::getBlockIDAt(const Vector3& position) const {
+	const Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
+	const auto& blockPosition = position % chunkWidthVector;
+	const auto& chunkPosition = (position - blockPosition) / chunkWidthVector;
+	
+	if (doesChunkExist(chunkPosition)) {
+		return m_chunkMap.at(chunkPosition)->getBlock(blockPosition);
+	}
+
+	return 0;
+}
+
 void World::notifyObservers(const IWorldEvent& event) {
 	auto isObserverExpired = [&](const WorldObserverPtr& observer) {
 		return observer.expired();
