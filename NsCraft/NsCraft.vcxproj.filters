@@ -78,6 +78,9 @@
     <ClCompile Include="src\World\Blocks\Block.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -174,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Mesh\CubeFaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\Mesh\CubeMeshGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

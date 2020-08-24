@@ -31,6 +31,7 @@
     <ClCompile Include="src\Rendering\ChunkRenderer.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp" />
+    <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp" />
     <ClCompile Include="src\States\GameState.cpp" />
     <ClCompile Include="src\States\MenuState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="src\Rendering\Mesh\ChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h" />
     <ClInclude Include="src\Rendering\Mesh\CubeFaces.h" />
+    <ClInclude Include="src\Rendering\Mesh\CubeMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
     <ClInclude Include="src\States\GameState.h" />
