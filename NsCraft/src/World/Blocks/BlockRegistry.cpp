@@ -11,6 +11,10 @@ const BlockRegistry::BlockPtr& BlockRegistry::getBlockFromID(Block_ID id) const 
 	return m_blocks[id];
 }
 
+Block_ID BlockRegistry::getBlockIDFromName(const std::string& name) const {
+	return m_nameToIDMap.at(name);
+}
+
 const BlockRegistry::BlockPtr& BlockRegistry::getBlockFromName(const std::string& name) const {
-	return m_blocks[static_cast<std::size_t>(m_nameToIDMap.at(name))];
+	return m_blocks[static_cast<std::size_t>(getBlockIDFromName(name))];
 }

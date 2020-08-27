@@ -15,6 +15,8 @@ public:
 	~BlockRegistry() = default;
 public:
 	void registerBlock(const std::string& name, const BlockPtr& block);
+	
+	Block_ID getBlockIDFromName(const std::string& name) const;
 
 	const BlockPtr& getBlockFromID(Block_ID id) const;
 	const BlockPtr& getBlockFromName(const std::string& name) const;
