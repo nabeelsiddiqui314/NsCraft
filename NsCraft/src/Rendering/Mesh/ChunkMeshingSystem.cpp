@@ -6,6 +6,10 @@
 #include "../../Math/Directions.h"
 #include "../ChunkRenderer.h"
 #include "ChunkMesh.h"
+#include "../../World/Blocks/BlockRegistry.h"
+#include "../../World/Blocks/Block.h"
+#include "../../World/Chunk/Chunk.h"
+#include "IMeshGenerator.h"
 #include <vector>
 
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry,
@@ -29,8 +33,20 @@ void ChunkMeshingSystem::onWorldEvent(const ChunkLoadEvent& event) {
 	for (const auto& neighbor : neighbors) {
 		if (m_world->doesChunkExist(neighbor) && doesChunkHaveAllNeighbors(neighbor)) {
 			ChunkMesh mesh;
-			// mesh gen here
-			m_renderer->addMesh(chunkPosition, mesh);
+
+			for (int x = 0; x < Chunk::WIDTH; x++) {
+				for (int y = 0; y < Chunk::WIDTH; y++) {
+					for (int z = 0; z < Chunk::WIDTH; z++) {
+						Vector3 blockPosition = (neighbor * Chunk::WIDTH) + Vector3(x, y, z);
+						Block_ID blockID = m_world->getBlockIDAt(blockPosition);
+						auto block = m_blockRegistry->getBlockFromID(blockID);
+						block->getMeshGenerator()->generateMesh(mesh, *m_world, blockPosition);
+					}
+				}
+			}
+			if (!mesh.isEmpty()) {
+				m_renderer->addMesh(neighbor, mesh);
+			}
 		}
 	}
 }
