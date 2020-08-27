@@ -9,6 +9,7 @@ public:
 	static constexpr int WIDTH = 16;
 public:
 	Chunk();
+	Chunk(Block_ID blockID);
 	~Chunk() = default;
 public:
 	void setBlock(const Vector3& position, Block_ID id);

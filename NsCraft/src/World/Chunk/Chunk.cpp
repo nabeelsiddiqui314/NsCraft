@@ -5,6 +5,10 @@ Chunk::Chunk() {
 	m_blocks.fill(0);
 }
 
+Chunk::Chunk(Block_ID blockID) {
+	m_blocks.fill(blockID);
+}
+
 void Chunk::setBlock(const Vector3& position, Block_ID id) {
 	m_blocks[getIndex(position)] = id;
 }
