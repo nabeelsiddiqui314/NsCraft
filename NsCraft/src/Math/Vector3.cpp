@@ -23,6 +23,26 @@ const Vector3 Vector3::operator%(const Vector3& other) const {
 	return {x % other.x, y % other.y, z % other.z };
 }
 
+const Vector3 Vector3::operator+(int other) const {
+	return {x + other, y + other, z + other};
+}
+
+const Vector3 Vector3::operator-(int other) const {
+	return { x - other, y - other, z - other };
+}
+
+const Vector3 Vector3::operator*(int other) const {
+	return { x * other, y * other, z * other };
+}
+
+const Vector3 Vector3::operator/(int other) const {
+	return { x / other, y / other, z / other };
+}
+
+const Vector3 Vector3::operator%(int other) const {
+	return { x % other, y % other, z % other };
+}
+
 void Vector3::operator+=(const Vector3& other) {
 	x += other.x;
 	y += other.y;
