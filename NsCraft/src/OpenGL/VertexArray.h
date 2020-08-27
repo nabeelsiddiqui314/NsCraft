@@ -8,8 +8,8 @@ class IndexBuffer;
 
 class VertexArray {
 public:
-	VertexArray() = default;
-	~VertexArray() =default;
+	VertexArray();
+	~VertexArray();
 public:
 	void bind();
 	void unbind();

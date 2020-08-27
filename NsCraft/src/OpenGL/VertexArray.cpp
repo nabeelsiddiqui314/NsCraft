@@ -2,6 +2,14 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
+VertexArray::VertexArray() {
+	glCreateVertexArrays(1, &m_vaoHandle);
+}
+
+VertexArray::~VertexArray() {
+	glDeleteVertexArrays(1, &m_vaoHandle);
+}
+
 void VertexArray::bind() {
 	glBindVertexArray(m_vaoHandle);
 }
