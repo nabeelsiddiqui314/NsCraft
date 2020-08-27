@@ -33,6 +33,10 @@ void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords,
 	m_currentIndex += 4;
 }
 
+bool ChunkMesh::isEmpty() const {
+	return m_vertices.empty() || m_textureCoords.empty() || m_indices.empty();
+}
+
 std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 	auto vao = std::make_shared<VertexArray>();
 
