@@ -24,12 +24,6 @@
     <ClCompile Include="src\States\StateMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\States\MenuState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\States\GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OpenGL\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +78,9 @@
     <ClCompile Include="src\World\ChunkGenerator\RandomBlockGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\States\TestState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -93,12 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\States\StateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\MenuState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\States\GameState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGL\Shader.h">
@@ -186,6 +177,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\ChunkGenerator\RandomBlockGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\States\TestState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

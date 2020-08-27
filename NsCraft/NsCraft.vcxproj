@@ -33,8 +33,7 @@
     <ClCompile Include="src\Rendering\Mesh\ChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp" />
     <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp" />
-    <ClCompile Include="src\States\GameState.cpp" />
-    <ClCompile Include="src\States\MenuState.cpp" />
+    <ClCompile Include="src\States\TestState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
@@ -62,9 +61,8 @@
     <ClInclude Include="src\Rendering\Mesh\EmptyMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
-    <ClInclude Include="src\States\GameState.h" />
+    <ClInclude Include="src\States\TestState.h" />
     <ClInclude Include="src\States\IState.h" />
-    <ClInclude Include="src\States\MenuState.h" />
     <ClInclude Include="src\States\StateMachine.h" />
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />

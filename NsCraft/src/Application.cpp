@@ -1,7 +1,7 @@
 #include "Application.h"
 #include <GL/glew.h>
 #include <SFML/Window/Event.hpp>
-#include "States/MenuState.h"
+#include "States/TestState.h"
 
 Application::Application(std::uint32_t windowWidth, std::uint32_t windowHeight, const std::string& windowName) {
 	sf::ContextSettings settings;
@@ -13,8 +13,6 @@ Application::Application(std::uint32_t windowWidth, std::uint32_t windowHeight, 
 
 	m_window.create(sf::VideoMode(windowWidth, windowHeight), windowName, sf::Style::Default, settings);
 	m_window.setActive();
-
-	m_stateMachine.setState<MenuState>();
 }
 
 int Application::execute() {
@@ -23,6 +21,8 @@ int Application::execute() {
 	if (GLEW_OK != glewInit()) {
 		return EXIT_FAILURE;
 	}
+
+	m_stateMachine.setState<TestState>();
 
 	while (m_window.isOpen()) {
 		sf::Event evnt;
