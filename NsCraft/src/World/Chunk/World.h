@@ -3,7 +3,6 @@
 #include <unordered_map>
 #include <vector>
 #include "../../Math/Vector3.h"
-#include "../ChunkGenerator/ChunkGeneratorFactory.h"
 #include "../Blocks/BlockDefs.h"
 
 class Chunk;
@@ -15,9 +14,9 @@ class World {
 private:
 	typedef std::shared_ptr<Chunk> ChunkPtr;
 	typedef std::weak_ptr<IWorldObserver> WorldObserverPtr;
+	typedef std::unique_ptr<IChunkGenerator> ChunkGeneratorPtr;
 public:
-	World();
-	explicit World(const ChunkGeneratorType& type);
+	World(ChunkGeneratorPtr&& chunkGenerator);
 	~World();
 public:
 	void loadChunk(const Vector3& position);
@@ -33,6 +32,5 @@ private:
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
-	ChunkGeneratorFactory m_chunkGeneratorfactory;
 	std::vector<WorldObserverPtr> m_observers;
 };

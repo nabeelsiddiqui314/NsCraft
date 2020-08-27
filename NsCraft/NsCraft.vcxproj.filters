@@ -60,9 +60,6 @@
     <ClCompile Include="src\World\ChunkGenerator\VoidChunkGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\ChunkGenerator\ChunkGeneratorFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -138,12 +135,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\ChunkGenerator\VoidChunkGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\ChunkGenerator\ChunkGeneratorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\ChunkGenerator\ChunkGeneratorType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h">

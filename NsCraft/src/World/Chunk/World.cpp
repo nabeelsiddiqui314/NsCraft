@@ -7,13 +7,10 @@
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"
 
-World::World() {
-	m_chunkGenerator = m_chunkGeneratorfactory.createChunkGenerator(ChunkGeneratorType::VOID);
-}
 
-World::World(const ChunkGeneratorType& type) {
-	m_chunkGenerator = m_chunkGeneratorfactory.createChunkGenerator(type);
-}
+
+World::World(ChunkGeneratorPtr&& chunkGenerator) 
+	: m_chunkGenerator(std::move(chunkGenerator)) {}
 
 World::~World() {}
 
