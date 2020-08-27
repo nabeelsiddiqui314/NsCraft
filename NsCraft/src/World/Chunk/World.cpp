@@ -44,11 +44,17 @@ void World::addObserver(const WorldObserverPtr& observer) {
 	m_observers.emplace_back(observer);
 }
 
+void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
+	auto[chunkPosition, blockPosition] = getBlockLocation(position);
+
+	if (doesChunkExist(chunkPosition)) {
+		m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
+	}
+}
+
 Block_ID World::getBlockIDAt(const Vector3& position) const {
-	const Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
-	const auto& blockPosition = position % chunkWidthVector;
-	const auto& chunkPosition = (position - blockPosition) / chunkWidthVector;
-	
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
 	if (doesChunkExist(chunkPosition)) {
 		return m_chunkMap.at(chunkPosition)->getBlock(blockPosition);
 	}
@@ -68,4 +74,12 @@ void World::notifyObservers(const IWorldEvent& event) {
 
 		event.handleEvent(*observer);
 	}
+}
+
+std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
+	const Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
+	const auto& blockPosition = position % chunkWidthVector;
+	const auto& chunkPosition = (position - blockPosition) / chunkWidthVector;
+
+	return {chunkPosition, blockPosition};
 }
