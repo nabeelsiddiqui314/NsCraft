@@ -28,3 +28,7 @@ void VertexArray::setIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer
 
 	m_indexBuffer = indexBuffer;
 }
+
+GLsizei VertexArray::getIndexCount() const {
+	return m_indexBuffer->getIndexCount();
+}
