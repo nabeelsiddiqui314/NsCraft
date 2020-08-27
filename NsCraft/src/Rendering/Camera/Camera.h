@@ -15,6 +15,9 @@ public:
 	void setPosition(const glm::vec3& position);
 	void move(const glm::vec3& moveVector);
 	void rotate(float yaw, float pitch);
+
+	glm::vec3 getFront() const;
+	glm::vec3 getRight() const;
 private:
 	void updateCameraVectors();
 private:

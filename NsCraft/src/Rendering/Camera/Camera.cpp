@@ -49,6 +49,14 @@ void Camera::rotate(float yaw, float pitch) {
 	updateCameraVectors();
 }
 
+glm::vec3 Camera::getFront() const {
+	return m_front;
+}
+
+glm::vec3 Camera::getRight() const {
+	return m_right;
+}
+
 void Camera::updateCameraVectors() {
 	glm::vec3 front;
 	front.x = cosf(glm::radians(m_yaw)) * cosf(glm::radians(m_pitch));
