@@ -33,6 +33,10 @@ void Camera::setPosition(const glm::vec3& position) {
 	updateCameraVectors();
 }
 
+void Camera::move(const glm::vec3& moveVector) {
+	setPosition(m_position + moveVector);
+}
+
 void Camera::rotate(float yaw, float pitch) {
 	m_yaw += yaw;
 	m_pitch += pitch;
