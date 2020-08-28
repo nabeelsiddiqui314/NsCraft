@@ -8,6 +8,7 @@ Texture::Texture()
 void Texture::loadFromPath(const std::string& path) {
 	sf::Image image;
 	image.loadFromFile(path);
+	image.flipVertically();
 	loadFromImage(image);
 }
 
