@@ -48,6 +48,10 @@ void TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 		m_camera.rotate(event.mouseMove.x - m_lastMousePos.x, m_lastMousePos.y - event.mouseMove.y);
 		m_lastMousePos = {event.mouseMove.x, event.mouseMove.y};
 		break;
+	case sf::Event::Resized:
+		glViewport(0, 0, event.size.width, event.size.height);
+		m_camera.setAspectRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
+		break;
 	}
 }
 void TestState::update(StateMachine& stateMachine, float deltaTime) {
