@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\EventSystem\Event.h" />
+    <ClInclude Include="src\EventSystem\EventDispatcher.h" />
     <ClInclude Include="src\Math\FloatRect.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Math\Directions.h" />
