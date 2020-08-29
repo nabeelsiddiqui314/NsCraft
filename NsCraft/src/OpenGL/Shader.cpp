@@ -58,8 +58,12 @@ void Shader::loadShader(const char* vertexPath, const char* fragmentPath) {
 	glDeleteShader(fragmentShader);
 }
 
-void Shader::useProgram() {
+void Shader::bind() {
 	glUseProgram(m_program);
+}
+
+void Shader::unbind() {
+	glUseProgram(0);
 }
 
 void Shader::setUniform1i(const std::string& name, int val) {

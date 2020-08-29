@@ -4,11 +4,9 @@
 #include "../OpenGL/VertexArray.h"
 #include "Camera/Camera.h"
 
-ChunkRenderer::ChunkRenderer() : m_shader("shaders/basicShader.vs", "shaders/basicShader.fs") {
+ChunkRenderer::ChunkRenderer() : m_chunkShader("shaders/chunkShader.vs", "shaders/chunkShader.fs") {
 	m_texture.loadFromPath("res/smiley.png");
 	m_texture.bind();
-	m_shader.useProgram();
-
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -21,11 +19,13 @@ void ChunkRenderer::removeMesh(const Vector3& position) {
 }
 
 void ChunkRenderer::renderChunks(const Camera& camera) {
+	m_chunkShader.bind();
 	for (const auto& [position, chunkVao] : m_renderableChunkMap) {
 		chunkVao->bind();
-		m_shader.setUniformMat4("u_view", camera.getView());
-		m_shader.setUniformMat4("u_projection", camera.getProjection());
+		m_chunkShader.setUniformMat4("u_view", camera.getView());
+		m_chunkShader.setUniformMat4("u_projection", camera.getProjection());
 		glDrawElements(GL_TRIANGLES, chunkVao->getIndexCount(), GL_UNSIGNED_INT, 0);
 		chunkVao->unbind();
 	}
+	m_chunkShader.unbind();
 }

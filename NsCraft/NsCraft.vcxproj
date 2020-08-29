@@ -79,6 +79,10 @@
     <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
     <ClInclude Include="src\World\Events\IWorldEvent.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\chunkShader.fs" />
+    <None Include="shaders\chunkShader.vs" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{3FC07EFB-E9BF-4647-A58F-C883F8DE3CFB}</ProjectGuid>

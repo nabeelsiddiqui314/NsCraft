@@ -13,7 +13,8 @@ public:
 	Shader(const char* vertexPath, const char* fragmentPath);
 public:
 	void loadShader(const char* vertexPath, const char* fragmentPath);
-	void useProgram();
+	void bind();
+	void unbind();
 	void setUniformMat4(const std::string& name, const glm::mat4& val);
 	void setUniform3f(const std::string& name, const glm::vec3& val);
 	void setUniform1i(const std::string& name, int val);

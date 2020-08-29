@@ -189,4 +189,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\chunkShader.fs" />
+    <None Include="shaders\chunkShader.vs" />
+  </ItemGroup>
 </Project>

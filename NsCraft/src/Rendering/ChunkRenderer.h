@@ -22,8 +22,8 @@ public:
 	void renderChunks(const Camera& camera);
 private:
 	std::unordered_map<Vector3, VaoPtr> m_renderableChunkMap;
+	Shader m_chunkShader;
 
 	// temporary
 	Texture m_texture;
-	Shader m_shader;
 };
