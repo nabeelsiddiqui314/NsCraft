@@ -8,7 +8,7 @@
 class Chunk;
 class IChunkGenerator;
 class IWorldObserver;
-struct IWorldEvent;
+struct IEvent;
 
 class World {
 private:
@@ -29,7 +29,7 @@ public:
 	void setBlockIDAt(const Vector3& position, Block_ID blockID);
 	Block_ID getBlockIDAt(const Vector3& position) const;
 private:
-	void notifyObservers(const IWorldEvent& event);
+	void notifyObservers(IEvent& event);
 
 	// gets chunk position and block position from world position
 	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;

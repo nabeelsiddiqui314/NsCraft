@@ -1,13 +1,8 @@
 #pragma once
-#include "IWorldEvent.h"
-#include "../Chunk/IWorldObserver.h"
+#include "../../EventSystem/Event.h"
 #include "../../Math/Vector3.h"
 
-struct ChunkLoadEvent : IWorldEvent {
-public:
+
+struct ChunkLoadEvent : Event<ChunkLoadEvent> {
 	Vector3 chunkPosition;
-public:
-	void handleEvent(IWorldObserver& eventHandler) const override {
-		eventHandler.onWorldEvent(*this);
-	}
 };

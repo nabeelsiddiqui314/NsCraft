@@ -5,6 +5,8 @@
 class World;
 class BlockRegistry;
 class ChunkRenderer;
+struct ChunkLoadEvent;
+struct ChunkUnloadEvent;
 
 class ChunkMeshingSystem : public IWorldObserver {
 public:
@@ -12,9 +14,11 @@ public:
 		const std::shared_ptr<ChunkRenderer>& renderer);
 	~ChunkMeshingSystem() = default;
 public:
-	void onWorldEvent(const ChunkLoadEvent& event) override;
-	void onWorldEvent(const ChunkUnloadEvent& event) override;
+	void onEvent(IEvent& event) override;
 private:
+	void onChunkLoad(ChunkLoadEvent& event) const;
+	void onChunkUnload(ChunkUnloadEvent& event) const;
+
 	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
 private:
 	std::shared_ptr<World> m_world;

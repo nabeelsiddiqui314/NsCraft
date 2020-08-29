@@ -11,6 +11,9 @@
 #include "../../World/Chunk/Chunk.h"
 #include "IMeshGenerator.h"
 #include <vector>
+#include "../../EventSystem/EventDispatcher.h"
+
+#define BIND_EVENT(function) std::bind(&ChunkMeshingSystem::function, this, std::placeholders::_1)
 
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry,
 	const std::shared_ptr<ChunkRenderer>& renderer)
@@ -18,7 +21,13 @@ ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, cons
 	  m_blockRegistry(blockRegistry),
       m_renderer(renderer) {}
 
-void ChunkMeshingSystem::onWorldEvent(const ChunkLoadEvent& event) {
+void ChunkMeshingSystem::onEvent(IEvent& event) {
+	EventDispatcher dispatcher(event);
+	dispatcher.dispatch<ChunkLoadEvent>(BIND_EVENT(onChunkLoad));
+	dispatcher.dispatch<ChunkUnloadEvent>(BIND_EVENT(onChunkUnload));
+}
+
+void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 	const auto& chunkPosition = event.chunkPosition;
 
 	std::vector<Vector3> neighbors;
@@ -51,7 +60,7 @@ void ChunkMeshingSystem::onWorldEvent(const ChunkLoadEvent& event) {
 	}
 }
 
-void ChunkMeshingSystem::onWorldEvent(const ChunkUnloadEvent& event) {
+void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
 	const auto& chunkPosiiton = event.chunkPosition;
 	m_renderer->removeMesh(chunkPosiiton);
 }

@@ -3,11 +3,9 @@
 #include "../ChunkGenerator/IChunkGenerator.h"
 #include "IWorldObserver.h"
 #include <algorithm>
-#include "../Events/IWorldEvent.h"
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"
-
-
+#include "../../EventSystem/Event.h"
 
 World::World(ChunkGeneratorPtr&& chunkGenerator) 
 	: m_chunkGenerator(std::move(chunkGenerator)) {}
@@ -62,7 +60,7 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	return 0;
 }
 
-void World::notifyObservers(const IWorldEvent& event) {
+void World::notifyObservers(IEvent& event) {
 	auto isObserverExpired = [&](const WorldObserverPtr& observer) {
 		return observer.expired();
 	};
@@ -71,8 +69,7 @@ void World::notifyObservers(const IWorldEvent& event) {
 
 	for (auto& observerPtr : m_observers) {
 		auto observer = observerPtr.lock();
-
-		event.handleEvent(*observer);
+		observer->onEvent(event);
 	}
 }
 
