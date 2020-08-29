@@ -27,15 +27,3 @@ private:
 		return getUniqueEventID<T>();
 	}
 };
-
-struct CollisionEvent : Event<CollisionEvent> {
-	int collisionData;
-};
-
-struct DiedEvent : Event<DiedEvent> {
-	int deathCount;
-};
-
-struct DabEvent : Event<DabEvent> {
-	int dabBlastRadius;
-};
