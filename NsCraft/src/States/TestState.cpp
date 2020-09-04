@@ -28,7 +28,7 @@ TestState::TestState()
 																									m_blockRegistry->getBlockIDFromName("testBlock") })));
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_chunkRenderer);
 
-	m_world->addObserver(m_chunkMeshingSystem);
+	m_world->registerListener(m_chunkMeshingSystem);
 
 	int width = 5;
 	int depth = 5;

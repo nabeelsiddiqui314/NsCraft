@@ -1,7 +1,6 @@
 #include "World.h"
 #include "Chunk.h"
 #include "../ChunkGenerator/IChunkGenerator.h"
-#include "IWorldObserver.h"
 #include <algorithm>
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"
@@ -19,7 +18,7 @@ void World::loadChunk(const Vector3& position) {
 		ChunkLoadEvent event;
 		event.chunkPosition = position;
 
-		notifyObservers(event);
+		notifyListeners(event);
 	}
 }
 
@@ -30,16 +29,12 @@ void World::unloadChunk(const Vector3& position) {
 		ChunkUnloadEvent event;
 		event.chunkPosition = position;
 
-		notifyObservers(event);
+		notifyListeners(event);
 	}
 }
 
 bool World::doesChunkExist(const Vector3& position) const {
 	return m_chunkMap.find(position) != m_chunkMap.end();
-}
-
-void World::addObserver(const WorldObserverPtr& observer) {
-	m_observers.emplace_back(observer);
 }
 
 void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
@@ -58,19 +53,6 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	}
 
 	return 0;
-}
-
-void World::notifyObservers(IEvent& event) {
-	auto isObserverExpired = [&](const WorldObserverPtr& observer) {
-		return observer.expired();
-	};
-
-	m_observers.erase(std::remove_if(m_observers.begin(), m_observers.end(), isObserverExpired), m_observers.end());
-
-	for (auto& observerPtr : m_observers) {
-		auto observer = observerPtr.lock();
-		observer->onEvent(event);
-	}
 }
 
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {

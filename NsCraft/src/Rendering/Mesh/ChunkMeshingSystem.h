@@ -1,14 +1,15 @@
 #pragma once
 #include <memory>
-#include "../../World/Chunk/IWorldObserver.h"
+#include "../../EventSystem/IEventListener.h"
 
 class World;
 class BlockRegistry;
 class ChunkRenderer;
+struct Vector3;
 struct ChunkLoadEvent;
 struct ChunkUnloadEvent;
 
-class ChunkMeshingSystem : public IWorldObserver {
+class ChunkMeshingSystem : public IEventListener {
 public:
 	ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry, 
 		const std::shared_ptr<ChunkRenderer>& renderer);

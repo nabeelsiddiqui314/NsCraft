@@ -84,6 +84,9 @@
     <ClCompile Include="src\Profiling\ScopeTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\EventSystem\Subject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -123,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Chunk\World.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Chunk\IWorldObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\ChunkGenerator\IChunkGenerator.h">
@@ -189,6 +189,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\EventSystem\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventSystem\Subject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventSystem\IEventListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
