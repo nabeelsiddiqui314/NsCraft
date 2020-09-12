@@ -19,7 +19,3 @@ private:
 	TimePoint m_start, m_finish;
 	bool m_hasStopped;
 };
-
-#define PROFILE_SCOPE(taskName) ScopeTimer timer(taskName);
-#define PROFILE_FUNCTION() PROFILE_SCOPE(__FUNCTION__)
-#define PROFILE_FUNCTION_SIGNATURE() PROFILE_SCOPE(__FUNCSIG__);
