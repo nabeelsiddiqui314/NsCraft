@@ -13,6 +13,8 @@ void Texture::loadFromPath(const std::string& path) {
 }
 
 void Texture::loadFromImage(const sf::Image& image) {
+	deleteTexture();
+
 	glGenTextures(1, &m_texture);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 
@@ -35,6 +37,10 @@ void Texture::unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Texture::~Texture() {
+void Texture::deleteTexture() {
 	glDeleteTextures(1, &m_texture);
+}
+
+Texture::~Texture() {
+	deleteTexture();
 }

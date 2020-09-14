@@ -17,5 +17,7 @@ public:
 	void bind(std::uint8_t slot = 0);
 	void unbind();
 private:
+	void deleteTexture();
+private:
 	GLuint m_texture;
 };
