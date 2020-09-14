@@ -37,8 +37,14 @@ void TextureAtlas::generateAtlas() {
 		std::uint32_t texturePosY = (i - (i % gridWidth)) / gridWidth * m_textureWidth;
 		
 		m_textureAtlasBuffer.copy(textureImage, texturePosX, texturePosY);
-		m_textureCoordinateMap.emplace(textureName, FloatRect(texturePosX, texturePosY, 
-			                                                 texturePosX + m_textureWidth, texturePosY + m_textureWidth));
+
+		FloatRect textureCoords;
+		textureCoords.x = static_cast<float>(texturePosX)                  / static_cast<float>(textureAtlasWidth);
+		textureCoords.y = static_cast<float>(texturePosY)                  / static_cast<float>(textureAtlasWidth);
+		textureCoords.w = static_cast<float>(texturePosX + m_textureWidth) / static_cast<float>(textureAtlasWidth);
+		textureCoords.x = static_cast<float>(texturePosY + m_textureWidth) / static_cast<float>(textureAtlasWidth);
+
+		m_textureCoordinateMap.emplace(textureName, textureCoords);
 
 		m_textureQueue.pop();
 	}
