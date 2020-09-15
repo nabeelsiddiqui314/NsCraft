@@ -39,10 +39,10 @@ void TextureAtlas::generateAtlas() {
 		m_textureAtlasBuffer.copy(textureImage, texturePosX, texturePosY);
 
 		FloatRect textureCoords;
-		textureCoords.x = static_cast<float>(texturePosX)                  / static_cast<float>(textureAtlasWidth);
-		textureCoords.y = static_cast<float>(texturePosY)                  / static_cast<float>(textureAtlasWidth);
-		textureCoords.w = static_cast<float>(texturePosX + m_textureWidth) / static_cast<float>(textureAtlasWidth);
-		textureCoords.x = static_cast<float>(texturePosY + m_textureWidth) / static_cast<float>(textureAtlasWidth);
+		textureCoords.x = static_cast<float>(texturePosX)    / static_cast<float>(textureAtlasWidth);
+		textureCoords.y = static_cast<float>(texturePosY)    / static_cast<float>(textureAtlasWidth);
+		textureCoords.w = static_cast<float>(m_textureWidth) / static_cast<float>(textureAtlasWidth);
+		textureCoords.h = static_cast<float>(m_textureWidth) / static_cast<float>(textureAtlasWidth);
 
 		m_textureCoordinateMap.emplace(textureName, textureCoords);
 
