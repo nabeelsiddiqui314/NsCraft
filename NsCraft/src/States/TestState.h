@@ -3,11 +3,11 @@
 #include <memory>
 #include "../Rendering/Camera/Camera.h"
 #include <SFML/System/Vector2.hpp>
+#include "../World/Blocks/BlockRegistry.h"
+#include "../Rendering/ChunkRenderer.h"
 
 class World;
-class BlockRegistry;
 class ChunkMeshingSystem;
-class ChunkRenderer;
 
 class TestState : public IState {
 public:
@@ -18,9 +18,9 @@ public:
 	void update(StateMachine& stateMachine, float deltaTime) override;
 	void render() override;
 private:
-	std::shared_ptr<BlockRegistry> m_blockRegistry;
-	std::shared_ptr<ChunkRenderer> m_chunkRenderer;
 	Camera m_camera;
+	BlockRegistry m_blockRegistry;
+	ChunkRenderer m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
 

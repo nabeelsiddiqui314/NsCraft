@@ -15,8 +15,7 @@
 
 #define BIND_EVENT(function) std::bind(&ChunkMeshingSystem::function, this, std::placeholders::_1)
 
-ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry,
-	const std::shared_ptr<ChunkRenderer>& renderer)
+ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, ChunkRenderer& renderer)
 	: m_world(world), 
 	  m_blockRegistry(blockRegistry),
       m_renderer(renderer) {}
@@ -48,13 +47,13 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 					for (int z = 0; z < Chunk::WIDTH; z++) {
 						Vector3 blockPosition = (neighbor * Chunk::WIDTH) + Vector3(x, y, z);
 						Block_ID blockID = m_world->getBlockIDAt(blockPosition);
-						auto block = m_blockRegistry->getBlockFromID(blockID);
-						block->getMeshGenerator()->generateMesh(mesh, *m_world, blockPosition);
+						const auto& block = m_blockRegistry.getBlockFromID(blockID);
+						block.getMeshGenerator()->generateMesh(mesh, *m_world, blockPosition);
 					}
 				}
 			}
 			if (!mesh.isEmpty()) {
-				m_renderer->addMesh(neighbor, mesh);
+				m_renderer.addMesh(neighbor, mesh);
 			}
 		}
 	}
@@ -62,7 +61,7 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 
 void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
 	const auto& chunkPosiiton = event.chunkPosition;
-	m_renderer->removeMesh(chunkPosiiton);
+	m_renderer.removeMesh(chunkPosiiton);
 }
 
 bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {

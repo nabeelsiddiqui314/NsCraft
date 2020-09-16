@@ -15,17 +15,15 @@
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()
-	: m_blockRegistry(std::make_shared<BlockRegistry>()),
-      m_chunkRenderer(std::make_shared<ChunkRenderer>()),
-      m_camera(800.0f / 600.0f, 80.0f) {
-	auto airBlock = std::make_shared<Block>(std::make_shared<EmptyMeshGenerator>(), false);
-	m_blockRegistry->registerBlock("air", airBlock);
+	: m_camera(800.0f / 600.0f, 80.0f) {
+	auto& airBlock = m_blockRegistry.registerBlock("air");
 
-	auto testBlock = std::make_shared<Block>(std::make_shared<CubeMeshGenerator>(m_blockRegistry), true);
-	m_blockRegistry->registerBlock("testBlock", testBlock);
+	auto& testBlock = m_blockRegistry.registerBlock("test");
+	testBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(m_blockRegistry));
+	testBlock.setOpaqueness(true);
 
-	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry->getBlockIDFromName("air"),
-																									m_blockRegistry->getBlockIDFromName("testBlock") })));
+	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry.getBlockIDFromName("air"),
+																									m_blockRegistry.getBlockIDFromName("test") })));
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
@@ -88,5 +86,5 @@ void TestState::render() {
 	glClearColor(0.0f, 1.0f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	m_chunkRenderer->renderChunks(m_camera);
+	m_chunkRenderer.renderChunks(m_camera);
 }

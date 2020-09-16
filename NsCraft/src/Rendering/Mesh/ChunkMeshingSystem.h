@@ -11,8 +11,7 @@ struct ChunkUnloadEvent;
 
 class ChunkMeshingSystem : public IEventListener {
 public:
-	ChunkMeshingSystem(const std::shared_ptr<World>& world, const std::shared_ptr<BlockRegistry>& blockRegistry, 
-		const std::shared_ptr<ChunkRenderer>& renderer);
+	ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, ChunkRenderer& renderer);
 	~ChunkMeshingSystem() = default;
 public:
 	void onEvent(IEvent& event) override;
@@ -23,6 +22,6 @@ private:
 	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
 private:
 	std::shared_ptr<World> m_world;
-	std::shared_ptr<BlockRegistry> m_blockRegistry;
-	std::shared_ptr<ChunkRenderer> m_renderer;
+	const BlockRegistry& m_blockRegistry;
+	ChunkRenderer& m_renderer;
 };
