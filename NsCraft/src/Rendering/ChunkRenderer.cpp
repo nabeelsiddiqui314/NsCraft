@@ -5,8 +5,6 @@
 #include "Camera/Camera.h"
 
 ChunkRenderer::ChunkRenderer() : m_chunkShader("shaders/chunkShader.vs", "shaders/chunkShader.fs") {
-	m_texture.loadFromPath("res/smiley.png");
-	m_texture.bind();
 	glEnable(GL_DEPTH_TEST);
 }
 

@@ -5,6 +5,7 @@
 #include <SFML/System/Vector2.hpp>
 #include "../World/Blocks/BlockRegistry.h"
 #include "../Rendering/ChunkRenderer.h"
+#include "../Rendering/TextureAtlas.h"
 
 class World;
 class ChunkMeshingSystem;
@@ -19,8 +20,9 @@ public:
 	void render() override;
 private:
 	Camera m_camera;
-	BlockRegistry m_blockRegistry;
+	TextureAtlas m_textureAtlas;
 	ChunkRenderer m_chunkRenderer;
+	BlockRegistry m_blockRegistry;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
 

@@ -3,17 +3,21 @@
 #include "../../Math/FloatRect.h"
 #include "../../OpenGL/VertexBuffer.h"
 #include "../../OpenGL/IndexBuffer.h"
+#include "../TextureAtlas.h"
 
-ChunkMesh::ChunkMesh() 
-	: m_currentIndex(0) {}
+ChunkMesh::ChunkMesh(const TextureAtlas& textureAtlas)
+	: m_textureAtlas(textureAtlas),
+	  m_currentIndex(0) {}
 
-void ChunkMesh::addQuad(const Vector3& position, const FloatRect& textureCoords, const Quad& quad) {
+void ChunkMesh::addQuad(const Vector3& position, const std::string& texture, const Quad& quad) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
 		m_vertices.emplace_back(position.x + quad[faceIndex++]);
 		m_vertices.emplace_back(position.y + quad[faceIndex++]);
 		m_vertices.emplace_back(position.z + quad[faceIndex++]);
 	}
+
+	FloatRect textureCoords = m_textureAtlas.getTextureCoordinates(texture);
 
 	m_textureCoords.insert(m_textureCoords.end(), {
 			textureCoords.x                  , textureCoords.y,

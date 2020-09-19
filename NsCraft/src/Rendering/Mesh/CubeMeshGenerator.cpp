@@ -14,7 +14,7 @@ void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const BlockRegistry& block
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
 		if (!neighborBlock.isOpaque()) {
-			mesh.addQuad(blockPosition, { 0.0f, 0.0f, 1.0f, 1.0f }, face); // the texture coords are temporary, it will be replaced when a texture atlas is added.
+			mesh.addQuad(blockPosition, "smiley", face);
 		}
 	};
 

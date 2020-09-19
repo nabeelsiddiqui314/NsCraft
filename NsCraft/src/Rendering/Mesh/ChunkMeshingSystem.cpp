@@ -15,9 +15,10 @@
 
 #define BIND_EVENT(function) std::bind(&ChunkMeshingSystem::function, this, std::placeholders::_1)
 
-ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, ChunkRenderer& renderer)
+ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, const TextureAtlas& textureAtlas, ChunkRenderer& renderer)
 	: m_world(world), 
 	  m_blockRegistry(blockRegistry),
+	  m_textureAtlas(textureAtlas),
       m_renderer(renderer) {}
 
 void ChunkMeshingSystem::onEvent(IEvent& event) {
@@ -40,7 +41,7 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 
 	for (const auto& neighbor : neighbors) {
 		if (m_world->doesChunkExist(neighbor) && doesChunkHaveAllNeighbors(neighbor)) {
-			ChunkMesh mesh;
+			ChunkMesh mesh(m_textureAtlas);
 
 			for (int x = 0; x < Chunk::WIDTH; x++) {
 				for (int y = 0; y < Chunk::WIDTH; y++) {

@@ -15,7 +15,11 @@
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()
-	: m_camera(800.0f / 600.0f, 80.0f) {
+	: m_camera(800.0f / 600.0f, 80.0f), 
+	  m_textureAtlas(16) {
+	m_textureAtlas.addTexture("res/smiley.png", "smiley");
+	m_textureAtlas.generateAtlas();
+
 	auto& airBlock = m_blockRegistry.registerBlock("air");
 
 	auto& testBlock = m_blockRegistry.registerBlock("test");
@@ -24,7 +28,7 @@ TestState::TestState()
 
 	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry.getBlockIDFromName("air"),
 																									m_blockRegistry.getBlockIDFromName("test") })));
-	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_chunkRenderer);
+	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
 
@@ -86,5 +90,6 @@ void TestState::render() {
 	glClearColor(0.0f, 1.0f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	m_textureAtlas.bindTexture();
 	m_chunkRenderer.renderChunks(m_camera);
 }
