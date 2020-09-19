@@ -48,7 +48,7 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 						Vector3 blockPosition = (neighbor * Chunk::WIDTH) + Vector3(x, y, z);
 						Block_ID blockID = m_world->getBlockIDAt(blockPosition);
 						const auto& block = m_blockRegistry.getBlockFromID(blockID);
-						block.getMeshGenerator()->generateMesh(mesh, *m_world, blockPosition);
+						block.getMeshGenerator()->generateMesh(mesh, m_blockRegistry, *m_world, blockPosition);
 					}
 				}
 			}

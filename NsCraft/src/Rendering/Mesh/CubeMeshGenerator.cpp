@@ -8,13 +8,10 @@
 #include "../../Math/Directions.h"
 #include "../../Math/FloatRect.h"
 
-CubeMeshGenerator::CubeMeshGenerator(const BlockRegistry& blockRegistry) 
-	: m_blockRegistry(blockRegistry) {}
-
-void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& blockPosition) {
+void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const BlockRegistry& blockRegistry, const World& world, const Vector3& blockPosition) {
 	auto tryAddFace = [&](const Vector3& neighborPos, const Quad& face) {
 		auto neighborBlockID = world.getBlockIDAt(blockPosition + neighborPos);
-		const auto& neighborBlock = m_blockRegistry.getBlockFromID(neighborBlockID);
+		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
 		if (!neighborBlock.isOpaque()) {
 			mesh.addQuad(blockPosition, { 0.0f, 0.0f, 1.0f, 1.0f }, face); // the texture coords are temporary, it will be replaced when a texture atlas is added.

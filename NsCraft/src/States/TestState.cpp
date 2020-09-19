@@ -19,7 +19,7 @@ TestState::TestState()
 	auto& airBlock = m_blockRegistry.registerBlock("air");
 
 	auto& testBlock = m_blockRegistry.registerBlock("test");
-	testBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(m_blockRegistry));
+	testBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>());
 	testBlock.setOpaqueness(true);
 
 	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry.getBlockIDFromName("air"),
