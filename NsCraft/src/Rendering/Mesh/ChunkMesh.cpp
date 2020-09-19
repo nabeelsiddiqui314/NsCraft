@@ -20,10 +20,10 @@ void ChunkMesh::addQuad(const Vector3& position, const std::string& texture, con
 	FloatRect textureCoords = m_textureAtlas.getTextureCoordinates(texture);
 
 	m_textureCoords.insert(m_textureCoords.end(), {
-			textureCoords.x                  , textureCoords.y,
-			textureCoords.x + textureCoords.w, textureCoords.y,
 			textureCoords.x + textureCoords.w, textureCoords.y + textureCoords.h,
-			textureCoords.x                  , textureCoords.y + textureCoords.h
+			textureCoords.x                  , textureCoords.y + textureCoords.h,
+			textureCoords.x                  , textureCoords.y,
+			textureCoords.x + textureCoords.w, textureCoords.y
 		});
 
 	m_indices.insert(m_indices.end(), {

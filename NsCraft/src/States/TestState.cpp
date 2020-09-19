@@ -17,17 +17,24 @@
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
 	  m_textureAtlas(16) {
-	m_textureAtlas.addTexture("res/smiley.png", "smiley");
+	m_textureAtlas.addTexture("res/dirt.png", "dirt");
+	m_textureAtlas.addTexture("res/grass_top.png", "grass_top");
+	m_textureAtlas.addTexture("res/grass_side.png", "grass_side");
 	m_textureAtlas.generateAtlas();
 
 	auto& airBlock = m_blockRegistry.registerBlock("air");
 
-	auto& testBlock = m_blockRegistry.registerBlock("test");
-	testBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>());
-	testBlock.setOpaqueness(true);
+	auto& grassBlock = m_blockRegistry.registerBlock("grass");
+	grassBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("grass_top", "grass_side", "dirt"));
+	grassBlock.setOpaqueness(true);
+
+	auto& dirtBlock = m_blockRegistry.registerBlock("dirt");
+	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
+	dirtBlock.setOpaqueness(true);
 
 	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry.getBlockIDFromName("air"),
-																									m_blockRegistry.getBlockIDFromName("test") })));
+																									m_blockRegistry.getBlockIDFromName("air"),
+		                                                                                            m_blockRegistry.getBlockIDFromName("grass")})));
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);

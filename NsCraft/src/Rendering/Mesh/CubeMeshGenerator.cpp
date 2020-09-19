@@ -8,20 +8,25 @@
 #include "../../Math/Directions.h"
 #include "../../Math/FloatRect.h"
 
+CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture)
+	: m_topTexture(topTexture),
+      m_sideTexture(sideTexture),
+      m_bottomTexture(bottomTexture) {}
+
 void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const BlockRegistry& blockRegistry, const World& world, const Vector3& blockPosition) {
-	auto tryAddFace = [&](const Vector3& neighborPos, const Quad& face) {
+	auto tryAddFace = [&](const Vector3& neighborPos, const std::string& texture, const Quad& face) {
 		auto neighborBlockID = world.getBlockIDAt(blockPosition + neighborPos);
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
 		if (!neighborBlock.isOpaque()) {
-			mesh.addQuad(blockPosition, "smiley", face);
+			mesh.addQuad(blockPosition, texture, face);
 		}
 	};
 
-	tryAddFace(Directions::Up,    CubeFaces::Top);
-	tryAddFace(Directions::Down,  CubeFaces::Bottom);
-	tryAddFace(Directions::Right, CubeFaces::Right);
-	tryAddFace(Directions::Left,  CubeFaces::Left);
-	tryAddFace(Directions::Front, CubeFaces::Front);
-	tryAddFace(Directions::Back,  CubeFaces::Back);
+	tryAddFace(Directions::Up,    m_topTexture,     CubeFaces::Top);
+	tryAddFace(Directions::Down,  m_bottomTexture,  CubeFaces::Bottom);
+	tryAddFace(Directions::Right, m_sideTexture,     CubeFaces::Right);
+	tryAddFace(Directions::Left,  m_sideTexture,     CubeFaces::Left);
+	tryAddFace(Directions::Front, m_sideTexture,     CubeFaces::Front);
+	tryAddFace(Directions::Back,  m_sideTexture,     CubeFaces::Back);
 }
