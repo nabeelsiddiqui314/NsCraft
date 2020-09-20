@@ -56,8 +56,24 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 }
 
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
-	const Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
-	const auto& blockPosition = position % chunkWidthVector;
+	Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
+	auto blockPosition = position % chunkWidthVector;
+
+	if (blockPosition.x < 0) {
+		blockPosition.x = abs(blockPosition.x);
+		blockPosition.x = Chunk::WIDTH - blockPosition.x;
+	}
+
+	if (blockPosition.y < 0) {
+		blockPosition.y = abs(blockPosition.y);
+		blockPosition.y = Chunk::WIDTH - blockPosition.y;
+	}
+
+	if (blockPosition.z < 0) {
+		blockPosition.z = abs(blockPosition.z);
+		blockPosition.z = Chunk::WIDTH - blockPosition.z;
+	}
+
 	const auto& chunkPosition = (position - blockPosition) / chunkWidthVector;
 
 	return {chunkPosition, blockPosition};
