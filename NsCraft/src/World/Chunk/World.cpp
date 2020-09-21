@@ -33,6 +33,12 @@ void World::unloadChunk(const Vector3& position) {
 	}
 }
 
+void World::forEachChunk(const ForEachFunc& func) const {
+	for (auto& [position, chunk] : m_chunkMap) {
+		func(position);
+	}
+}
+
 bool World::doesChunkExist(const Vector3& position) const {
 	return m_chunkMap.find(position) != m_chunkMap.end();
 }

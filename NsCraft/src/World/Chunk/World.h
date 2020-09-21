@@ -2,6 +2,7 @@
 #include <memory>
 #include <unordered_map>
 #include <vector>
+#include <functional>
 #include "../../EventSystem/Subject.h"
 #include "../../Math/Vector3.h"
 #include "../Blocks/BlockDefs.h"
@@ -14,12 +15,15 @@ class World : public Subject {
 private:
 	typedef std::shared_ptr<Chunk> ChunkPtr;
 	typedef std::unique_ptr<IChunkGenerator> ChunkGeneratorPtr;
+	typedef std::function<void(const Vector3&)> ForEachFunc;
 public:
 	World(ChunkGeneratorPtr&& chunkGenerator);
 	~World();
 public:
 	void loadChunk(const Vector3& position);
 	void unloadChunk(const Vector3& position);
+
+	void forEachChunk(const ForEachFunc& func) const;
 	
 	bool doesChunkExist(const Vector3& position) const;
 

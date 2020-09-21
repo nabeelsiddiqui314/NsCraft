@@ -94,6 +94,13 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 			}
 		}
 	}
+
+	m_world->forEachChunk([&](const Vector3& position) {
+		if (position.x < chunkPosX - loadDistance || position.x > chunkPosX + loadDistance ||
+			position.z < chunkPosZ - loadDistance || position.z > chunkPosZ + loadDistance) {
+			m_world->unloadChunk(position);
+		}
+	});
 }
 
 void TestState::render() {
