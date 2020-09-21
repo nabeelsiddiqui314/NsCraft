@@ -38,17 +38,6 @@ TestState::TestState()
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
-
-	int width = 5;
-	int depth = 5;
-
-	for (int y = 0; y < depth; y++) {
-		for (int x = 0; x < width; x++) {
-			for (int z = 0; z < width; z++) {
-				m_world->loadChunk({x, y, z});
-			}
-		}
-	}
 }
 
 void TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
@@ -90,6 +79,20 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		m_camera.move(camRight * speed);
+	}
+
+	int loadDistance = 5;
+	int height = 5;
+
+	int chunkPosX = m_camera.getPosition().x / Chunk::WIDTH;
+	int chunkPosZ = m_camera.getPosition().z / Chunk::WIDTH;
+
+	for (int y = 0; y < height; y++) {
+		for (int x = chunkPosX - loadDistance; x < chunkPosX + loadDistance; x++) {
+			for (int z = chunkPosZ - loadDistance; z < chunkPosZ + loadDistance; z++) {
+				m_world->loadChunk({ x, y, z });
+			}
+		}
 	}
 }
 
