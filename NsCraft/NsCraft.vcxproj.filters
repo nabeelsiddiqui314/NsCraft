@@ -203,6 +203,9 @@
     <ClInclude Include="src\Rendering\TextureAtlas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Events\ChunkModifyEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\chunkShader.fs" />

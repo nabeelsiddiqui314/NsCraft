@@ -6,10 +6,11 @@
 
 ChunkRenderer::ChunkRenderer() : m_chunkShader("shaders/chunkShader.vs", "shaders/chunkShader.fs") {
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 }
 
 void ChunkRenderer::addMesh(const Vector3& position, const ChunkMesh& mesh) {
+	removeMesh(position);
 	m_renderableChunkMap.emplace(std::make_pair(position, mesh.generateChunkVAO()));
 }
 

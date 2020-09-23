@@ -3,6 +3,7 @@
 #include "../../Math/Vector3.h"
 #include "../../World/Events/ChunkLoadEvent.h"
 #include "../../World/Events/ChunkUnloadEvent.h"
+#include "../../World/Events/ChunkModifyEvent.h"
 #include "../../Math/Directions.h"
 #include "../ChunkRenderer.h"
 #include "ChunkMesh.h"
@@ -25,37 +26,24 @@ void ChunkMeshingSystem::onEvent(IEvent& event) {
 	EventDispatcher dispatcher(event);
 	dispatcher.dispatch<ChunkLoadEvent>(BIND_EVENT(onChunkLoad));
 	dispatcher.dispatch<ChunkUnloadEvent>(BIND_EVENT(onChunkUnload));
+	dispatcher.dispatch<ChunkModifyEvent>(BIND_EVENT(onChunkModify));
 }
 
 void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 	const auto& chunkPosition = event.chunkPosition;
 
-	std::vector<Vector3> neighbors;
+	std::vector<Vector3> chunksToMesh;
 
-	neighbors.emplace_back(chunkPosition + Directions::Up);
-	neighbors.emplace_back(chunkPosition + Directions::Down);
-	neighbors.emplace_back(chunkPosition + Directions::Right);
-	neighbors.emplace_back(chunkPosition + Directions::Left);
-	neighbors.emplace_back(chunkPosition + Directions::Front);
-	neighbors.emplace_back(chunkPosition + Directions::Back);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Up);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Down);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Right);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Left);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Front);
+	chunksToMesh.emplace_back(chunkPosition + Directions::Back);
 
-	for (const auto& neighbor : neighbors) {
-		if (m_world->doesChunkExist(neighbor) && doesChunkHaveAllNeighbors(neighbor)) {
-			ChunkMesh mesh(m_textureAtlas);
-
-			for (int x = 0; x < Chunk::WIDTH; x++) {
-				for (int y = 0; y < Chunk::WIDTH; y++) {
-					for (int z = 0; z < Chunk::WIDTH; z++) {
-						Vector3 blockPosition = (neighbor * Chunk::WIDTH) + Vector3(x, y, z);
-						Block_ID blockID = m_world->getBlockIDAt(blockPosition);
-						const auto& block = m_blockRegistry.getBlockFromID(blockID);
-						block.getMeshGenerator()->generateMesh(mesh, m_blockRegistry, *m_world, blockPosition);
-					}
-				}
-			}
-			if (!mesh.isEmpty()) {
-				m_renderer.addMesh(neighbor, mesh);
-			}
+	for (const auto& chunk : chunksToMesh) {
+		if (m_world->doesChunkExist(chunk) && doesChunkHaveAllNeighbors(chunk)) {
+			meshChunk(chunk);
 		}
 	}
 }
@@ -63,6 +51,76 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
 void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
 	const auto& chunkPosiiton = event.chunkPosition;
 	m_renderer.removeMesh(chunkPosiiton);
+}
+
+void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) const {
+	const auto& chunkPosition = event.chunkPosition;
+	const auto& blockPosition = event.blockPosition;
+
+  	std::vector<Vector3> chunksToMesh;
+
+	chunksToMesh.emplace_back(chunkPosition);
+
+	// check if the modified block is on the edge of the chunk and if so add that to the list of chunks to be meshed
+	if (blockPosition.x == 0) {
+		auto chunk = chunkPosition;
+		chunk.x -= 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	if (blockPosition.y == 0) {
+		auto chunk = chunkPosition;
+		chunk.y -= 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	if (blockPosition.z == 0) {
+		auto chunk = chunkPosition;
+		chunk.z -= 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	if (blockPosition.x == Chunk::WIDTH - 1) {
+		auto chunk = chunkPosition;
+		chunk.x += 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	if (blockPosition.y == Chunk::WIDTH - 1) {
+		auto chunk = chunkPosition;
+		chunk.y += 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	if (blockPosition.z == Chunk::WIDTH - 1) {
+		auto chunk = chunkPosition;
+		chunk.z += 1;
+		chunksToMesh.emplace_back(chunk);
+	}
+
+	for (const auto& chunk : chunksToMesh) {
+		if (m_world->doesChunkExist(chunk) && doesChunkHaveAllNeighbors(chunk)) {
+			meshChunk(chunk);
+		}
+	}
+}
+
+void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) const {
+	ChunkMesh mesh(m_textureAtlas);
+
+	for (int x = 0; x < Chunk::WIDTH; x++) {
+		for (int y = 0; y < Chunk::WIDTH; y++) {
+			for (int z = 0; z < Chunk::WIDTH; z++) {
+				Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
+				Block_ID blockID = m_world->getBlockIDAt(blockPosition);
+				const auto& block = m_blockRegistry.getBlockFromID(blockID);
+				block.getMeshGenerator()->generateMesh(mesh, m_blockRegistry, *m_world, blockPosition);
+			}
+		}
+	}
+	if (!mesh.isEmpty()) {
+		m_renderer.addMesh(chunkPosition, mesh);
+	}
 }
 
 bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {

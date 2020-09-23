@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"
+#include "../Events/ChunkModifyEvent.h"
 #include "../../EventSystem/Event.h"
 
 World::World(ChunkGeneratorPtr&& chunkGenerator) 
@@ -47,7 +48,15 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 	auto[chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
+		if (m_chunkMap.at(chunkPosition)->getBlock(blockPosition) != blockID) {
+			m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
+
+			ChunkModifyEvent event;
+			event.chunkPosition = chunkPosition;
+			event.blockPosition = blockPosition;
+
+			notifyListeners(event);
+		}
 	}
 }
 

@@ -82,6 +82,7 @@
     <ClInclude Include="src\World\Chunk\World.h" />
     <ClInclude Include="src\World\ChunkGenerator\IChunkGenerator.h" />
     <ClInclude Include="src\World\Events\ChunkLoadEvent.h" />
+    <ClInclude Include="src\World\Events\ChunkModifyEvent.h" />
     <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
   </ItemGroup>
   <ItemGroup>
