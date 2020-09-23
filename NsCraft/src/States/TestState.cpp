@@ -114,3 +114,11 @@ void TestState::render() {
 	m_textureAtlas.bindTexture();
 	m_chunkRenderer.renderChunks(m_camera);
 }
+
+bool TestState::allowUpdateBelow() {
+	return false;
+}
+
+bool TestState::allowRenderingBelow() {
+	return false;
+}

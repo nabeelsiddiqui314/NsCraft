@@ -18,6 +18,9 @@ public:
 	void handleEvent(StateMachine& stateMachine, const sf::Event& event) override;
 	void update(StateMachine& stateMachine, float deltaTime) override;
 	void render() override;
+
+	bool allowUpdateBelow() override;
+	bool allowRenderingBelow() override;
 private:
 	Camera m_camera;
 	TextureAtlas m_textureAtlas;

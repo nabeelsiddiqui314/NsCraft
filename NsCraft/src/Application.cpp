@@ -22,7 +22,7 @@ int Application::execute() {
 		return EXIT_FAILURE;
 	}
 
-	m_stateMachine.setState<TestState>();
+	m_stateMachine.pushState<TestState>();
 
 	while (m_window.isOpen()) {
 		sf::Event evnt;
