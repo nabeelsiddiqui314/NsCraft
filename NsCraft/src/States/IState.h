@@ -11,7 +11,7 @@ public:
 	IState() = default;
 	virtual ~IState() {}
 public:
-	virtual void handleEvent(StateMachine& stateMachine, const sf::Event& event) {}
+	virtual bool handleEvent(StateMachine& stateMachine, const sf::Event& event) = 0;
 	virtual void update(StateMachine& stateMachine, float deltaTime) = 0;
 	virtual void render() = 0;
 

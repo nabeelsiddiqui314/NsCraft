@@ -5,30 +5,40 @@ void StateMachine::popState() {
 }
 
 void StateMachine::handleEvent(const sf::Event& event) {
-	reverseIterate([&](const StatePtr& state) {
-		state->handleEvent(*this, event);
-		return state->allowUpdateBelow();
-	});
+	for (auto iter = m_stateStack.rbegin(); iter != m_stateStack.rend(); iter++) {
+		auto& state = *iter;
+		bool eventHandled = state->handleEvent(*this, event);
+
+		if (eventHandled || !state->allowUpdateBelow()) {
+			break;
+		}
+	}
 }
 
 void StateMachine::update(float deltaTime) {
-	reverseIterate([&](const StatePtr& state) {
+	for (auto iter = m_stateStack.rbegin(); iter != m_stateStack.rend(); iter++) {
+		auto& state = *iter;
+
 		state->update(*this, deltaTime);
-		return state->allowUpdateBelow();
-	});
+
+		if (!state->allowUpdateBelow()) {
+			break;
+		}
+	}
 }
 
 void StateMachine::render() {
-	reverseIterate([&](const StatePtr& state) {
-		state->render();
-		return state->allowRenderingBelow();
-	});
-}
+	std::size_t renderingBeginIndex = 0;
 
-void StateMachine::reverseIterate(const ReverseIterateFunc& reverseIterate) {
-	for (auto iter = m_stateStack.rbegin(); iter != m_stateStack.rend(); iter++) {
-		if (!reverseIterate(*iter)) {
+	for (std::size_t i = m_stateStack.size() - 1; i >= 0; i--) {
+		renderingBeginIndex = i;
+
+		if (!m_stateStack[i]->allowRenderingBelow()) {
 			break;
 		}
+	}
+
+	for (std::size_t i = renderingBeginIndex; i < m_stateStack.size(); i++) {
+		m_stateStack[i]->render();
 	}
 }

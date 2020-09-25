@@ -40,7 +40,7 @@ TestState::TestState()
 	m_world->registerListener(m_chunkMeshingSystem);
 }
 
-void TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
+bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
 	switch (event.type) {
 	case sf::Event::MouseMoved:
 		m_camera.rotate(event.mouseMove.x - m_lastMousePos.x, m_lastMousePos.y - event.mouseMove.y);
@@ -51,6 +51,8 @@ void TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 		m_camera.setAspectRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
 		break;
 	}
+
+	return false;
 }
 void TestState::update(StateMachine& stateMachine, float deltaTime) {
 	const float speed = 20.0f * deltaTime;

@@ -15,7 +15,7 @@ public:
 	TestState();
 	~TestState() = default;
 public:
-	void handleEvent(StateMachine& stateMachine, const sf::Event& event) override;
+	bool handleEvent(StateMachine& stateMachine, const sf::Event& event) override;
 	void update(StateMachine& stateMachine, float deltaTime) override;
 	void render() override;
 
