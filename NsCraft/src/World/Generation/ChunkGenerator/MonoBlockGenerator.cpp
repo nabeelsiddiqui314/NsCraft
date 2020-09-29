@@ -1,5 +1,5 @@
 #include "MonoBlockGenerator.h"
-#include "../Chunk/Chunk.h"
+#include "../../Chunk/Chunk.h"
 
 MonoBlockGenerator::MonoBlockGenerator() 
 	: m_blockID(0) {}

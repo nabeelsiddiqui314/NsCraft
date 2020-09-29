@@ -1,6 +1,6 @@
 #include "World.h"
 #include "Chunk.h"
-#include "../ChunkGenerator/IChunkGenerator.h"
+#include "../Generation/ChunkGenerator/IChunkGenerator.h"
 #include <algorithm>
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"

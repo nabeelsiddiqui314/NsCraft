@@ -1,6 +1,6 @@
 #pragma once
 #include "IChunkGenerator.h"
-#include "../Blocks/BlockDefs.h"
+#include "../../Blocks/BlockDefs.h"
 
 class MonoBlockGenerator : public IChunkGenerator {
 public:

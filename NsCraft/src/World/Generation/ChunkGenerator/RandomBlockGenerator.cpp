@@ -1,6 +1,6 @@
 #include "RandomBlockGenerator.h"
-#include "../Chunk/Chunk.h"
-#include "../../Math/Vector3.h"
+#include "../../Chunk/Chunk.h"
+#include "../../../Math/Vector3.h"
 #include <ctime>
 
 RandomBlockGenerator::RandomBlockGenerator(const std::vector<Block_ID>& blockList) 

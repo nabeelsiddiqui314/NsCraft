@@ -10,8 +10,8 @@
 #include "../World/Blocks/Block.h"
 #include "../Rendering/Mesh/CubeMeshGenerator.h"
 #include "../Rendering/Mesh/EmptyMeshGenerator.h"
-#include "../World/ChunkGenerator/MonoBlockGenerator.h"
-#include "../World/ChunkGenerator/RandomBlockGenerator.h"
+#include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
+#include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()

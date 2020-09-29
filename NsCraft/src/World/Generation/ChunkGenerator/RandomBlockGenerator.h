@@ -1,7 +1,7 @@
 #pragma once
 #include "IChunkGenerator.h"
 #include <vector>
-#include "../Blocks/BlockDefs.h"
+#include "../../Blocks/BlockDefs.h"
 
 class RandomBlockGenerator : public IChunkGenerator {
 public:
