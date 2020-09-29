@@ -23,6 +23,7 @@
     <ClCompile Include="src\EventSystem\Subject.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math\FloatRect.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
     <ClCompile Include="src\Math\Vector3.cpp" />
     <ClCompile Include="src\OpenGL\IndexBuffer.cpp" />
     <ClCompile Include="src\OpenGL\Shader.cpp" />
@@ -52,6 +53,7 @@
     <ClInclude Include="src\EventSystem\IEventListener.h" />
     <ClInclude Include="src\EventSystem\Subject.h" />
     <ClInclude Include="src\Math\FloatRect.h" />
+    <ClInclude Include="src\Math\Vector2.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Math\Directions.h" />
     <ClInclude Include="src\OpenGL\IndexBuffer.h" />
