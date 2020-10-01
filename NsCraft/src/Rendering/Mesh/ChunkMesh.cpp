@@ -43,6 +43,7 @@ bool ChunkMesh::isEmpty() const {
 
 std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 	auto vao = std::make_shared<VertexArray>();
+	vao->bind();
 
 	auto verticesBuffer = std::make_shared<VertexBuffer>(&m_vertices.front(), m_vertices.size());
 	auto textureCoordBuffer = std::make_shared<VertexBuffer>(&m_textureCoords.front(), m_textureCoords.size());
