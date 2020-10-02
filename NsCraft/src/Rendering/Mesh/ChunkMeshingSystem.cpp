@@ -124,10 +124,17 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) const {
 }
 
 bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {
-	return m_world->doesChunkExist(chunkPosition + Directions::Up) &&
-		   m_world->doesChunkExist(chunkPosition + Directions::Down) &&
-		   m_world->doesChunkExist(chunkPosition + Directions::Right) && 
-		   m_world->doesChunkExist(chunkPosition + Directions::Left) && 
-		   m_world->doesChunkExist(chunkPosition + Directions::Front) && 
-		   m_world->doesChunkExist(chunkPosition + Directions::Back);
+	bool sideNeighbors = m_world->doesChunkExist(chunkPosition + Directions::Right) && 
+		                 m_world->doesChunkExist(chunkPosition + Directions::Left) && 
+		                 m_world->doesChunkExist(chunkPosition + Directions::Front) && 
+		                 m_world->doesChunkExist(chunkPosition + Directions::Back);
+
+	bool topNeighbor = m_world->doesChunkExist(chunkPosition + Directions::Up);
+	bool bottomNeighbor = m_world->doesChunkExist(chunkPosition + Directions::Down);
+
+	if (chunkPosition.y == 0) {
+		return sideNeighbors && topNeighbor;
+	}
+
+	return sideNeighbors && topNeighbor && bottomNeighbor;
 }
