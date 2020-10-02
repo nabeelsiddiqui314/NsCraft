@@ -23,6 +23,7 @@
     <ClCompile Include="src\EventSystem\Subject.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math\FloatRect.cpp" />
+    <ClCompile Include="src\Math\Noise.cpp" />
     <ClCompile Include="src\Math\Vector2.cpp" />
     <ClCompile Include="src\Math\Vector3.cpp" />
     <ClCompile Include="src\OpenGL\IndexBuffer.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.cpp" />
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
     <ClCompile Include="src\World\Chunk\World.cpp" />
+    <ClCompile Include="src\World\Generation\Heightmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -53,6 +55,7 @@
     <ClInclude Include="src\EventSystem\IEventListener.h" />
     <ClInclude Include="src\EventSystem\Subject.h" />
     <ClInclude Include="src\Math\FloatRect.h" />
+    <ClInclude Include="src\Math\Noise.h" />
     <ClInclude Include="src\Math\Vector2.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Math\Directions.h" />
@@ -86,6 +89,7 @@
     <ClInclude Include="src\World\Events\ChunkLoadEvent.h" />
     <ClInclude Include="src\World\Events\ChunkModifyEvent.h" />
     <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
+    <ClInclude Include="src\World\Generation\Heightmap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\chunkShader.fs" />

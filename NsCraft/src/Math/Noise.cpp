@@ -2,7 +2,7 @@
 #include "Noise.h"
 #include <cmath>
 
-Noise::Noise(const std::uint32_t seed, const NoiseProperties& properties)
+Noise::Noise(std::uint32_t seed, const NoiseProperties& properties)
 	: m_seed(seed),
 	m_properties(properties) {}
 

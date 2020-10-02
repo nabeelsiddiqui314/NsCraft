@@ -13,7 +13,7 @@ struct NoiseProperties {
 class Noise
 {
 public:
-	Noise(const std::uint32_t seed, const NoiseProperties& properties);
+	Noise(std::uint32_t seed, const NoiseProperties& properties);
 	~Noise() = default;
 public:
 	float getNoiseAt(const sf::Vector2f& position) const;
