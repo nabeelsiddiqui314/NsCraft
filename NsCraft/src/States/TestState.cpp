@@ -12,6 +12,7 @@
 #include "../Rendering/Mesh/EmptyMeshGenerator.h"
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
+#include "../World/Generation/ChunkGenerator/DefaultGenerator.h"
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()
@@ -32,9 +33,7 @@ TestState::TestState()
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
 	dirtBlock.setOpaqueness(true);
 
-	m_world = std::make_shared<World>(std::make_unique<RandomBlockGenerator>(std::vector<Block_ID>({ m_blockRegistry.getBlockIDFromName("dirt"),
-																									m_blockRegistry.getBlockIDFromName("dirt"),
-		                                                                                            m_blockRegistry.getBlockIDFromName("grass")})));
+	m_world = std::make_shared<World>(std::make_unique<DefaultGenerator>());
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
@@ -83,8 +82,8 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 		m_camera.move(camRight * speed);
 	}
 
-	int loadDistance = 5;
-	int height = 5;
+	int loadDistance = 16;
+	int height = 16;
 
 	int chunkPosX = m_camera.getPosition().x / Chunk::WIDTH;
 	int chunkPosZ = m_camera.getPosition().z / Chunk::WIDTH;
@@ -106,7 +105,7 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 
 	Vector3 camPos = Vector3(m_camera.getPosition().x ,m_camera.getPosition().y, m_camera.getPosition().z);
 
-	m_world->setBlockIDAt(camPos, 0);
+	//m_world->setBlockIDAt(camPos, 0);
 }
 
 void TestState::render() {

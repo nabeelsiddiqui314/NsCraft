@@ -99,6 +99,9 @@
     <ClCompile Include="src\World\Generation\Heightmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\ChunkGenerator\DefaultGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Heightmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\ChunkGenerator\DefaultGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

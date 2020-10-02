@@ -42,6 +42,7 @@
     <ClCompile Include="src\States\StateMachine.cpp" />
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
+    <ClCompile Include="src\World\Generation\ChunkGenerator\DefaultGenerator.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\MonoBlockGenerator.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.cpp" />
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
@@ -81,6 +82,7 @@
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
+    <ClInclude Include="src\World\Generation\ChunkGenerator\DefaultGenerator.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\MonoBlockGenerator.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.h" />
     <ClInclude Include="src\World\Chunk\Chunk.h" />
