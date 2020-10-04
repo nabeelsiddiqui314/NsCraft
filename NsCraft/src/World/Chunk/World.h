@@ -6,6 +6,7 @@
 #include "../../EventSystem/Subject.h"
 #include "../../Math/Vector3.h"
 #include "../Blocks/BlockDefs.h"
+#include <mutex>
 
 class Chunk;
 class IChunkGenerator;
@@ -35,4 +36,5 @@ private:
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
+	mutable std::mutex m_mutex;
 };

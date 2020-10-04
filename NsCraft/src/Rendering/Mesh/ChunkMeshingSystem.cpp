@@ -20,7 +20,9 @@ ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, cons
 	: m_world(world), 
 	  m_blockRegistry(blockRegistry),
 	  m_textureAtlas(textureAtlas),
-      m_renderer(renderer) {}
+      m_renderer(renderer),
+	  m_meshThreadPool(1)
+      {}
 
 void ChunkMeshingSystem::onEvent(IEvent& event) {
 	EventDispatcher dispatcher(event);
@@ -106,21 +108,23 @@ void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) const {
 }
 
 void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) const {
-	ChunkMesh mesh(m_textureAtlas);
+	m_meshThreadPool.enqueueTask([this, chunkPosition]() {
+		auto mesh = std::make_shared<ChunkMesh>(m_textureAtlas);
 
-	for (int x = 0; x < Chunk::WIDTH; x++) {
-		for (int y = 0; y < Chunk::WIDTH; y++) {
-			for (int z = 0; z < Chunk::WIDTH; z++) {
-				Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
-				Block_ID blockID = m_world->getBlockIDAt(blockPosition);
-				const auto& block = m_blockRegistry.getBlockFromID(blockID);
-				block.getMeshGenerator()->generateMesh(mesh, m_blockRegistry, *m_world, blockPosition);
+		for (int x = 0; x < Chunk::WIDTH; x++) {
+			for (int y = 0; y < Chunk::WIDTH; y++) {
+				for (int z = 0; z < Chunk::WIDTH; z++) {
+					Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
+					Block_ID blockID = m_world->getBlockIDAt(blockPosition);
+					const auto& block = m_blockRegistry.getBlockFromID(blockID);
+					block.getMeshGenerator()->generateMesh(*mesh, m_blockRegistry, *m_world, blockPosition);
+				}
 			}
 		}
-	}
-	if (!mesh.isEmpty()) {
-		m_renderer.addMesh(chunkPosition, mesh);
-	}
+		if (!mesh->isEmpty()) {
+			m_renderer.addMesh(chunkPosition, mesh);
+		}
+	});
 }
 
 bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {

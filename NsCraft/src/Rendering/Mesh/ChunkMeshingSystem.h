@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "../../EventSystem/IEventListener.h"
+#include "../../Utilities/ThreadPool.h"
 
 class World;
 class BlockRegistry;
@@ -29,4 +30,5 @@ private:
 	const BlockRegistry& m_blockRegistry;
 	const TextureAtlas& m_textureAtlas;
 	ChunkRenderer& m_renderer;
+	mutable ThreadPool m_meshThreadPool;
 };

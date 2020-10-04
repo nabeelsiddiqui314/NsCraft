@@ -40,6 +40,7 @@
     <ClCompile Include="src\Rendering\TextureAtlas.cpp" />
     <ClCompile Include="src\States\TestState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
+    <ClCompile Include="src\Utilities\ThreadPool.cpp" />
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\DefaultGenerator.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="src\States\TestState.h" />
     <ClInclude Include="src\States\IState.h" />
     <ClInclude Include="src\States\StateMachine.h" />
+    <ClInclude Include="src\Utilities\ThreadPool.h" />
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
