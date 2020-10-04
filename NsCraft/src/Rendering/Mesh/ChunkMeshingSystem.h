@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <set>
 #include "../../EventSystem/IEventListener.h"
 #include "../../Utilities/ThreadPool.h"
 
@@ -18,17 +19,21 @@ public:
 	~ChunkMeshingSystem() = default;
 public:
 	void onEvent(IEvent& event) override;
+	
+	void generateChunkMeshes();
 private:
-	void onChunkLoad(ChunkLoadEvent& event) const;
+	void onChunkLoad(ChunkLoadEvent& event);
 	void onChunkUnload(ChunkUnloadEvent& event) const;
-	void onChunkModify(ChunkModifyEvent& event) const;
+	void onChunkModify(ChunkModifyEvent& event);
 
-	void meshChunk(const Vector3& chunkPosition) const;
+	void enqueueChunkToMesh(const Vector3& chunkPosition);
+	void meshChunk(const Vector3& chunkPosition);
 	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
 private:
 	std::shared_ptr<World> m_world;
 	const BlockRegistry& m_blockRegistry;
 	const TextureAtlas& m_textureAtlas;
 	ChunkRenderer& m_renderer;
-	mutable ThreadPool m_meshThreadPool;
+	ThreadPool m_meshThreadPool;
+	std::set<Vector3> m_chunksToMesh;
 };

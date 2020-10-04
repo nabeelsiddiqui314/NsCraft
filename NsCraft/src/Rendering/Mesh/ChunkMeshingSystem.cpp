@@ -31,23 +31,23 @@ void ChunkMeshingSystem::onEvent(IEvent& event) {
 	dispatcher.dispatch<ChunkModifyEvent>(BIND_EVENT(onChunkModify));
 }
 
-void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) const {
+void ChunkMeshingSystem::generateChunkMeshes() {
+	for (auto& chunkPosition : m_chunksToMesh) {
+		meshChunk(chunkPosition);
+	}
+
+	m_chunksToMesh.clear();
+}
+
+void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 
-	std::vector<Vector3> chunksToMesh;
-
-	chunksToMesh.emplace_back(chunkPosition + Directions::Up);
-	chunksToMesh.emplace_back(chunkPosition + Directions::Down);
-	chunksToMesh.emplace_back(chunkPosition + Directions::Right);
-	chunksToMesh.emplace_back(chunkPosition + Directions::Left);
-	chunksToMesh.emplace_back(chunkPosition + Directions::Front);
-	chunksToMesh.emplace_back(chunkPosition + Directions::Back);
-
-	for (const auto& chunk : chunksToMesh) {
-		if (m_world->doesChunkExist(chunk) && doesChunkHaveAllNeighbors(chunk)) {
-			meshChunk(chunk);
-		}
-	}
+	enqueueChunkToMesh(chunkPosition + Directions::Up);
+	enqueueChunkToMesh(chunkPosition + Directions::Down);
+	enqueueChunkToMesh(chunkPosition + Directions::Right);
+	enqueueChunkToMesh(chunkPosition + Directions::Left);
+	enqueueChunkToMesh(chunkPosition + Directions::Front);
+	enqueueChunkToMesh(chunkPosition + Directions::Back);
 }
 
 void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
@@ -55,59 +55,55 @@ void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
 	m_renderer.removeMesh(chunkPosiiton);
 }
 
-void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) const {
+void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 	const auto& blockPosition = event.blockPosition;
-
-  	std::vector<Vector3> chunksToMesh;
-
-	chunksToMesh.emplace_back(chunkPosition);
 
 	// check if the modified block is on the edge of the chunk and if so add that to the list of chunks to be meshed
 	if (blockPosition.x == 0) {
 		auto chunk = chunkPosition;
 		chunk.x -= 1;
-		chunksToMesh.emplace_back(chunk);
+		enqueueChunkToMesh(chunk);
 	}
 
 	if (blockPosition.y == 0) {
 		auto chunk = chunkPosition;
 		chunk.y -= 1;
-		chunksToMesh.emplace_back(chunk);
+		enqueueChunkToMesh(chunk);
 	}
 
 	if (blockPosition.z == 0) {
 		auto chunk = chunkPosition;
 		chunk.z -= 1;
-		chunksToMesh.emplace_back(chunk);
+		enqueueChunkToMesh(chunk);
 	}
 
 	if (blockPosition.x == Chunk::WIDTH - 1) {
 		auto chunk = chunkPosition;
 		chunk.x += 1;
-		chunksToMesh.emplace_back(chunk);
+		enqueueChunkToMesh(chunk);
 	}
 
 	if (blockPosition.y == Chunk::WIDTH - 1) {
 		auto chunk = chunkPosition;
 		chunk.y += 1;
-		chunksToMesh.emplace_back(chunk);
+		enqueueChunkToMesh(chunk);
 	}
 
 	if (blockPosition.z == Chunk::WIDTH - 1) {
 		auto chunk = chunkPosition;
 		chunk.z += 1;
-		chunksToMesh.emplace_back(chunk);
-	}
-
-	for (const auto& chunk : chunksToMesh) {
-		if (m_world->doesChunkExist(chunk) && doesChunkHaveAllNeighbors(chunk)) {
-			meshChunk(chunk);
-		}
+		enqueueChunkToMesh(chunk);
 	}
 }
 
-void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) const {
+void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
+	if (m_world->doesChunkExist(chunkPosition) && doesChunkHaveAllNeighbors(chunkPosition)) {
+		m_chunksToMesh.emplace(chunkPosition);
+	}
+}
+
+void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 	m_meshThreadPool.enqueueTask([this, chunkPosition]() {
 		auto mesh = std::make_shared<ChunkMesh>(m_textureAtlas);
 

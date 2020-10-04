@@ -84,3 +84,14 @@ bool Vector3::operator!=(const Vector3& other) const {
 		   y != other.y ||
 		   z != other.z;
 }
+
+bool Vector3::operator<(const Vector3 & other) const {
+	if (x < other.x) return true;
+	if (x > other.x) return false;
+
+	if (y < other.y) return true;
+	if (y > other.y) return false;
+
+	if (z < other.z) return true;
+	return false;
+}
