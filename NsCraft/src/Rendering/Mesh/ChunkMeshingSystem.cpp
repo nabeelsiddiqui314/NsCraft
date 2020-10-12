@@ -59,6 +59,8 @@ void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 	const auto& blockPosition = event.blockPosition;
 
+	enqueueChunkToMesh(chunkPosition);
+
 	// check if the modified block is on the edge of the chunk and if so add that to the list of chunks to be meshed
 	if (blockPosition.x == 0) {
 		auto chunk = chunkPosition;
