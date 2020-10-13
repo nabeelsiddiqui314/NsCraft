@@ -2,4 +2,7 @@
 #include <array>
 #include <GL/glew.h>
 
-typedef std::array<GLfloat, 12> Quad;
+struct Quad {
+	std::array<GLfloat, 12> vertices;
+	GLfloat lightingMultiplier;
+};

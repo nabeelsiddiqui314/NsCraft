@@ -22,6 +22,7 @@ public:
 private:
 	std::vector<GLfloat> m_vertices;
 	std::vector<GLfloat> m_textureCoords;
+	std::vector<GLfloat> m_lighting;
 	std::vector<GLuint> m_indices;
 
 	const TextureAtlas& m_textureAtlas;

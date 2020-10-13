@@ -12,9 +12,11 @@ ChunkMesh::ChunkMesh(const TextureAtlas& textureAtlas)
 void ChunkMesh::addQuad(const Vector3& position, const std::string& texture, const Quad& quad) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
-		m_vertices.emplace_back(position.x + quad[faceIndex++]);
-		m_vertices.emplace_back(position.y + quad[faceIndex++]);
-		m_vertices.emplace_back(position.z + quad[faceIndex++]);
+		m_vertices.emplace_back(position.x + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(position.y + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(position.z + quad.vertices[faceIndex++]);
+
+		m_lighting.emplace_back(quad.lightingMultiplier);
 	}
 
 	FloatRect textureCoords = m_textureAtlas.getTextureCoordinates(texture);
@@ -47,10 +49,12 @@ std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 
 	auto verticesBuffer = std::make_shared<VertexBuffer>(&m_vertices.front(), m_vertices.size());
 	auto textureCoordBuffer = std::make_shared<VertexBuffer>(&m_textureCoords.front(), m_textureCoords.size());
+	auto lightingBuffer = std::make_shared<VertexBuffer>(&m_lighting.front(), m_lighting.size());
 	auto indexBuffer = std::make_shared<IndexBuffer>(&m_indices.front(), m_indices.size());
 
 	vao->addVertexBuffer(verticesBuffer, 3);
 	vao->addVertexBuffer(textureCoordBuffer, 2);
+	vao->addVertexBuffer(lightingBuffer, 1);
 	vao->setIndexBuffer(indexBuffer);
 
 	return vao;
