@@ -47,7 +47,6 @@ void World::forEachChunk(const ForEachFunc& func) const {
 }
 
 bool World::doesChunkExist(const Vector3& position) const {
-	std::lock_guard<std::mutex> lock(m_mutex);
 	return m_chunkMap.find(position) != m_chunkMap.end();
 }
 
@@ -57,10 +56,8 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 	if (doesChunkExist(chunkPosition)) {
 		std::unique_lock<std::mutex> lock(m_mutex);
 		if (m_chunkMap.at(chunkPosition)->getBlock(blockPosition) != blockID) {
-			{
-				m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
-				lock.unlock();
-			}
+			m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
+			lock.unlock();
 
 			ChunkModifyEvent event;
 			event.chunkPosition = chunkPosition;
