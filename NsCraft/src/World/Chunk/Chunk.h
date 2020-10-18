@@ -12,10 +12,13 @@ public:
 	Chunk(Block_ID blockID);
 	~Chunk() = default;
 public:
-	void setBlock(const Vector3& position, Block_ID id);
+	void setBlock(const Vector3& position, Block_ID blockID);
 	Block_ID getBlock(const Vector3& position) const;
+
+	bool isFullyOpaque() const;
 private:
 	std::size_t getIndex(const Vector3& position) const;
 private:
 	std::array<Block_ID, WIDTH * WIDTH * WIDTH> m_blocks;
+	std::uint32_t m_opaqueBlockCount;
 };

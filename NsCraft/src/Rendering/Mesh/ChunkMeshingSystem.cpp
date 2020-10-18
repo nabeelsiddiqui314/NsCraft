@@ -14,11 +14,11 @@
 #include <vector>
 #include "../../EventSystem/EventDispatcher.h"
 
+
 #define BIND_EVENT(function) std::bind(&ChunkMeshingSystem::function, this, std::placeholders::_1)
 
-ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, const TextureAtlas& textureAtlas, ChunkRenderer& renderer)
+ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const TextureAtlas& textureAtlas, ChunkRenderer& renderer)
 	: m_world(world), 
-	  m_blockRegistry(blockRegistry),
 	  m_textureAtlas(textureAtlas),
       m_renderer(renderer),
 	  m_meshThreadPool(1)
@@ -106,16 +106,28 @@ void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
 }
 
 void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
+	if (m_world->isChunkFullyOpaque(chunkPosition) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Up) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Down) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Left) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Right) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Front) &&
+		m_world->isChunkFullyOpaque(chunkPosition + Directions::Back)) {
+		return;
+	}
+
 	m_meshThreadPool.enqueueTask([this, chunkPosition]() {
 		auto mesh = std::make_shared<ChunkMesh>(m_textureAtlas);
+
+		auto& blockRegistry = BlockRegistry::getInstance();
 
 		for (int x = 0; x < Chunk::WIDTH; x++) {
 			for (int y = 0; y < Chunk::WIDTH; y++) {
 				for (int z = 0; z < Chunk::WIDTH; z++) {
 					Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
 					Block_ID blockID = m_world->getBlockIDAt(blockPosition);
-					const auto& block = m_blockRegistry.getBlockFromID(blockID);
-					block.getMeshGenerator()->generateMesh(*mesh, m_blockRegistry, *m_world, blockPosition);
+					const auto& block = blockRegistry.getBlockFromID(blockID);
+					block.getMeshGenerator()->generateMesh(*mesh, *m_world, blockPosition);
 				}
 			}
 		}

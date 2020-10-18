@@ -23,18 +23,20 @@ TestState::TestState()
 	m_textureAtlas.addTexture("res/grass_side.png", "grass_side");
 	m_textureAtlas.generateAtlas();
 
-	auto& airBlock = m_blockRegistry.registerBlock("air");
+	auto& blockRegistry = BlockRegistry::getInstance();
 
-	auto& grassBlock = m_blockRegistry.registerBlock("grass");
+	auto& airBlock = blockRegistry.registerBlock("air");
+
+	auto& grassBlock = blockRegistry.registerBlock("grass");
 	grassBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("grass_top", "grass_side", "dirt"));
 	grassBlock.setOpaqueness(true);
 
-	auto& dirtBlock = m_blockRegistry.registerBlock("dirt");
+	auto& dirtBlock = blockRegistry.registerBlock("dirt");
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
 	dirtBlock.setOpaqueness(true);
 
 	m_world = std::make_shared<World>(std::make_unique<DefaultGenerator>());
-	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_blockRegistry, m_textureAtlas, m_chunkRenderer);
+	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
 }
@@ -54,7 +56,7 @@ bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 	return false;
 }
 void TestState::update(StateMachine& stateMachine, float deltaTime) {
-	const float speed = 20.0f * deltaTime;
+	const float speed = 50.0f * deltaTime;
 	
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 		m_camera.move({0, speed, 0});
@@ -82,7 +84,7 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 		m_camera.move(camRight * speed);
 	}
 
-	int loadDistance = 8;
+	int loadDistance = 16;
 	int height = 16;
 
 	int chunkPosX = m_camera.getPosition().x / Chunk::WIDTH;
@@ -105,13 +107,13 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 
 	Vector3 camPos = Vector3(m_camera.getPosition().x ,m_camera.getPosition().y, m_camera.getPosition().z);
 
-	for (int y = camPos.y - 3; y < camPos.y + 3; y++) {
-		for (int x = camPos.x - 3; x < camPos.x + 3; x++) {
-			for (int z = camPos.z - 3; z < camPos.z + 3; z++) {
-				m_world->setBlockIDAt({x, y, z}, 0);
-			}
-		}
-	}
+	//for (int y = camPos.y - 3; y < camPos.y + 3; y++) {
+	//	for (int x = camPos.x - 3; x < camPos.x + 3; x++) {
+	//		for (int z = camPos.z - 3; z < camPos.z + 3; z++) {
+	//			m_world->setBlockIDAt({x, y, z}, 0);
+	//		}
+	//	}
+	//}
 
 	m_chunkMeshingSystem->generateChunkMeshes();
 }

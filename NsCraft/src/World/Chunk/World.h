@@ -30,6 +30,8 @@ public:
 
 	void setBlockIDAt(const Vector3& position, Block_ID blockID);
 	Block_ID getBlockIDAt(const Vector3& position) const;
+
+	bool isChunkFullyOpaque(const Vector3& position) const;
 private:
 	// gets chunk position and block position from world position
 	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;

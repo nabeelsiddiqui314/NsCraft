@@ -1,6 +1,11 @@
 #include "BlockRegistry.h"
 #include "Block.h"
 
+BlockRegistry& BlockRegistry::getInstance() {
+	static BlockRegistry instance;
+	return instance;
+}
+
 Block& BlockRegistry::registerBlock(const std::string& name) {
 	Block_ID id = static_cast<Block_ID>(m_blocks.size());
 	m_blocks.emplace_back();

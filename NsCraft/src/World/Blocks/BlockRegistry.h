@@ -9,8 +9,13 @@ class Block;
 
 class BlockRegistry {
 public:
-	BlockRegistry() = default;
+	BlockRegistry(const BlockRegistry&) = delete;
+	BlockRegistry(const BlockRegistry&&) = delete;
+	BlockRegistry& operator=(const BlockRegistry&) = delete;
 	~BlockRegistry() = default;
+	static BlockRegistry& getInstance();
+private:
+	BlockRegistry() = default;
 public:
 	Block& registerBlock(const std::string& name);
 	

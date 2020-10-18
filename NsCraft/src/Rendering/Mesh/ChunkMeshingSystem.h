@@ -5,7 +5,6 @@
 #include "../../Utilities/ThreadPool.h"
 
 class World;
-class BlockRegistry;
 class TextureAtlas;
 class ChunkRenderer;
 struct Vector3;
@@ -15,7 +14,7 @@ struct ChunkModifyEvent;
 
 class ChunkMeshingSystem : public IEventListener {
 public:
-	ChunkMeshingSystem(const std::shared_ptr<World>& world, const BlockRegistry& blockRegistry, const TextureAtlas& textureAtlas, ChunkRenderer& renderer);
+	ChunkMeshingSystem(const std::shared_ptr<World>& world, const TextureAtlas& textureAtlas, ChunkRenderer& renderer);
 	~ChunkMeshingSystem() = default;
 public:
 	void onEvent(IEvent& event) override;
@@ -31,7 +30,6 @@ private:
 	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
 private:
 	std::shared_ptr<World> m_world;
-	const BlockRegistry& m_blockRegistry;
 	const TextureAtlas& m_textureAtlas;
 	ChunkRenderer& m_renderer;
 	ThreadPool m_meshThreadPool;

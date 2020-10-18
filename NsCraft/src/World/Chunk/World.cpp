@@ -79,6 +79,14 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	return 0;
 }
 
+bool World::isChunkFullyOpaque(const Vector3& position) const {
+	if (doesChunkExist(position)) {
+		return m_chunkMap.at(position)->isFullyOpaque();
+	}
+
+	return false;
+}
+
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
 	Vector3 chunkWidthVector = { Chunk::WIDTH, Chunk::WIDTH, Chunk::WIDTH };
 	auto blockPosition = position % chunkWidthVector;

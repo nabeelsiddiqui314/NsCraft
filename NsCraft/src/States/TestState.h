@@ -3,7 +3,6 @@
 #include <memory>
 #include "../Rendering/Camera/Camera.h"
 #include <SFML/System/Vector2.hpp>
-#include "../World/Blocks/BlockRegistry.h"
 #include "../Rendering/ChunkRenderer.h"
 #include "../Rendering/TextureAtlas.h"
 
@@ -25,7 +24,6 @@ private:
 	Camera m_camera;
 	TextureAtlas m_textureAtlas;
 	ChunkRenderer m_chunkRenderer;
-	BlockRegistry m_blockRegistry;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
 
