@@ -3,7 +3,6 @@
 #include "../OpenGL/VertexArray.h"
 #include "Camera/Camera.h"
 #include "Mesh/ChunkMesh.h"
-#include "../Math/Frustum.h"
 #include "../Math/AABB.h"
 #include "../World/Chunk/Chunk.h"
 
@@ -28,13 +27,11 @@ void ChunkRenderer::renderChunks(const Camera& camera) {
 
 	m_chunkShader.setUniformMat4("u_view", camera.getView());
 	m_chunkShader.setUniformMat4("u_projection", camera.getProjection());
-	
-	Frustum viewFrustum(camera);
 
 	for (const auto& [position, chunkVao] : m_renderableChunkMap) {
 		AABB chunkBoundingBox = {position * Chunk::WIDTH, glm::vec3(Chunk::WIDTH)};
 
-		if (viewFrustum.isAABBinFrustum(chunkBoundingBox)) {
+		if (camera.getFrustum().isAABBinFrustum(chunkBoundingBox)) {
 			chunkVao->bind();
 			glDrawElements(GL_TRIANGLES, chunkVao->getIndexCount(), GL_UNSIGNED_INT, 0);
 			chunkVao->unbind();

@@ -1,11 +1,8 @@
 #include "Frustum.h"
 #include "AABB.h"
-#include "Plane.h"
-#include "../Rendering/Camera/Camera.h"
-#include <glm/glm.hpp>
 
-Frustum::Frustum(const Camera& camera) {
-	glm::mat4 mat = camera.getProjection() * camera.getView();
+void Frustum::update(const glm::mat4& view, const glm::mat4& projection) {
+	glm::mat4 mat = projection * view;
 
 	m_planes[LEFT].normal.x = mat[0][3] + mat[0][0];
 	m_planes[LEFT].normal.y = mat[1][3] + mat[1][0];

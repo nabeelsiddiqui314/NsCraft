@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "../../Math/Frustum.h"
 
 class Camera {
 public:
@@ -20,10 +21,12 @@ public:
 	glm::vec3 getRight() const;
 
 	glm::vec3 getPosition() const;
-private:
-	void updateCameraVectors();
-private:
 
+	const Frustum& getFrustum() const;
+private:
+	void updateView();
+	void updateProjection();
+private:
 	glm::vec3 m_position;
 	glm::vec3 m_worldUp;
 	glm::vec3 m_up;
@@ -34,4 +37,9 @@ private:
 	float m_pitch;
 	float m_aspectRatio;
 	float m_fov;
+
+	glm::mat4 m_view;
+	glm::mat4 m_projection;
+
+	Frustum m_frustum;
 };
