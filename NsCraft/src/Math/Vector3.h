@@ -35,12 +35,10 @@ namespace std {
 	template<>
 	struct std::hash<Vector3> {
 		size_t operator()(const Vector3& vec) const {
-			std::hash<int> hasher;
-			auto hashx = hasher(vec.x);
-			auto hashy = hasher(vec.y);
-			auto hashz = hasher(vec.z);
-
-			return std::hash<int>{}((hashx ^ (hashy << hashz) ^ hashz));
+			size_t h1 = std::hash<int>()(vec.x);
+			size_t h2 = std::hash<int>()(vec.y);
+			size_t h3 = std::hash<int>()(vec.z);
+			return (h1 ^ (h2 << 1)) ^ h3;
 		}
 	};
 }
