@@ -3,6 +3,10 @@
 Vector3::Vector3(int _x, int _y, int _z) 
 	: x(_x), y(_y), z(_z) {}
 
+Vector3::operator glm::vec3() const {
+	return glm::vec3(x, y, z);
+}
+
 const Vector3 Vector3::operator+(const Vector3& other) const {
 	return { x + other.x, y + other.y, z + other.z };
 }

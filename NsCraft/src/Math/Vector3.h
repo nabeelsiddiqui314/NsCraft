@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <glm/glm.hpp>
 
 struct Vector3 {
 	int x, y, z;
@@ -7,6 +8,8 @@ public:
 	Vector3() = default;
 	Vector3(int _x, int _y, int _z);
 public:
+	operator glm::vec3() const;
+
 	const Vector3 operator+(const Vector3& other) const;
 	const Vector3 operator-(const Vector3& other) const;
 	const Vector3 operator*(const Vector3& other) const;
