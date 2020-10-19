@@ -3,7 +3,7 @@
 #include "IndexBuffer.h"
 
 VertexArray::VertexArray() {
-	glCreateVertexArrays(1, &m_vaoHandle);
+	glGenVertexArrays(1, &m_vaoHandle);
 }
 
 VertexArray::~VertexArray() {

@@ -9,7 +9,7 @@ Application::Application(std::uint32_t windowWidth, std::uint32_t windowHeight, 
 	settings.stencilBits = 8;
 	settings.antialiasingLevel = 4;
 	settings.majorVersion = 4;
-	settings.minorVersion = 6;
+	settings.minorVersion = 3;
 
 	m_window.create(sf::VideoMode(windowWidth, windowHeight), windowName, sf::Style::Default, settings);
 	m_window.setActive();
