@@ -6,6 +6,7 @@
 #include "../../EventSystem/Subject.h"
 #include "../../Math/Vector3.h"
 #include "../Blocks/BlockDefs.h"
+#include "MetaChunk.h"
 #include <mutex>
 
 class Chunk;
@@ -37,6 +38,7 @@ private:
 	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
+	std::unordered_map<Vector3, MetaChunk> m_metaChunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
 	mutable std::mutex m_mutex;
 };

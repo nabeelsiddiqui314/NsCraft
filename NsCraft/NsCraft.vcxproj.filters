@@ -114,6 +114,9 @@
     <ClCompile Include="src\Math\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Chunk\MetaChunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -252,6 +255,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Chunk\MetaChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

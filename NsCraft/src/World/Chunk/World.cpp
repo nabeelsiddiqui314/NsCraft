@@ -16,7 +16,13 @@ void World::loadChunk(const Vector3& position) {
 	if (!doesChunkExist(position)) {
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
-			m_chunkMap.emplace(std::make_pair(position, m_chunkGenerator->generateChunk(position)));
+			auto chunk = m_chunkGenerator->generateChunk(position);
+			m_chunkMap.emplace(std::make_pair(position, chunk));
+
+			if (m_metaChunkMap.find(position) != m_metaChunkMap.end()) {
+				m_metaChunkMap.at(position).applyModification(chunk);
+				m_metaChunkMap.erase(position);
+			}
 		}
 
 		ChunkLoadEvent event;
@@ -54,10 +60,8 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 	auto[chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		std::unique_lock<std::mutex> lock(m_mutex);
 		if (m_chunkMap.at(chunkPosition)->getBlock(blockPosition) != blockID) {
 			m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
-			lock.unlock();
 
 			ChunkModifyEvent event;
 			event.chunkPosition = chunkPosition;
@@ -65,6 +69,9 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 
 			notifyListeners(event);
 		}
+	}
+	else {
+		m_metaChunkMap[chunkPosition].modifyBlock(blockPosition, blockID);
 	}
 }
 
