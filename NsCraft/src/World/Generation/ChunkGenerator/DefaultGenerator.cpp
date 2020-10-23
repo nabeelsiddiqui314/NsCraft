@@ -3,7 +3,7 @@
 
 DefaultGenerator::DefaultGenerator() : m_heightMap(31415, {5, 200, 150, 5, 4}) {}
 
-std::shared_ptr<Chunk> DefaultGenerator::generateChunk(const Vector3& position) {
+std::shared_ptr<Chunk> DefaultGenerator::generateChunk(World& world, const Vector3& position) {
 	auto chunk = std::make_shared<Chunk>();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {

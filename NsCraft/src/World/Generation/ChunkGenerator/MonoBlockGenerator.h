@@ -8,7 +8,7 @@ public:
 	MonoBlockGenerator(Block_ID blockID);
 	~MonoBlockGenerator() = default;
 public:
-	std::shared_ptr<Chunk> generateChunk(const Vector3& position) override;
+	std::shared_ptr<Chunk> generateChunk(World& world, const Vector3& position) override;
 private:
 	const Block_ID m_blockID;
 };

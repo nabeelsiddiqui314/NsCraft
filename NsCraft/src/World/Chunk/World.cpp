@@ -16,7 +16,7 @@ void World::loadChunk(const Vector3& position) {
 	if (!doesChunkExist(position)) {
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
-			auto chunk = m_chunkGenerator->generateChunk(position);
+			auto chunk = m_chunkGenerator->generateChunk(*this, position);
 			m_chunkMap.emplace(std::make_pair(position, chunk));
 
 			if (m_metaChunkMap.find(position) != m_metaChunkMap.end()) {

@@ -8,7 +8,7 @@ RandomBlockGenerator::RandomBlockGenerator(const std::vector<Block_ID>& blockLis
 	srand(time(NULL));
 }
 
-std::shared_ptr<Chunk> RandomBlockGenerator::generateChunk(const Vector3& position) {
+std::shared_ptr<Chunk> RandomBlockGenerator::generateChunk(World& world, const Vector3& position) {
 	auto chunk = std::make_shared<Chunk>();
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int y = 0; y < Chunk::WIDTH; y++) {

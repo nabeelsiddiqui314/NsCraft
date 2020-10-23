@@ -8,7 +8,7 @@ public:
 	RandomBlockGenerator(const std::vector<Block_ID>& blockList);
 	~RandomBlockGenerator() = default;
 public:
-	std::shared_ptr<Chunk> generateChunk(const Vector3& position) override;
+	std::shared_ptr<Chunk> generateChunk(World& world, const Vector3& position) override;
 private:
 	const std::vector<Block_ID> m_blockList;
 };
