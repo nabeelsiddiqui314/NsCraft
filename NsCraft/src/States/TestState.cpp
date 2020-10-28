@@ -12,7 +12,7 @@
 #include "../Rendering/Mesh/EmptyMeshGenerator.h"
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
-#include "../World/Generation/ChunkGenerator/DefaultGenerator.h"
+#include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()
@@ -35,7 +35,7 @@ TestState::TestState()
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
 	dirtBlock.setOpaqueness(true);
 
-	m_world = std::make_shared<World>(std::make_unique<DefaultGenerator>());
+	m_world = std::make_shared<World>(std::make_unique<TerrainGenPipeline>());
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);
