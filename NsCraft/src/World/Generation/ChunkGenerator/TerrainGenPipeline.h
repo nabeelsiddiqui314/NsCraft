@@ -1,13 +1,12 @@
 #pragma once
 #include "IChunkGenerator.h"
-#include "../Heightmap.h"
 
-class DefaultGenerator : public IChunkGenerator {
+class TerrainGenPipeline : public IChunkGenerator {
 public:
-	DefaultGenerator();
-	~DefaultGenerator() = default;
+	TerrainGenPipeline() = default;
+	~TerrainGenPipeline() = default;
 public:
 	std::shared_ptr<Chunk> generateChunk(World& world, const Vector3& position) override;
 private:
-	Heightmap m_heightMap;
+
 };
