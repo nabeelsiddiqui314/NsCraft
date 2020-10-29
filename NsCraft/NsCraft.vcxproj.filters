@@ -269,6 +269,9 @@
     <ClInclude Include="src\World\Generation\Density\IDensityGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\World\Generation\Composition\IChunkComposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\chunkShader.fs" />

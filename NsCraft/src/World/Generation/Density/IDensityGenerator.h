@@ -11,5 +11,5 @@ public:
 	IDensityGenerator() = default;
 	virtual ~IDensityGenerator() = default;
 public:
-	virtual DensityMapPtr generateDensity(const Vector3& position) = 0;
+	virtual DensityMapPtr generateDensityMap(const Vector3& position) = 0;
 };
