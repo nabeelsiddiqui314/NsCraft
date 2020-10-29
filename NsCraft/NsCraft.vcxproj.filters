@@ -117,6 +117,9 @@
     <ClCompile Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\Density\DensityMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -258,6 +261,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Density\DensityMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Density\IDensityGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
