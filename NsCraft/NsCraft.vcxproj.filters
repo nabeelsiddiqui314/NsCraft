@@ -269,7 +269,10 @@
     <ClInclude Include="src\World\Generation\Density\IDensityGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Generation\Composition\IChunkComposer.h">
+    <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,16 +1,24 @@
 #pragma once
 #include "IChunkGenerator.h"
+#include <memory>
+#include <vector>
 
 class IDensityGenerator;
-class IChunkComposer;
+class ITerrainComposer;
+class ITerrainDecorator;
 
 class TerrainGenPipeline : public IChunkGenerator {
+private:
+	typedef std::shared_ptr<IDensityGenerator> DensityGeneratorPtr;
+	typedef std::shared_ptr<ITerrainComposer> TerrainComposerPtr;
+	typedef std::shared_ptr<ITerrainDecorator> TerrainDecoratorPtr;
 public:
 	TerrainGenPipeline() = default;
 	~TerrainGenPipeline() = default;
 public:
 	std::shared_ptr<Chunk> generateChunk(World& world, const Vector3& position) override;
 private:
-	std::shared_ptr<IDensityGenerator> m_densityGenerator;
-	std::shared_ptr<IChunkComposer> m_chunkComposer;
+	DensityGeneratorPtr m_densityGenerator;
+	TerrainComposerPtr m_terrainComposer;
+	std::vector<TerrainDecoratorPtr> m_terrainDecorators;
 };
