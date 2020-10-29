@@ -9,7 +9,7 @@ private:
 	typedef std::shared_ptr<DensityMap> DensityMapPtr;
 public:
 	IDensityGenerator() = default;
-	~IDensityGenerator() = default;
+	virtual ~IDensityGenerator() = default;
 public:
 	virtual DensityMapPtr generateDensity(const Vector3& position) = 0;
 };
