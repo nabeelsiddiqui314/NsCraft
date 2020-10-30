@@ -13,9 +13,12 @@ private:
 	typedef std::shared_ptr<ITerrainComposer> TerrainComposerPtr;
 	typedef std::shared_ptr<ITerrainDecorator> TerrainDecoratorPtr;
 public:
-	TerrainGenPipeline() = default;
+	TerrainGenPipeline(const DensityGeneratorPtr& densityGenerator,
+		                const TerrainComposerPtr& terrainComposer);
 	~TerrainGenPipeline() = default;
 public:
+	void addDecorator(const TerrainDecoratorPtr& decorator);
+
 	std::shared_ptr<Chunk> generateChunk(World& world, const Vector3& position) override;
 private:
 	DensityGeneratorPtr m_densityGenerator;

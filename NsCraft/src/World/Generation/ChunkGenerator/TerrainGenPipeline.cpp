@@ -5,6 +5,15 @@
 #include "../Composition/ITerrainComposer.h"
 #include "../Decoration/ITerrainDecorator.h"
 
+TerrainGenPipeline::TerrainGenPipeline(const DensityGeneratorPtr& densityGenerator, 
+    const TerrainComposerPtr& terrainComposer) 
+    : m_densityGenerator(densityGenerator),
+      m_terrainComposer(terrainComposer) {}
+
+void TerrainGenPipeline::addDecorator(const TerrainDecoratorPtr& decorator) {
+    m_terrainDecorators.push_back(decorator);
+}
+
 std::shared_ptr<Chunk> TerrainGenPipeline::generateChunk(World& world, const Vector3& position) {
     auto chunk = std::make_shared<Chunk>();
 
