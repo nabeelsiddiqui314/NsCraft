@@ -120,6 +120,9 @@
     <ClCompile Include="src\World\Generation\Density\DensityMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\Density\HeightmapGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Density\HeightmapGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

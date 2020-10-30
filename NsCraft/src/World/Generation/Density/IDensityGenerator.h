@@ -4,9 +4,9 @@
 class DensityMap;
 struct Vector3;
 
+typedef std::shared_ptr<DensityMap> DensityMapPtr;
+
 class IDensityGenerator {
-private:
-	typedef std::shared_ptr<DensityMap> DensityMapPtr;
 public:
 	IDensityGenerator() = default;
 	virtual ~IDensityGenerator() = default;

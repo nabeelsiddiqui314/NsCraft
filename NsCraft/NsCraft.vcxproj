@@ -53,6 +53,7 @@
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
     <ClCompile Include="src\World\Chunk\World.cpp" />
     <ClCompile Include="src\World\Generation\Density\DensityMap.cpp" />
+    <ClCompile Include="src\World\Generation\Density\HeightmapGenerator.cpp" />
     <ClCompile Include="src\World\Generation\Heightmap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +106,7 @@
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h" />
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h" />
     <ClInclude Include="src\World\Generation\Density\DensityMap.h" />
+    <ClInclude Include="src\World\Generation\Density\HeightmapGenerator.h" />
     <ClInclude Include="src\World\Generation\Density\IDensityGenerator.h" />
     <ClInclude Include="src\World\Generation\Heightmap.h" />
   </ItemGroup>
