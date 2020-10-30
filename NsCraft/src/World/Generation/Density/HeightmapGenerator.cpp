@@ -7,7 +7,7 @@ HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties
  : m_heightmap(seed, noiseProperties) {}
 
 DensityMapPtr HeightmapGenerator::generateDensityMap(const Vector3& position) {
-    DensityMapPtr densityMap;
+    DensityMapPtr densityMap = std::shared_ptr<DensityMap>();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {
