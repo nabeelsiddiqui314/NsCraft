@@ -117,10 +117,10 @@
     <ClCompile Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Generation\Density\DensityMap.cpp">
+    <ClCompile Include="src\World\Generation\Shape\HeightmapGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Generation\Density\HeightmapGenerator.cpp">
+    <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -266,19 +266,19 @@
     <ClInclude Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Generation\Density\DensityMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Generation\Density\IDensityGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Generation\Density\HeightmapGenerator.h">
+    <ClInclude Include="src\World\Generation\Shape\HeightmapGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\IShapeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\ChunkShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

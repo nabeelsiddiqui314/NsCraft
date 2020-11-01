@@ -1,13 +1,13 @@
 #include "HeightmapGenerator.h"
 #include "../../Chunk/Chunk.h"
 #include "../../../Math/Vector3.h"
-#include "DensityMap.h"
+#include "ChunkShape.h"
 
 HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties& noiseProperties) 
  : m_heightmap(seed, noiseProperties) {}
 
-DensityMapPtr HeightmapGenerator::generateDensityMap(const Vector3& position) {
-    DensityMapPtr densityMap = std::shared_ptr<DensityMap>();
+ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position) {
+	ChunkShapePtr shape = std::shared_ptr<ChunkShape>();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {
@@ -28,10 +28,27 @@ DensityMapPtr HeightmapGenerator::generateDensityMap(const Vector3& position) {
 			}
 
 			for (int y = 0; y < chunkHeight; y++) {
-				densityMap->setDensity({ x, y, z }, Density::SOLID);
+				shape->setDensity({ x, y, z }, Density::SOLID);
+				
+				PositionData data;
+
+				if (height == Chunk::WIDTH * position.y + y) {
+					data.positionType = PositionType::SURFACE;
+					data.distanceFromTop = 0;
+				}
+				else if (position.y == 0 && y == 0) {
+					data.positionType = PositionType::BASE;
+					data.distanceFromTop = height;
+				}
+				else {
+					data.positionType = PositionType::INTERIOR;
+					data.distanceFromTop = height - position.y + Chunk::WIDTH + y;
+				}
+
+				shape->setPositionData({x, y, z}, data);
 			}
 		}
 	}
 
-    return densityMap;
+	return shape;
 }

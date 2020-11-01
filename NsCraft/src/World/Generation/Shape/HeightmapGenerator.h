@@ -1,13 +1,13 @@
 #pragma once
-#include "IDensityGenerator.h"
+#include "IShapeGenerator.h"
 #include "../Heightmap.h"
 
-class HeightmapGenerator : public IDensityGenerator {
+class HeightmapGenerator : public IShapeGenerator {
 public:
 	HeightmapGenerator(std::uint32_t seed, const NoiseProperties& noiseProperties);
 	~HeightmapGenerator() = default;
 public:
-	DensityMapPtr generateDensityMap(const Vector3& position) override;
+	ChunkShapePtr generateShape(const Vector3& position) override;
 private:
 	Heightmap m_heightmap;
 };
