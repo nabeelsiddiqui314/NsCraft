@@ -12,7 +12,9 @@
 #include "../Rendering/Mesh/EmptyMeshGenerator.h"
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
-#include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
+#include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
+#include "../World/Generation/Shape/HeightmapGenerator.h"
+#include "../World/Generation/Composition/DefaultComposer.h"
 #include "../World/Chunk/Chunk.h"
 
 TestState::TestState()
@@ -21,6 +23,7 @@ TestState::TestState()
 	m_textureAtlas.addTexture("res/dirt.png", "dirt");
 	m_textureAtlas.addTexture("res/grass_top.png", "grass_top");
 	m_textureAtlas.addTexture("res/grass_side.png", "grass_side");
+	m_textureAtlas.addTexture("res/bedrock.png", "bedrock");
 	m_textureAtlas.generateAtlas();
 
 	auto& blockRegistry = BlockRegistry::getInstance();
@@ -35,7 +38,21 @@ TestState::TestState()
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
 	dirtBlock.setOpaqueness(true);
 
-	m_world = std::make_shared<World>(std::make_unique<MonoBlockGenerator>());
+	auto& bedrock = blockRegistry.registerBlock("bedrock");
+	bedrock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("bedrock", "bedrock", "bedrock"));
+	bedrock.setOpaqueness(true);
+
+	NoiseProperties noiseProperties;
+	noiseProperties.octaves = 3;
+	noiseProperties.amplitude = 200;
+	noiseProperties.smoothness = 150;
+	noiseProperties.persistance = 4;
+	noiseProperties.lacunarity = 4;
+
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<HeightmapGenerator>(12212, noiseProperties),
+		                                                       std::make_shared<DefaultComposer>());
+
+	m_world = std::make_shared<World>(std::move(chunkGenerator));
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
 
 	m_world->registerListener(m_chunkMeshingSystem);

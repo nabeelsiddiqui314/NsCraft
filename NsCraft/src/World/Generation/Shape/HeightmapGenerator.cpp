@@ -7,7 +7,7 @@ HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties
  : m_heightmap(seed, noiseProperties) {}
 
 ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position) {
-	ChunkShapePtr shape = std::shared_ptr<ChunkShape>();
+	ChunkShapePtr shape = std::make_shared<ChunkShape>();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {
@@ -32,7 +32,7 @@ ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position) {
 				
 				PositionData data;
 
-				if (height == Chunk::WIDTH * position.y + y) {
+				if (height == Chunk::WIDTH * position.y + y + 1) {
 					data.positionType = PositionType::SURFACE;
 					data.distanceFromTop = 0;
 				}

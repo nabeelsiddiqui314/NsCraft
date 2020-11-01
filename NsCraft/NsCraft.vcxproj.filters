@@ -123,6 +123,9 @@
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\Composition\DefaultComposer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -279,6 +282,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Shape\ChunkShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Composition\DefaultComposer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
