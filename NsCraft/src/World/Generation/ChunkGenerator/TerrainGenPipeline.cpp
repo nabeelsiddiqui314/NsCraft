@@ -21,7 +21,7 @@ std::shared_ptr<Chunk> TerrainGenPipeline::generateChunk(World& world, const Vec
     m_terrainComposer->compose(*chunk, *chunkShape);
 
     for (auto& terrainDecorator : m_terrainDecorators) {
-        terrainDecorator->decorate(position, *chunk, world);
+        terrainDecorator->decorate(position, *chunk, *chunkShape, world);
     }
 
     return chunk;
