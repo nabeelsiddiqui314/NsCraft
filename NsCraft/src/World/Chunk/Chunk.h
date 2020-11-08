@@ -15,10 +15,17 @@ public:
 	void setBlock(const Vector3& position, Block_ID blockID);
 	Block_ID getBlock(const Vector3& position) const;
 
+	void setNaturalLight(const Vector3& position, std::uint8_t value);
+	void setSkyLight(const Vector3& position, std::uint8_t value);
+
+	std::uint8_t getNaturalLight(const Vector3& position) const;
+	std::uint8_t getSkyLight(const Vector3& position) const;
+
 	bool isFullyOpaque() const;
 private:
 	std::size_t getIndex(const Vector3& position) const;
 private:
 	std::array<Block_ID, WIDTH * WIDTH * WIDTH> m_blocks;
+	std::array<std::uint8_t, WIDTH* WIDTH* WIDTH> m_lightMap;
 	std::uint32_t m_opaqueBlockCount;
 };

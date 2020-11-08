@@ -7,6 +7,7 @@ Chunk::Chunk() : Chunk(0) {}
 
 Chunk::Chunk(Block_ID blockID) : m_opaqueBlockCount(0) {
 	m_blocks.fill(blockID);
+	m_lightMap.fill(0);
 
 	auto& blockRegistry = BlockRegistry::getInstance();
 	auto& block = blockRegistry.getBlockFromID(blockID);
@@ -39,6 +40,22 @@ void Chunk::setBlock(const Vector3& position, Block_ID blockID) {
 
 Block_ID Chunk::getBlock(const Vector3& position) const {
 	return m_blocks[getIndex(position)];
+}
+
+void Chunk::setNaturalLight(const Vector3& position, std::uint8_t value) {
+	m_lightMap[getIndex(position)] = (m_lightMap[getIndex(position)] & 0xF0) | value;
+}
+
+void Chunk::setSkyLight(const Vector3& position, std::uint8_t value) {
+	m_lightMap[getIndex(position)] = (m_lightMap[getIndex(position)] & 0xF) | (value << 4);
+}
+
+std::uint8_t Chunk::getNaturalLight(const Vector3& position) const {
+	return m_lightMap[getIndex(position)] & 0xF;
+}
+
+std::uint8_t Chunk::getSkyLight(const Vector3& position) const {
+	return (m_lightMap[getIndex(position)] >> 4) & 0xF;
 }
 
 bool Chunk::isFullyOpaque() const {
