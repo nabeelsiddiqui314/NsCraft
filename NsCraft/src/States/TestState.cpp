@@ -16,6 +16,7 @@
 #include "../World/Generation/Shape/HeightmapGenerator.h"
 #include "../World/Generation/Composition/DefaultComposer.h"
 #include "../World/Chunk/Chunk.h"
+#include "../Lighting/BlockLightingSystem.h"
 
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
@@ -42,6 +43,11 @@ TestState::TestState()
 	bedrock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("bedrock", "bedrock", "bedrock"));
 	bedrock.setOpaqueness(true);
 
+	auto& lightTest = blockRegistry.registerBlock("lightTest");
+	lightTest.setMeshGenerator(std::make_shared<CubeMeshGenerator>("bedrock", "bedrock", "bedrock"));
+	lightTest.setOpaqueness(true);
+	lightTest.setLuminocity(15);
+
 	NoiseProperties noiseProperties;
 	noiseProperties.octaves = 3;
 	noiseProperties.amplitude = 200;
@@ -54,8 +60,10 @@ TestState::TestState()
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator));
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
+	m_blockLightingSystem = std::make_shared<BlockLightingSystem>(m_world);
 
 	m_world->registerListener(m_chunkMeshingSystem);
+	m_world->registerListener(m_blockLightingSystem);
 }
 
 bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
@@ -124,13 +132,9 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 
 	Vector3 camPos = Vector3(m_camera.getPosition().x ,m_camera.getPosition().y, m_camera.getPosition().z);
 
-	//for (int y = camPos.y - 3; y < camPos.y + 3; y++) {
-	//	for (int x = camPos.x - 3; x < camPos.x + 3; x++) {
-	//		for (int z = camPos.z - 3; z < camPos.z + 3; z++) {
-	//			m_world->setBlockIDAt({x, y, z}, 0);
-	//		}
-	//	}
-	//}
+	if (m_world->getBlockIDAt(camPos) != 0) {
+		m_world->setBlockIDAt(camPos, 4);
+	}
 
 	m_chunkMeshingSystem->generateChunkMeshes();
 }

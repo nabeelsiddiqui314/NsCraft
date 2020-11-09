@@ -8,6 +8,7 @@
 
 class World;
 class ChunkMeshingSystem;
+class BlockLightingSystem;
 
 class TestState : public IState {
 public:
@@ -26,6 +27,7 @@ private:
 	ChunkRenderer m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
+	std::shared_ptr<BlockLightingSystem> m_blockLightingSystem;
 
 	sf::Vector2i m_lastMousePos;
 };

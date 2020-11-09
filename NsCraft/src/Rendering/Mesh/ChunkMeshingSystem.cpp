@@ -14,9 +14,6 @@
 #include <vector>
 #include "../../EventSystem/EventDispatcher.h"
 
-
-#define BIND_EVENT(function) std::bind(&ChunkMeshingSystem::function, this, std::placeholders::_1)
-
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const TextureAtlas& textureAtlas, ChunkRenderer& renderer)
 	: m_world(world), 
 	  m_textureAtlas(textureAtlas),
@@ -26,9 +23,9 @@ ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, cons
 
 void ChunkMeshingSystem::onEvent(IEvent& event) {
 	EventDispatcher dispatcher(event);
-	dispatcher.dispatch<ChunkLoadEvent>(BIND_EVENT(onChunkLoad));
-	dispatcher.dispatch<ChunkUnloadEvent>(BIND_EVENT(onChunkUnload));
-	dispatcher.dispatch<ChunkModifyEvent>(BIND_EVENT(onChunkModify));
+	dispatcher.dispatch<ChunkLoadEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkLoad));
+	dispatcher.dispatch<ChunkUnloadEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkUnload));
+	dispatcher.dispatch<ChunkModifyEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkModify));
 }
 
 void ChunkMeshingSystem::generateChunkMeshes() {

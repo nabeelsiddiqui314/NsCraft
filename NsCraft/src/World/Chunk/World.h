@@ -32,6 +32,9 @@ public:
 	void setBlockIDAt(const Vector3& position, Block_ID blockID);
 	Block_ID getBlockIDAt(const Vector3& position) const;
 
+	void setSkyLightAt(const Vector3& position, std::uint8_t value);
+	void setNaturalLightAt(const Vector3& position, std::uint8_t value);
+
 	std::uint8_t getSkyLightAt(const Vector3& position) const;
 	std::uint8_t getNaturalLightAt(const Vector3& position) const;
 

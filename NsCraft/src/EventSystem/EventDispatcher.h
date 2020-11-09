@@ -22,3 +22,5 @@ public:
 private:
 	IEvent& m_event;
 };
+
+#define BIND_EVENT(function) std::bind(&function, this, std::placeholders::_1)

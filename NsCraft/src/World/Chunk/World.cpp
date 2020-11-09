@@ -5,6 +5,7 @@
 #include "../Events/ChunkLoadEvent.h"
 #include "../Events/ChunkUnloadEvent.h"
 #include "../Events/ChunkModifyEvent.h"
+#include "../Events/BlockModifiedEvent.h"
 #include "../../EventSystem/Event.h"
 
 World::World(ChunkGeneratorPtr&& chunkGenerator) 
@@ -60,14 +61,23 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 	auto[chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		if (m_chunkMap.at(chunkPosition)->getBlock(blockPosition) != blockID) {
+		Block_ID previousBlockID = m_chunkMap.at(chunkPosition)->getBlock(blockPosition);
+		if (previousBlockID != blockID) {
 			m_chunkMap.at(chunkPosition)->setBlock(blockPosition, blockID);
 
-			ChunkModifyEvent event;
-			event.chunkPosition = chunkPosition;
-			event.blockPosition = blockPosition;
+			ChunkModifyEvent chunkModEvent;
+			chunkModEvent.chunkPosition = chunkPosition;
+			chunkModEvent.blockPosition = blockPosition;
 
-			notifyListeners(event);
+			notifyListeners(chunkModEvent);
+
+			BlockModifiedEvent blockModEvent;
+			blockModEvent.chunkPosition = chunkPosition;
+			blockModEvent.blockPosition = blockPosition;
+			blockModEvent.previousBlock = previousBlockID;
+			blockModEvent.newBlock = blockID;
+
+			notifyListeners(blockModEvent);
 		}
 	}
 	else {
@@ -84,6 +94,34 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	}
 
 	return 0;
+}
+
+void World::setSkyLightAt(const Vector3& position, std::uint8_t value) {
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
+	if (doesChunkExist(chunkPosition)) {
+		m_chunkMap.at(chunkPosition)->setSkyLight(blockPosition, value);
+
+		ChunkModifyEvent chunkModEvent;
+		chunkModEvent.chunkPosition = chunkPosition;
+		chunkModEvent.blockPosition = blockPosition;
+
+		notifyListeners(chunkModEvent);
+	}
+}
+
+void World::setNaturalLightAt(const Vector3& position, std::uint8_t value) {
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
+	if (doesChunkExist(chunkPosition)) {
+		m_chunkMap.at(chunkPosition)->setNaturalLight(blockPosition, value);
+
+		ChunkModifyEvent chunkModEvent;
+		chunkModEvent.chunkPosition = chunkPosition;
+		chunkModEvent.blockPosition = blockPosition;
+
+		notifyListeners(chunkModEvent);
+	}
 }
 
 std::uint8_t World::getSkyLightAt(const Vector3& position) const {
