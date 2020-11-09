@@ -56,6 +56,7 @@
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp" />
     <ClCompile Include="src\World\Generation\Shape\HeightmapGenerator.cpp" />
     <ClCompile Include="src\World\Generation\Heightmap.cpp" />
+    <ClCompile Include="src\Lighting\LightNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="src\World\Generation\Shape\HeightmapGenerator.h" />
     <ClInclude Include="src\World\Generation\Shape\IShapeGenerator.h" />
     <ClInclude Include="src\World\Generation\Heightmap.h" />
+    <ClInclude Include="src\Lighting\LightNode.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\chunkShader.fs" />

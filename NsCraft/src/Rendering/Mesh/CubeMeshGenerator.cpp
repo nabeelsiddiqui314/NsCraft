@@ -14,14 +14,15 @@ CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::s
       m_bottomTexture(bottomTexture) {}
 
 void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& blockPosition) {
-	auto tryAddFace = [&](const Vector3& neighborPos, const std::string& texture, const Quad& face) {
-		auto neighborBlockID = world.getBlockIDAt(blockPosition + neighborPos);
+	auto tryAddFace = [&](const Vector3& neighborOffset, const std::string& texture, const Quad& face) {
+		auto neighborPos = blockPosition + neighborOffset;
+		auto neighborBlockID = world.getBlockIDAt(neighborPos);
 		
 		auto& blockRegistry = BlockRegistry::getInstance();
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
 		if (!neighborBlock.isOpaque()) {
-			mesh.addQuad(blockPosition, texture, face);
+			mesh.addQuad(blockPosition, texture, face, world.getSkyLightAt(neighborPos), world.getNaturalLightAt(neighborPos));
 		}
 	};
 

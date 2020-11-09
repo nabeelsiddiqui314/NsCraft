@@ -86,6 +86,28 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	return 0;
 }
 
+std::uint8_t World::getSkyLightAt(const Vector3& position) const {
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
+	if (doesChunkExist(chunkPosition)) {
+		std::lock_guard<std::mutex> lock(m_mutex);
+		return m_chunkMap.at(chunkPosition)->getSkyLight(blockPosition);
+	}
+
+	return 0;
+}
+
+std::uint8_t World::getNaturalLightAt(const Vector3& position) const {
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
+	if (doesChunkExist(chunkPosition)) {
+		std::lock_guard<std::mutex> lock(m_mutex);
+		return m_chunkMap.at(chunkPosition)->getNaturalLight(blockPosition);
+	}
+
+	return 0;
+}
+
 bool World::isChunkFullyOpaque(const Vector3& position) const {
 	if (doesChunkExist(position)) {
 		return m_chunkMap.at(position)->isFullyOpaque();

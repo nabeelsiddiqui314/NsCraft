@@ -126,6 +126,9 @@
     <ClCompile Include="src\World\Generation\Composition\DefaultComposer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lighting\LightNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -285,6 +288,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Composition\DefaultComposer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lighting\LightNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

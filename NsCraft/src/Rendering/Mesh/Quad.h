@@ -4,5 +4,5 @@
 
 struct Quad {
 	std::array<GLfloat, 12> vertices;
-	GLfloat lightingMultiplier;
+	GLfloat faceLight;
 };
