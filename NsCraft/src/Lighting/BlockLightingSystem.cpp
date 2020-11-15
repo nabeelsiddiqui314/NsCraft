@@ -21,16 +21,47 @@ void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
 		auto& newBlock = blockRegistry.getBlockFromID(event.newBlock);
 
-		if (newBlock.getLuminocity() > 0 &&
-			previousBlock.getLuminocity() != newBlock.getLuminocity()) {
-			propogateLight(event.chunkPosition * Chunk::WIDTH + event.blockPosition, newBlock.getLuminocity());
+		if (previousBlock.getLuminocity() != newBlock.getLuminocity()) {
+			Vector3 blockPosition = event.chunkPosition * Chunk::WIDTH + event.blockPosition;
+
+			if (newBlock.getLuminocity() > 0 &&
+				previousBlock.getLuminocity() == 0) {
+				addLight(blockPosition, newBlock.getLuminocity());
+			}
+			else if (newBlock.getLuminocity() == 0 &&
+				     previousBlock.getLuminocity() > 0) {
+				removeLight(blockPosition);
+			}
 		}
 	}
 }
 
-void BlockLightingSystem::propogateLight(const Vector3& startBlockPosition, std::uint8_t luminocity) {
-	m_world->setNaturalLightAt(startBlockPosition, luminocity);
-	m_lightBfsQueue.emplace(startBlockPosition);
+void BlockLightingSystem::addLight(const Vector3& blockPosition, std::uint8_t luminocity) {
+	m_world->setNaturalLightAt(blockPosition, luminocity);
+	m_lightBfsQueue.emplace(blockPosition);
+
+	updatePropogationQueue();
+}
+
+void BlockLightingSystem::removeLight(const Vector3& blockPosition) {
+	m_lightRemovalBfsQueue.emplace(blockPosition, m_world->getNaturalLightAt(blockPosition));
+	m_world->setNaturalLightAt(blockPosition, 0);
+
+	updateRemovalQueue();
+	// Block removal might add nodes to the light bfs queue so it needs to be updated as well.
+	updatePropogationQueue();
+}
+
+void BlockLightingSystem::updatePropogationQueue() {
+	auto spreadToNeighbor = [this](const Vector3& neighborPos, std::uint8_t lightValue) {
+		auto& blockRegistry = BlockRegistry::getInstance();
+		auto& neighborBlock = blockRegistry.getBlockFromID(m_world->getBlockIDAt(neighborPos));
+		if (!neighborBlock.isOpaque() &&
+			m_world->getNaturalLightAt(neighborPos) + 2 <= lightValue) {
+			m_world->setNaturalLightAt(neighborPos, lightValue - 1);
+			m_lightBfsQueue.emplace(neighborPos);
+		}
+	};
 
 	while (!m_lightBfsQueue.empty()) {
 		auto blockPosition = m_lightBfsQueue.front();
@@ -46,13 +77,31 @@ void BlockLightingSystem::propogateLight(const Vector3& startBlockPosition, std:
 	}
 }
 
-void BlockLightingSystem::spreadToNeighbor(const Vector3& neighborPos, std::uint8_t lightValue) {
-	auto& blockRegistry = BlockRegistry::getInstance();
-	auto& neighborBlock = blockRegistry.getBlockFromID(m_world->getBlockIDAt(neighborPos));
-	if (!neighborBlock.isOpaque() &&
-		m_world->getNaturalLightAt(neighborPos) + 2 <= lightValue) {
-		m_world->setNaturalLightAt(neighborPos, lightValue - 1);
-		m_lightBfsQueue.emplace(neighborPos);
+void BlockLightingSystem::updateRemovalQueue() {
+	auto spreadLightRemoval = [this](const Vector3& neighborPos, std::uint8_t lightValue) {
+		std::uint8_t neighborLightValue = m_world->getNaturalLightAt(neighborPos);
+
+		if (neighborLightValue != 0 && neighborLightValue < lightValue) {
+			m_world->setNaturalLightAt(neighborPos, 0);
+			m_lightRemovalBfsQueue.emplace(neighborPos, neighborLightValue);
+		}
+		else if (neighborLightValue >= lightValue) {
+			m_lightBfsQueue.emplace(neighborPos);
+		}
+	};
+
+	while (!m_lightRemovalBfsQueue.empty()) {
+		auto& lightRemovalNode = m_lightRemovalBfsQueue.front();
+		auto blockPosition = lightRemovalNode.position;
+		std::uint8_t lightValue = lightRemovalNode.value;
+		m_lightRemovalBfsQueue.pop();
+
+		spreadLightRemoval(blockPosition + Directions::Up, lightValue);
+		spreadLightRemoval(blockPosition + Directions::Down, lightValue);
+		spreadLightRemoval(blockPosition + Directions::Left, lightValue);
+		spreadLightRemoval(blockPosition + Directions::Right, lightValue);
+		spreadLightRemoval(blockPosition + Directions::Front, lightValue);
+		spreadLightRemoval(blockPosition + Directions::Back, lightValue);
 	}
 }
 
