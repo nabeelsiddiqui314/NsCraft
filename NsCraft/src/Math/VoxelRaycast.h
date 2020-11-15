@@ -11,6 +11,7 @@ public:
 private:
 	float sign(float value);
 	float intBound(float s, float ds);
+	int mod(int value, int modulus);
 private:
 	glm::vec3 m_currentPos;
 	glm::vec3 m_step;

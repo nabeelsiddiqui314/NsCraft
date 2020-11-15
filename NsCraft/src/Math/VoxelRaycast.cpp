@@ -14,7 +14,7 @@ VoxelRaycast::VoxelRaycast(const glm::vec3& origin, const glm::vec3& direction) 
 	m_tMax.y = intBound(m_currentPos.y, direction.y);
 	m_tMax.z = intBound(m_currentPos.z, direction.z);
 
-	m_tDelta = m_step / glm::vec3(direction.x, direction.y, direction.z);
+	m_tDelta = m_step / direction;
 }
 
 Vector3 VoxelRaycast::increment() {
@@ -54,10 +54,15 @@ float VoxelRaycast::sign(float value) {
 }
 
 float VoxelRaycast::intBound(float s, float ds){
-	if (ds > 0) {
-		return (ceil(s) - s) / abs(ds);
+	if (ds < 0) {
+		return intBound(-s, -ds);
 	}
 	else {
-		return (s - floor(s)) / abs(ds);
+		s = mod(s, 1);
+		return (1 - s) / ds;
 	}
+}
+
+int VoxelRaycast::mod(int value, int modulus) {
+	return (value % modulus + modulus) % modulus;
 }
