@@ -17,6 +17,7 @@
 #include "../World/Generation/Composition/DefaultComposer.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
+#include "../Math/VoxelRaycast.h"
 
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
@@ -68,6 +69,16 @@ TestState::TestState()
 
 bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
 	switch (event.type) {
+	case sf::Event::MouseButtonPressed:
+		if (m_canDig) {
+			if (event.mouseButton.button == sf::Mouse::Button::Left) {
+				m_world->setBlockIDAt(m_blockRemovePos, 0);
+			}
+			else if (event.mouseButton.button == sf::Mouse::Button::Right) {
+				m_world->setBlockIDAt(m_blockAddPos, 4);
+			}
+		}
+		break;
 	case sf::Event::MouseMoved:
 		m_camera.rotate(event.mouseMove.x - m_lastMousePos.x, m_lastMousePos.y - event.mouseMove.y);
 		m_lastMousePos = {event.mouseMove.x, event.mouseMove.y};
@@ -130,10 +141,26 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 		}
 	});
 
-	Vector3 camPos = Vector3(m_camera.getPosition().x ,m_camera.getPosition().y, m_camera.getPosition().z);
+	Vector3 camPos = Vector3(floor(m_camera.getPosition().x), floor(m_camera.getPosition().y), floor(m_camera.getPosition().z));
 
-	if (m_world->getBlockIDAt(camPos) != 0) {
-		m_world->setBlockIDAt(camPos, 4);
+	VoxelRaycast ray(m_camera.getPosition(), m_camera.getFront());
+
+	Vector3 lastPos = camPos;
+
+	for (int i = 0; i < 10; i++) {
+		auto newPos = ray.increment();
+
+		if (m_world->getBlockIDAt(lastPos) == 0 &&
+			m_world->getBlockIDAt(newPos) != 0) {
+			m_blockAddPos = lastPos;
+			m_blockRemovePos = newPos;
+			m_canDig = true;
+			break;
+		}
+
+		lastPos = newPos;
+
+		m_canDig = false;
 	}
 
 	m_chunkMeshingSystem->generateChunkMeshes();

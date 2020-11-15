@@ -30,4 +30,8 @@ private:
 	std::shared_ptr<BlockLightingSystem> m_blockLightingSystem;
 
 	sf::Vector2i m_lastMousePos;
+
+	Vector3 m_blockAddPos;
+	Vector3 m_blockRemovePos;
+	bool m_canDig = false;
 };
