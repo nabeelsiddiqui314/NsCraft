@@ -21,7 +21,7 @@ void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
 		auto& newBlock = blockRegistry.getBlockFromID(event.newBlock);
 
-		if (previousBlock.getLuminocity() != newBlock.getLuminocity()) {
+		//if (previousBlock.getLuminocity() != newBlock.getLuminocity()) {
 			Vector3 blockPosition = event.chunkPosition * Chunk::WIDTH + event.blockPosition;
 
 			if (newBlock.getLuminocity() > 0 &&
@@ -32,7 +32,11 @@ void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
 				     previousBlock.getLuminocity() > 0) {
 				removeLight(blockPosition);
 			}
-		}
+			else if (newBlock.getLuminocity() == 0 &&
+				     previousBlock.getLuminocity() == 0) {
+				editBlock(blockPosition);
+			}
+		//}
 	}
 }
 
@@ -50,6 +54,31 @@ void BlockLightingSystem::removeLight(const Vector3& blockPosition) {
 	updateRemovalQueue();
 	// Block removal might add nodes to the light bfs queue so it needs to be updated as well.
 	updatePropogationQueue();
+}
+
+void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
+	std::vector<Vector3> blocksToProcess;
+	blocksToProcess.emplace_back(blockPosition);
+	blocksToProcess.emplace_back(blockPosition + Directions::Up);
+	blocksToProcess.emplace_back(blockPosition + Directions::Down);
+	blocksToProcess.emplace_back(blockPosition + Directions::Left);
+	blocksToProcess.emplace_back(blockPosition + Directions::Right);
+	blocksToProcess.emplace_back(blockPosition + Directions::Front);
+	blocksToProcess.emplace_back(blockPosition + Directions::Back);
+
+	for (auto& blockPos : blocksToProcess) {
+		auto& blockRegistry = BlockRegistry::getInstance();
+		auto& block = blockRegistry.getBlockFromID(m_world->getBlockIDAt(blockPos));
+		if (block.getLuminocity() > 0) {
+			addLight(blockPos, block.getLuminocity());
+			continue;
+		}
+
+		if (m_world->getNaturalLightAt(blockPos) > 0) {
+			removeLight(blockPos);
+			continue;
+		}
+	}
 }
 
 void BlockLightingSystem::updatePropogationQueue() {

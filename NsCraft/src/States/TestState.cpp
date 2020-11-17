@@ -77,6 +77,9 @@ bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 			else if (event.mouseButton.button == sf::Mouse::Button::Right) {
 				m_world->setBlockIDAt(m_blockAddPos, 4);
 			}
+			else if(event.mouseButton.button == sf::Mouse::Button::Middle) {
+				m_world->setBlockIDAt(m_blockAddPos, 2);
+			}
 		}
 		break;
 	case sf::Event::MouseMoved:

@@ -28,6 +28,7 @@ private:
 
 	void addLight(const Vector3& blockPosition, std::uint8_t luminocity);
 	void removeLight(const Vector3& blockPosition);
+	void editBlock(const Vector3& blockPosition);
 
 	void updatePropogationQueue();
 	void updateRemovalQueue();
