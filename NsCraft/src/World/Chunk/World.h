@@ -19,7 +19,7 @@ private:
 	typedef std::unique_ptr<IChunkGenerator> ChunkGeneratorPtr;
 	typedef std::function<void(const Vector3&)> ForEachFunc;
 public:
-	World(ChunkGeneratorPtr&& chunkGenerator);
+	World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight);
 	~World();
 public:
 	void loadChunk(const Vector3& position);
@@ -28,6 +28,7 @@ public:
 	void forEachChunk(const ForEachFunc& func) const;
 	
 	bool doesChunkExist(const Vector3& position) const;
+	bool doesChunkHaveAllNeighbors(const Vector3& position);
 
 	void setBlockIDAt(const Vector3& position, Block_ID blockID);
 	Block_ID getBlockIDAt(const Vector3& position) const;
@@ -39,6 +40,8 @@ public:
 	std::uint8_t getNaturalLightAt(const Vector3& position) const;
 
 	bool isChunkFullyOpaque(const Vector3& position) const;
+	
+	int getMaxHeight() const;
 private:
 	// gets chunk position and block position from world position
 	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
@@ -46,5 +49,6 @@ private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
 	std::unordered_map<Vector3, MetaChunk> m_metaChunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
+	const int m_maxHeight;
 	mutable std::mutex m_mutex;
 };

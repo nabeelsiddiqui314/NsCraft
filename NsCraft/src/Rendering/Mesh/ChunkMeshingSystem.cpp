@@ -97,7 +97,7 @@ void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
 }
 
 void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
-	if (m_world->doesChunkExist(chunkPosition) && doesChunkHaveAllNeighbors(chunkPosition)) {
+	if (m_world->doesChunkExist(chunkPosition) && m_world->doesChunkHaveAllNeighbors(chunkPosition)) {
 		m_chunksToMesh.emplace(chunkPosition);
 	}
 }
@@ -132,20 +132,4 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 			m_renderer.addMesh(chunkPosition, mesh);
 		}
 	});
-}
-
-bool ChunkMeshingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const {
-	bool sideNeighbors = m_world->doesChunkExist(chunkPosition + Directions::Right) && 
-		                 m_world->doesChunkExist(chunkPosition + Directions::Left) && 
-		                 m_world->doesChunkExist(chunkPosition + Directions::Front) && 
-		                 m_world->doesChunkExist(chunkPosition + Directions::Back);
-
-	bool topNeighbor = m_world->doesChunkExist(chunkPosition + Directions::Up);
-	bool bottomNeighbor = m_world->doesChunkExist(chunkPosition + Directions::Down);
-
-	if (chunkPosition.y == 0) {
-		return sideNeighbors && topNeighbor;
-	}
-
-	return sideNeighbors && topNeighbor && bottomNeighbor;
 }

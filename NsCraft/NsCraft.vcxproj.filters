@@ -129,10 +129,10 @@
     <ClCompile Include="src\Lighting\LightNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Lighting\BlockLightingSystem.cpp">
+    <ClCompile Include="src\Math\VoxelRaycast.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\VoxelRaycast.cpp">
+    <ClCompile Include="src\Lighting\BlockLightingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -302,10 +302,10 @@
     <ClInclude Include="src\World\Events\BlockModifiedEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Lighting\BlockLightingSystem.h">
+    <ClInclude Include="src\Math\VoxelRaycast.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\VoxelRaycast.h">
+    <ClInclude Include="src\Lighting\BlockLightingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

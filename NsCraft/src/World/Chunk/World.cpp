@@ -7,14 +7,15 @@
 #include "../Events/ChunkModifyEvent.h"
 #include "../Events/BlockModifiedEvent.h"
 #include "../../EventSystem/Event.h"
+#include "../../Math/Directions.h"
 
-World::World(ChunkGeneratorPtr&& chunkGenerator) 
-	: m_chunkGenerator(std::move(chunkGenerator)) {}
+World::World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight) 
+	: m_chunkGenerator(std::move(chunkGenerator)), m_maxHeight(maxHeight) {}
 
 World::~World() {}
 
 void World::loadChunk(const Vector3& position) {
-	if (!doesChunkExist(position)) {
+	if (!doesChunkExist(position) && position.y >= 0 && position.y < m_maxHeight) {
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			auto chunk = m_chunkGenerator->generateChunk(*this, position);
@@ -55,6 +56,26 @@ void World::forEachChunk(const ForEachFunc& func) const {
 
 bool World::doesChunkExist(const Vector3& position) const {
 	return m_chunkMap.find(position) != m_chunkMap.end();
+}
+
+bool World::doesChunkHaveAllNeighbors(const Vector3& position) {
+	bool sideNeighbors = doesChunkExist(position + Directions::Right) &&
+		                 doesChunkExist(position + Directions::Left) &&
+		                 doesChunkExist(position + Directions::Front) &&
+		                 doesChunkExist(position + Directions::Back);
+
+	bool topNeighbor = doesChunkExist(position + Directions::Up);
+	bool bottomNeighbor = doesChunkExist(position + Directions::Down);
+
+	if (position.y == 0) {
+		return sideNeighbors && topNeighbor;
+	}
+
+	if (position.y == m_maxHeight - 1) {
+		return sideNeighbors && bottomNeighbor;
+	}
+
+	return sideNeighbors && topNeighbor && bottomNeighbor;
 }
 
 void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
@@ -152,6 +173,10 @@ bool World::isChunkFullyOpaque(const Vector3& position) const {
 	}
 
 	return false;
+}
+
+int World::getMaxHeight() const {
+	return m_maxHeight;
 }
 
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {

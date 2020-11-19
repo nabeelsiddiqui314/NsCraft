@@ -32,8 +32,6 @@ private:
 
 	void updatePropogationQueue();
 	void updateRemovalQueue();
-
-	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition);
 private:
 	std::shared_ptr<World> m_world;
 	std::queue<Vector3> m_lightBfsQueue;

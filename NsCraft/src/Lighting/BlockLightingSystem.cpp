@@ -16,27 +16,25 @@ void BlockLightingSystem::onEvent(IEvent& event) {
 }
 
 void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
-	if (doesChunkHaveAllNeighbors(event.chunkPosition)) {
+	if (m_world->doesChunkHaveAllNeighbors(event.chunkPosition)) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
 		auto& newBlock = blockRegistry.getBlockFromID(event.newBlock);
 
-		//if (previousBlock.getLuminocity() != newBlock.getLuminocity()) {
-			Vector3 blockPosition = event.chunkPosition * Chunk::WIDTH + event.blockPosition;
+		Vector3 blockPosition = event.chunkPosition * Chunk::WIDTH + event.blockPosition;
 
-			if (newBlock.getLuminocity() > 0 &&
-				previousBlock.getLuminocity() == 0) {
-				addLight(blockPosition, newBlock.getLuminocity());
-			}
-			else if (newBlock.getLuminocity() == 0 &&
-				     previousBlock.getLuminocity() > 0) {
-				removeLight(blockPosition);
-			}
-			else if (newBlock.getLuminocity() == 0 &&
-				     previousBlock.getLuminocity() == 0) {
-				editBlock(blockPosition);
-			}
-		//}
+		if (newBlock.getLuminocity() > 0 &&
+			previousBlock.getLuminocity() == 0) {
+			addLight(blockPosition, newBlock.getLuminocity());
+		}
+		else if (newBlock.getLuminocity() == 0 &&
+				    previousBlock.getLuminocity() > 0) {
+			removeLight(blockPosition);
+		}
+		else if (newBlock.getLuminocity() == 0 &&
+				    previousBlock.getLuminocity() == 0) {
+			editBlock(blockPosition);
+		}
 	}
 }
 
@@ -132,13 +130,4 @@ void BlockLightingSystem::updateRemovalQueue() {
 		spreadLightRemoval(blockPosition + Directions::Front, lightValue);
 		spreadLightRemoval(blockPosition + Directions::Back, lightValue);
 	}
-}
-
-bool BlockLightingSystem::doesChunkHaveAllNeighbors(const Vector3& chunkPosition) {
-	return m_world->doesChunkExist(chunkPosition + Directions::Up) &&
-		m_world->doesChunkExist(chunkPosition + Directions::Down)&&
-		m_world->doesChunkExist(chunkPosition + Directions::Left)&&
-		m_world->doesChunkExist(chunkPosition + Directions::Right)&&
-		m_world->doesChunkExist(chunkPosition + Directions::Front)&&
-		m_world->doesChunkExist(chunkPosition + Directions::Back);
 }

@@ -59,7 +59,7 @@ TestState::TestState()
 	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<HeightmapGenerator>(12212, noiseProperties),
 		                                                       std::make_shared<DefaultComposer>());
 
-	m_world = std::make_shared<World>(std::move(chunkGenerator));
+	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
 	m_blockLightingSystem = std::make_shared<BlockLightingSystem>(m_world);
 

@@ -27,7 +27,6 @@ private:
 
 	void enqueueChunkToMesh(const Vector3& chunkPosition);
 	void meshChunk(const Vector3& chunkPosition);
-	bool doesChunkHaveAllNeighbors(const Vector3& chunkPosition) const;
 private:
 	std::shared_ptr<World> m_world;
 	const TextureAtlas& m_textureAtlas;
