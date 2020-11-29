@@ -21,7 +21,7 @@ void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const 
 		auto& blockRegistry = BlockRegistry::getInstance();
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
-		if (!neighborBlock.isOpaque()) {
+		if (!neighborBlock.isCompletelyOpaque()) {
 			mesh.addQuad(blockPosition, texture, face, world.getSkyLightAt(neighborPos), world.getNaturalLightAt(neighborPos));
 		}
 	};

@@ -83,9 +83,9 @@ void BlockLightingSystem::updatePropogationQueue() {
 	auto spreadToNeighbor = [this](const Vector3& neighborPos, std::uint8_t lightValue) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		auto& neighborBlock = blockRegistry.getBlockFromID(m_world->getBlockIDAt(neighborPos));
-		if (!neighborBlock.isOpaque() &&
-			m_world->getNaturalLightAt(neighborPos) + 2 <= lightValue) {
-			m_world->setNaturalLightAt(neighborPos, lightValue - 1);
+		if (!neighborBlock.isCompletelyOpaque() &&
+			m_world->getNaturalLightAt(neighborPos) + neighborBlock.getOpacity() + 2 <= lightValue) {
+			m_world->setNaturalLightAt(neighborPos, lightValue - neighborBlock.getOpacity() - 1);
 			m_lightBfsQueue.emplace(neighborPos);
 		}
 	};

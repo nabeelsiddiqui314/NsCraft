@@ -19,6 +19,7 @@
 #include "../Lighting/BlockLightingSystem.h"
 #include "../Math/VoxelRaycast.h"
 #include "../World/Generation/Biome/IBiomeGenerator.h"
+#include "../Lighting/LightDefs.h"
 
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
@@ -35,20 +36,20 @@ TestState::TestState()
 
 	auto& grassBlock = blockRegistry.registerBlock("grass");
 	grassBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("grass_top", "grass_side", "dirt"));
-	grassBlock.setOpaqueness(true);
+	grassBlock.setOpacity(LightDefs::MAX_OPACITY);
 
 	auto& dirtBlock = blockRegistry.registerBlock("dirt");
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("dirt", "dirt", "dirt"));
-	dirtBlock.setOpaqueness(true);
+	dirtBlock.setOpacity(LightDefs::MAX_OPACITY);
 
 	auto& bedrock = blockRegistry.registerBlock("bedrock");
 	bedrock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("bedrock", "bedrock", "bedrock"));
-	bedrock.setOpaqueness(true);
+	bedrock.setOpacity(LightDefs::MAX_OPACITY);
 
 	auto& lightTest = blockRegistry.registerBlock("lightTest");
 	lightTest.setMeshGenerator(std::make_shared<CubeMeshGenerator>("bedrock", "bedrock", "bedrock"));
-	lightTest.setOpaqueness(true);
-	lightTest.setLuminocity(15);
+	lightTest.setOpacity(LightDefs::MAX_OPACITY);
+	lightTest.setLuminocity(LightDefs::MAX_LUMINOCITY);
 
 	NoiseProperties noiseProperties;
 	noiseProperties.octaves = 3;
