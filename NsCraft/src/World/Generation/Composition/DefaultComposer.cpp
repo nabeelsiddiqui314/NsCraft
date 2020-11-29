@@ -4,7 +4,7 @@
 #include "../../../Math/Vector3.h"
 #include "../../Blocks/BlockRegistry.h"
 
-void DefaultComposer::compose(Chunk& chunk, const ChunkShape& shape) {
+void DefaultComposer::compose(Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) {
 	auto& blockRegistry = BlockRegistry::getInstance();
 
 	Block_ID grass = blockRegistry.getBlockIDFromName("grass");

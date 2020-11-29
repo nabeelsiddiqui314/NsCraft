@@ -6,7 +6,7 @@
 HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties& noiseProperties) 
  : m_noise(seed, noiseProperties) {}
 
-ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position) {
+ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position, const BiomeMap& biomeMap) {
 	ChunkShapePtr shape = std::make_shared<ChunkShape>();
 
 	Vector2 position2d = { position.x, position.z };

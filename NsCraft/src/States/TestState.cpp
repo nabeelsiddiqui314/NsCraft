@@ -18,6 +18,7 @@
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
 #include "../Math/VoxelRaycast.h"
+#include "../World/Generation/Biome/IBiomeGenerator.h"
 
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
@@ -56,7 +57,8 @@ TestState::TestState()
 	noiseProperties.persistance = 4;
 	noiseProperties.lacunarity = 4;
 
-	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<HeightmapGenerator>(12212, noiseProperties),
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<IBiomeGenerator>(),
+		                                                       std::make_shared<HeightmapGenerator>(12212, noiseProperties),
 		                                                       std::make_shared<DefaultComposer>());
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
