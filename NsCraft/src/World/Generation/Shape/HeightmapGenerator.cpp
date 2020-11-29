@@ -4,10 +4,20 @@
 #include "ChunkShape.h"
 
 HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties& noiseProperties) 
- : m_heightmap(seed, noiseProperties) {}
+ : m_noise(seed, noiseProperties) {}
 
 ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position) {
 	ChunkShapePtr shape = std::make_shared<ChunkShape>();
+
+	Vector2 position2d = { position.x, position.z };
+
+	if (!m_heightmap.doesHeightMapExist(position2d)) {
+		for (int x = 0; x < Chunk::WIDTH; x++) {
+			for (int z = 0; z < Chunk::WIDTH; z++) {
+				m_heightmap.setHeightAt(position2d, { x, z }, m_noise.getNoiseAt(position2d * Vector2(Chunk::WIDTH, Chunk::WIDTH) + Vector2(x, z)));
+			}
+		}
+	}
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {

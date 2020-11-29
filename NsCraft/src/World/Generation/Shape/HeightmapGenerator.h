@@ -1,6 +1,7 @@
 #pragma once
 #include "IShapeGenerator.h"
-#include "../Heightmap.h"
+#include "../HeightmapCache.h"
+#include "../../../Math/Noise.h"
 
 class HeightmapGenerator : public IShapeGenerator {
 public:
@@ -9,5 +10,6 @@ public:
 public:
 	ChunkShapePtr generateShape(const Vector3& position) override;
 private:
-	Heightmap m_heightmap;
+	HeightmapCache m_heightmap;
+	Noise m_noise;
 };
