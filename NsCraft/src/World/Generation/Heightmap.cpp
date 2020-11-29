@@ -10,8 +10,7 @@ int Heightmap::getHeightAt(const Vector2& chunkPosition, const Vector2& blockPos
 
 		for (int x = 0; x < Chunk::WIDTH; x++) {
 			for (int z = 0; z < Chunk::WIDTH; z++) {
-				chunkHeightmap[getIndex({ x, z })] = m_noise.getNoiseAt({ (float)(x + chunkPosition.x * Chunk::WIDTH), 
-					                                                      (float)(z + chunkPosition.y * Chunk::WIDTH) });
+				chunkHeightmap[getIndex({ x, z })] = m_noise.getNoiseAt(Vector2(x, z) + chunkPosition * Chunk::WIDTH);
 			}
 		}
 		m_chunkHeightmaps.emplace(std::make_pair(chunkPosition, chunkHeightmap));

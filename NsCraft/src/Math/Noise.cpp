@@ -1,18 +1,32 @@
 #include "Noise.h"
 #include "Noise.h"
 #include <cmath>
+#include "Vector2.h"
+
+Noise::Noise()
+	: m_seed(0) {}
 
 Noise::Noise(std::uint32_t seed, const NoiseProperties& properties)
 	: m_seed(seed),
 	m_properties(properties) {}
 
-float Noise::getNoiseAt(const sf::Vector2f& position) const {
+void Noise::setSeed(std::uint32_t seed) {
+	m_seed = seed;
+}
+
+void Noise::setNoiseProperties(const NoiseProperties& properties) {
+	m_properties = properties;
+}
+
+float Noise::getNoiseAt(const Vector2& position) const {
 	float amplitude = 1;
 	float frequency = 1;
 	float maxValue = 0;
 	float total = 0;
 	for (int i = 0; i < m_properties.octaves; i++) {
-		total += amplitude * getBasicNoise(position * frequency);
+		auto position2f = sf::Vector2f(position.x, position.y);
+
+		total += amplitude * getBasicNoise(position2f * frequency);
 		maxValue += amplitude;
 		frequency *= m_properties.lacunarity;
 		amplitude /= m_properties.persistance;
