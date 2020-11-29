@@ -14,7 +14,7 @@ int Heightmap::getHeightAt(const Vector2& chunkPosition, const Vector2& blockPos
 			}
 		}
 		m_chunkHeightmaps.emplace(std::make_pair(chunkPosition, chunkHeightmap));
-	}
+	} 
 	
 	return m_chunkHeightmaps.at(chunkPosition)[getIndex(blockPosition)];
 }

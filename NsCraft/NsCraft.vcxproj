@@ -49,6 +49,7 @@
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
     <ClCompile Include="src\World\Chunk\MetaChunk.cpp" />
+    <ClCompile Include="src\World\Generation\Biome\Biome.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\MonoBlockGenerator.cpp" />
     <ClCompile Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
     <ClInclude Include="src\World\Chunk\MetaChunk.h" />
     <ClInclude Include="src\World\Events\BlockModifiedEvent.h" />
+    <ClInclude Include="src\World\Generation\Biome\Biome.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\TerrainGenPipeline.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\MonoBlockGenerator.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.h" />
