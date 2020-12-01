@@ -141,6 +141,9 @@
     <ClCompile Include="src\World\Generation\Biome\BiomeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\Biome\BiomeRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -327,6 +330,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Lighting\LightDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Biome\BiomeRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
