@@ -18,7 +18,9 @@
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
 #include "../Math/VoxelRaycast.h"
-#include "../World/Generation/Biome/IBiomeGenerator.h"
+#include "../World/Generation/Biome/PerlinBiomeGenerator.h"
+#include "../World/Generation/Biome/BiomeRegistry.h"
+#include "../World/Generation/Biome/Biome.h"
 #include "../Lighting/LightDefs.h"
 
 TestState::TestState()
@@ -54,11 +56,43 @@ TestState::TestState()
 	NoiseProperties noiseProperties;
 	noiseProperties.octaves = 3;
 	noiseProperties.amplitude = 200;
-	noiseProperties.smoothness = 150;
+	noiseProperties.smoothness = 150; 
 	noiseProperties.persistance = 4;
 	noiseProperties.lacunarity = 4;
 
-	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<IBiomeGenerator>(),
+	auto& biomeRegistry = BiomeRegistry::getInstance();
+
+	{
+		auto& biome = biomeRegistry.registerBiome("plains");
+
+		biome.setFlags(LAND);
+
+		NoiseProperties prop;
+		prop.octaves = 3;
+		prop.amplitude = 80;
+		prop.smoothness = 150;
+		prop.persistance = 4;
+		prop.lacunarity = 4;
+
+		biome.setNoiseProperties(prop);
+	}
+
+	{
+		auto& biome = biomeRegistry.registerBiome("ocean");
+
+		biome.setFlags(OCEAN);
+
+		NoiseProperties prop;
+		prop.octaves = 3;
+		prop.amplitude = 30;
+		prop.smoothness = 50;
+		prop.persistance = 4;
+		prop.lacunarity = 4;
+
+		biome.setNoiseProperties(prop);
+	}
+
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<PerlinBiomeGenerator>(12212),
 		                                                       std::make_shared<HeightmapGenerator>(12212, noiseProperties),
 		                                                       std::make_shared<DefaultComposer>());
 
