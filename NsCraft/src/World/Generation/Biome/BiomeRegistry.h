@@ -20,6 +20,8 @@ public:
 
 	const Biome& getBiomeFromName(const std::string& name) const;
 	const Biome& getBiomeFromID(Biome_ID id) const;
+
+	const Biome& getBiomeFromClimate(float temperature, float rainfall, const BiomeFlags& filters);
 private:
 	std::vector<Biome> m_biomes;
 	std::unordered_map<std::string, Biome_ID> m_nameToIdMap;

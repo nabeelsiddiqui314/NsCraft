@@ -2,7 +2,7 @@
 #include <vector>
 #include "../../Blocks/BlockDefs.h"
 #include "../../../Math/Noise.h"
-#include "BiomeFlags.h"
+#include "BiomeDefs.h"
 
 struct ColumnComposition {
 	Block_ID surfaceBlock;
