@@ -17,6 +17,14 @@ float Biome::getRainfall() const {
 	return m_rainfall;
 }
 
+void Biome::setFlags(const BiomeFlags& flags) {
+	m_flags = flags;
+}
+
+BiomeFlags Biome::getFlags() const {
+	return m_flags;
+}
+
 void Biome::setNoiseProperties(const NoiseProperties& noiseProperties) {
 	m_noiseProperties = noiseProperties;
 }

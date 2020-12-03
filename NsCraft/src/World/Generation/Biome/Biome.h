@@ -2,6 +2,7 @@
 #include <vector>
 #include "../../Blocks/BlockDefs.h"
 #include "../../../Math/Noise.h"
+#include "BiomeFlags.h"
 
 struct ColumnComposition {
 	Block_ID surfaceBlock;
@@ -19,6 +20,9 @@ public:
 	void setRainfall(float rainfall);
 	float getRainfall() const;
 
+	void setFlags(const BiomeFlags& flags);
+	BiomeFlags getFlags() const;
+
 	void setNoiseProperties(const NoiseProperties& noiseProperties);
 	void setComposition(const ColumnComposition& composition);
 
@@ -27,6 +31,7 @@ public:
 private:
 	float m_temperature;
 	float m_rainfall;
+	BiomeFlags m_flags;
 	NoiseProperties m_noiseProperties;
 	ColumnComposition m_composition;
 };
