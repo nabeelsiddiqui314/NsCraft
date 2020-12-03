@@ -18,6 +18,7 @@
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
 #include "../Math/VoxelRaycast.h"
+#include "../World/Generation/Biome/BiomeGeneratorCache.h"
 #include "../World/Generation/Biome/PerlinBiomeGenerator.h"
 #include "../World/Generation/Biome/BiomeRegistry.h"
 #include "../World/Generation/Biome/Biome.h"
@@ -92,7 +93,7 @@ TestState::TestState()
 		biome.setNoiseProperties(prop);
 	}
 
-	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<PerlinBiomeGenerator>(12212),
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212)),
 		                                                       std::make_shared<HeightmapGenerator>(12212, noiseProperties),
 		                                                       std::make_shared<DefaultComposer>());
 
