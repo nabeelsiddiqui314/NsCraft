@@ -1,8 +1,19 @@
 #include "Biome.h"
 #include "../../../Math/Vector2.h"
 
+Biome::Biome(Biome_ID id, const std::string& name) 
+	: m_id(id), m_name(name) {}
+
 void Biome::setTemperature(float temperature) {
 	m_temperature = temperature;
+}
+
+Biome_ID Biome::getID() const {
+	return m_id;
+}
+
+const std::string& Biome::getName() const {
+	return m_name;
 }
 
 float Biome::getTemperature() const {

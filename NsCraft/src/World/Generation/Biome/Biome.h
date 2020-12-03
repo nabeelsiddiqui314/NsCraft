@@ -11,9 +11,12 @@ struct ColumnComposition {
 
 class Biome {
 public:
-	Biome() = default;
+	Biome(Biome_ID id, const std::string& name);
 	~Biome() = default;
 public:
+	Biome_ID getID() const;
+	const std::string& getName() const;
+
 	void setTemperature(float temperature);
 	float getTemperature() const;
 
@@ -29,6 +32,9 @@ public:
 	const NoiseProperties& getNoiseProperties() const;
 	Block_ID getBlockAtDepth(int depth) const;
 private:
+	Biome_ID m_id;
+	std::string m_name;
+
 	float m_temperature;
 	float m_rainfall;
 	BiomeFlags m_flags;

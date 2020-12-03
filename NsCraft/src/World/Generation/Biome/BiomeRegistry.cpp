@@ -9,7 +9,7 @@ BiomeRegistry& BiomeRegistry::getInstance() {
 
 Biome& BiomeRegistry::registerBiome(const std::string& name) {
     Biome_ID id = static_cast<Biome_ID>(m_biomes.size());
-    m_biomes.emplace_back();
+    m_biomes.emplace_back(id, name);
     m_nameToIdMap.emplace(std::make_pair(name, id));
 
     return m_biomes.back();
