@@ -135,9 +135,6 @@
     <ClCompile Include="src\World\Generation\Biome\Biome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Generation\HeightmapCache.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Generation\Biome\BiomeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -148,6 +145,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\World\Generation\Biome\BiomeGeneratorCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Shape\HeightmapGeneratorCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Shape\FlatHeightmapGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Shape\Heightmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -323,9 +329,6 @@
     <ClInclude Include="src\World\Generation\Biome\Biome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Generation\HeightmapCache.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Generation\Biome\IBiomeGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,6 +348,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Biome\BiomeGeneratorCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\HeightmapGeneratorCache.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\FlatHeightmapGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\Heightmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

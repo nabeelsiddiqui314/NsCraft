@@ -13,7 +13,7 @@
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
-#include "../World/Generation/Shape/HeightmapGenerator.h"
+#include "../World/Generation/Shape/FlatHeightmapGenerator.h"
 #include "../World/Generation/Composition/DefaultComposer.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
@@ -94,7 +94,7 @@ TestState::TestState()
 	}
 
 	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212)),
-		                                                       std::make_shared<HeightmapGenerator>(12212, noiseProperties),
+		                                                       std::make_shared<FlatHeightmapGenerator>(50),
 		                                                       std::make_shared<DefaultComposer>());
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);

@@ -1,28 +1,19 @@
 #include "HeightmapGenerator.h"
 #include "../../Chunk/Chunk.h"
 #include "../../../Math/Vector3.h"
+#include "../../../Math/Vector2.h"
 #include "ChunkShape.h"
-
-HeightmapGenerator::HeightmapGenerator(std::uint32_t seed, const NoiseProperties& noiseProperties) 
- : m_noise(seed, noiseProperties) {}
+#include "Heightmap.h"
 
 ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position, const BiomeMap& biomeMap) {
 	ChunkShapePtr shape = std::make_shared<ChunkShape>();
 
-	Vector2 position2d = { position.x, position.z };
-
-	if (!m_heightmap.doesHeightMapExist(position2d)) {
-		for (int x = 0; x < Chunk::WIDTH; x++) {
-			for (int z = 0; z < Chunk::WIDTH; z++) {
-				m_heightmap.setHeightAt(position2d, { x, z }, m_noise.getNoiseAt(position2d * Vector2(Chunk::WIDTH, Chunk::WIDTH) + Vector2(x, z)));
-			}
-		}
-	}
+	auto heightmap = generateHeightmap({position.x, position.z});
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {
 			int chunkHeight = Chunk::WIDTH;
-			int height = m_heightmap.getHeightAt({ position.x, position.z }, { x, z });
+			int height = heightmap->getHeightAt({x, z});
 
 			if (height > position.y * Chunk::WIDTH &&
 				height < (position.y + 1) * Chunk::WIDTH) {

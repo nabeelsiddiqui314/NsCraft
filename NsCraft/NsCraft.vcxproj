@@ -61,8 +61,10 @@
     <ClCompile Include="src\World\Chunk\World.cpp" />
     <ClCompile Include="src\World\Generation\Composition\DefaultComposer.cpp" />
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp" />
+    <ClCompile Include="src\World\Generation\Shape\FlatHeightmapGenerator.cpp" />
+    <ClCompile Include="src\World\Generation\Shape\Heightmap.cpp" />
     <ClCompile Include="src\World\Generation\Shape\HeightmapGenerator.cpp" />
-    <ClCompile Include="src\World\Generation\HeightmapCache.cpp" />
+    <ClCompile Include="src\World\Generation\Shape\HeightmapGeneratorCache.cpp" />
     <ClCompile Include="src\Lighting\LightNode.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +129,11 @@
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h" />
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h" />
     <ClInclude Include="src\World\Generation\Shape\ChunkShape.h" />
+    <ClInclude Include="src\World\Generation\Shape\FlatHeightmapGenerator.h" />
+    <ClInclude Include="src\World\Generation\Shape\Heightmap.h" />
     <ClInclude Include="src\World\Generation\Shape\HeightmapGenerator.h" />
     <ClInclude Include="src\World\Generation\Shape\IShapeGenerator.h" />
-    <ClInclude Include="src\World\Generation\HeightmapCache.h" />
+    <ClInclude Include="src\World\Generation\Shape\HeightmapGeneratorCache.h" />
     <ClInclude Include="src\Lighting\LightNode.h" />
   </ItemGroup>
   <ItemGroup>
