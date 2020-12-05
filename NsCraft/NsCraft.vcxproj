@@ -59,7 +59,7 @@
     <ClCompile Include="src\World\Generation\ChunkGenerator\RandomBlockGenerator.cpp" />
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
     <ClCompile Include="src\World\Chunk\World.cpp" />
-    <ClCompile Include="src\World\Generation\Composition\DefaultComposer.cpp" />
+    <ClCompile Include="src\World\Generation\Composition\BiomeInterpolatedComposer.cpp" />
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp" />
     <ClCompile Include="src\World\Generation\Shape\FlatHeightmapGenerator.cpp" />
     <ClCompile Include="src\World\Generation\Shape\Heightmap.cpp" />
@@ -125,7 +125,7 @@
     <ClInclude Include="src\World\Events\ChunkLoadEvent.h" />
     <ClInclude Include="src\World\Events\ChunkModifyEvent.h" />
     <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
-    <ClInclude Include="src\World\Generation\Composition\DefaultComposer.h" />
+    <ClInclude Include="src\World\Generation\Composition\BiomeInterpolatedComposer.h" />
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h" />
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h" />
     <ClInclude Include="src\World\Generation\Shape\ChunkShape.h" />

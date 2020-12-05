@@ -14,7 +14,7 @@
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
 #include "../World/Generation/Shape/FlatHeightmapGenerator.h"
-#include "../World/Generation/Composition/DefaultComposer.h"
+#include "../World/Generation/Composition/BiomeInterpolatedComposer.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
 #include "../Math/VoxelRaycast.h"
@@ -31,6 +31,7 @@ TestState::TestState()
 	m_textureAtlas.addTexture("res/grass_top.png", "grass_top");
 	m_textureAtlas.addTexture("res/grass_side.png", "grass_side");
 	m_textureAtlas.addTexture("res/bedrock.png", "bedrock");
+	m_textureAtlas.addTexture("res/sand.png", "sand");
 	m_textureAtlas.generateAtlas();
 
 	auto& blockRegistry = BlockRegistry::getInstance();
@@ -54,6 +55,10 @@ TestState::TestState()
 	lightTest.setOpacity(LightDefs::MAX_OPACITY);
 	lightTest.setLuminocity(LightDefs::MAX_LUMINOCITY);
 
+	auto& sandBlock = blockRegistry.registerBlock("sand");
+	sandBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("sand", "sand", "sand"));
+	sandBlock.setOpacity(LightDefs::MAX_OPACITY);
+
 	NoiseProperties noiseProperties;
 	noiseProperties.octaves = 3;
 	noiseProperties.amplitude = 200;
@@ -76,6 +81,17 @@ TestState::TestState()
 		prop.lacunarity = 4;
 
 		biome.setNoiseProperties(prop);
+
+		ColumnComposition composition;
+		composition.surfaceBlock = blockRegistry.getBlockIDFromName("grass");
+
+		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("dirt"), 2},
+									 {blockRegistry.getBlockIDFromName("sand"), 3},
+									 {blockRegistry.getBlockIDFromName("dirt"), 4},
+									 {blockRegistry.getBlockIDFromName("sand"), 2},
+			{blockRegistry.getBlockIDFromName("bedrock"), 1 } };
+
+		biome.setComposition(composition);
 	}
 
 	{
@@ -91,11 +107,20 @@ TestState::TestState()
 		prop.lacunarity = 4;
 
 		biome.setNoiseProperties(prop);
+
+		ColumnComposition composition;
+		composition.surfaceBlock = blockRegistry.getBlockIDFromName("sand");
+
+		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("bedrock"), 2},
+									 {blockRegistry.getBlockIDFromName("dirt"), 1} };
+
+		biome.setComposition(composition);
+
 	}
 
 	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212)),
 		                                                       std::make_shared<FlatHeightmapGenerator>(50),
-		                                                       std::make_shared<DefaultComposer>());
+		                                                       std::make_shared<BiomeInterpolatedComposer>());
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);

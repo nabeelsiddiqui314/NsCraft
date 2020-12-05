@@ -120,9 +120,6 @@
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\World\Generation\Composition\DefaultComposer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Lighting\LightNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -154,6 +151,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\World\Generation\Shape\Heightmap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Generation\Composition\BiomeInterpolatedComposer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -311,9 +311,6 @@
     <ClInclude Include="src\World\Generation\Shape\ChunkShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Generation\Composition\DefaultComposer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Lighting\LightNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -357,6 +354,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Shape\Heightmap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Composition\BiomeInterpolatedComposer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

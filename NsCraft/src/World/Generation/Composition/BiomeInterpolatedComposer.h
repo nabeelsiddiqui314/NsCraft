@@ -1,10 +1,10 @@
 #pragma once
 #include "ITerrainComposer.h"
 
-class DefaultComposer : public ITerrainComposer {
+class BiomeInterpolatedComposer : public ITerrainComposer {
 public:
-	DefaultComposer() = default;
-	~DefaultComposer() = default;
+	BiomeInterpolatedComposer() = default;
+	~BiomeInterpolatedComposer() = default;
 public:
 	void compose(Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) override;
 };
