@@ -35,16 +35,15 @@ ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position, const B
 
 				if (height == Chunk::WIDTH * position.y + y + 1) {
 					data.positionType = PositionType::SURFACE;
-					data.distanceFromTop = 0;
 				}
 				else if (position.y == 0 && y == 0) {
 					data.positionType = PositionType::BASE;
-					data.distanceFromTop = height;
 				}
 				else {
 					data.positionType = PositionType::INTERIOR;
-					data.distanceFromTop = height - position.y + Chunk::WIDTH + y;
 				}
+
+				data.distanceFromTop = height - (position.y * Chunk::WIDTH + y + 1);
 
 				shape->setPositionData({x, y, z}, data);
 			}
