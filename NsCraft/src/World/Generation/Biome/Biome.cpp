@@ -53,7 +53,7 @@ Block_ID Biome::getBlockAtDepth(int depth) const {
 		return m_composition.surfaceBlock;
 	}
 
-	int totalBlockDepth = 0;
+	int totalBlockDepth = 1;
 
 	for (auto& [block, blockDepth] : m_composition.middleBlocks) {
 		totalBlockDepth += blockDepth;
@@ -63,5 +63,7 @@ Block_ID Biome::getBlockAtDepth(int depth) const {
 		}
 	}
 
-	return 0;
+	auto& [block, blockDepth] = m_composition.middleBlocks.back();
+
+	return block;
 }
