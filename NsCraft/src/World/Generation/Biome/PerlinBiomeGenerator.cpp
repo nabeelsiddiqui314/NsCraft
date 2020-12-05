@@ -49,13 +49,13 @@ BiomeMapPtr PerlinBiomeGenerator::generateBiome(const Vector2& position) {
             float temperature = m_temperatureNoise.getNoiseAt(worldPosition);
             float rainfall = m_rainfallNoise.getNoiseAt(worldPosition);
 
-            Biome_ID biome = 0;
+            Biome_ID biome;
 
             if (m_landOceanNoise.getNoiseAt(worldPosition) < 5) { // land
-                biomeRegistry.getBiomeFromClimate(temperature, rainfall, LAND).getID();
+                biome = biomeRegistry.getBiomeFromClimate(temperature, rainfall, LAND).getID();
             }
             else { //ocean
-                biomeRegistry.getBiomeFromClimate(temperature, rainfall, OCEAN).getID();
+                biome = biomeRegistry.getBiomeFromClimate(temperature, rainfall, OCEAN).getID();
             }
 
             biomeMap->setBiomeAt({x, z}, biome);
