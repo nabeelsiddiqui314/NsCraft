@@ -8,7 +8,7 @@ public:
 	HeightmapGeneratorCache(std::unique_ptr<HeightmapGenerator> heightmapGenerator);
 	~HeightmapGeneratorCache() = default;
 public:
-	HeightmapPtr generateHeightmap(const Vector2& position) override;
+	HeightmapPtr generateHeightmap(const Vector2& position, const BiomeMap& biomeMap) override;
 private:
 	std::unordered_map<Vector2, HeightmapPtr> m_heightmapCache;
 	std::unique_ptr<HeightmapGenerator> m_heightmapGenerator;

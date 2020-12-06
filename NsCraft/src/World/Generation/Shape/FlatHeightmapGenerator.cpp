@@ -12,6 +12,6 @@ FlatHeightmapGenerator::FlatHeightmapGenerator(int height) {
     }
 }
 
-HeightmapPtr FlatHeightmapGenerator::generateHeightmap(const Vector2& position) {
+HeightmapPtr FlatHeightmapGenerator::generateHeightmap(const Vector2& position, const BiomeMap& biomeMap) {
     return m_flatHeightmap;
 }

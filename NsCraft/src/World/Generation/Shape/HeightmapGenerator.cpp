@@ -8,7 +8,7 @@
 ChunkShapePtr HeightmapGenerator::generateShape(const Vector3& position, const BiomeMap& biomeMap) {
 	ChunkShapePtr shape = std::make_shared<ChunkShape>();
 
-	auto heightmap = generateHeightmap({position.x, position.z});
+	auto heightmap = generateHeightmap({position.x, position.z}, biomeMap);
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {

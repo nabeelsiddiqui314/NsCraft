@@ -12,5 +12,5 @@ public:
 	virtual ~HeightmapGenerator() = default;
 public:
 	ChunkShapePtr generateShape(const Vector3& position, const BiomeMap& biomeMap) override;
-	virtual HeightmapPtr generateHeightmap(const Vector2& position) = 0;
+	virtual HeightmapPtr generateHeightmap(const Vector2& position, const BiomeMap& biomeMap) = 0;
 };
