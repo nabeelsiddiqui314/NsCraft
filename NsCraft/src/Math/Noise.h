@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <SFML/System/Vector2.hpp>
 
 struct Vector2;
 
@@ -23,11 +22,6 @@ public:
 	void setNoiseProperties(const NoiseProperties& properties);
 
 	float getNoiseAt(const Vector2& position) const;
-private:
-	float getBasicNoise(const sf::Vector2f& position) const;
-	float dot(const sf::Vector2f& v1, const sf::Vector2f& v2) const;
-	float lerp(float x, float a, float b) const;
-	float fade(float t) const;
 private:
 	std::uint32_t m_seed;
 	NoiseProperties m_properties;
