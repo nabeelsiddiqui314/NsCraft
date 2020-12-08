@@ -24,7 +24,7 @@
     <ClCompile Include="src\Lighting\BlockLightingSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math\AABB.cpp" />
-    <ClCompile Include="src\Math\FloatRect.cpp" />
+    <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
     <ClCompile Include="src\Math\Frustum.cpp" />
     <ClCompile Include="src\Math\Noise.cpp" />
     <ClCompile Include="src\Math\Plane.cpp" />
@@ -42,7 +42,7 @@
     <ClCompile Include="src\Rendering\Mesh\ChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp" />
     <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp" />
-    <ClCompile Include="src\Rendering\TextureAtlas.cpp" />
+    <ClCompile Include="src\Rendering\Texture\TextureAtlas.cpp" />
     <ClCompile Include="src\States\TestState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
     <ClCompile Include="src\Utilities\ThreadPool.cpp" />
@@ -76,7 +76,7 @@
     <ClInclude Include="src\Lighting\BlockLightingSystem.h" />
     <ClInclude Include="src\Lighting\LightDefs.h" />
     <ClInclude Include="src\Math\AABB.h" />
-    <ClInclude Include="src\Math\FloatRect.h" />
+    <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
     <ClInclude Include="src\Math\Frustum.h" />
     <ClInclude Include="src\Math\Noise.h" />
     <ClInclude Include="src\Math\Plane.h" />
@@ -99,7 +99,7 @@
     <ClInclude Include="src\Rendering\Mesh\EmptyMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
-    <ClInclude Include="src\Rendering\TextureAtlas.h" />
+    <ClInclude Include="src\Rendering\Texture\TextureAtlas.h" />
     <ClInclude Include="src\States\TestState.h" />
     <ClInclude Include="src\States\IState.h" />
     <ClInclude Include="src\States\StateMachine.h" />

@@ -1,9 +1,9 @@
 #include "ChunkMesh.h"
 #include "../../Math/Vector3.h"
-#include "../../Math/FloatRect.h"
+#include "../Texture/TextureCoords.h"
 #include "../../OpenGL/VertexBuffer.h"
 #include "../../OpenGL/IndexBuffer.h"
-#include "../TextureAtlas.h"
+#include "../Texture/TextureAtlas.h"
 
 ChunkMesh::ChunkMesh(const TextureAtlas& textureAtlas)
 	: m_textureAtlas(textureAtlas),
@@ -25,13 +25,13 @@ void ChunkMesh::addQuad(const Vector3& position, const std::string& texture, con
 		m_naturalLight.emplace_back(naturalLightNormalized);
 	}
 
-	FloatRect textureCoords = m_textureAtlas.getTextureCoordinates(texture);
+	TextureCoords textureCoords = m_textureAtlas.getTextureCoordinates(texture);
 
 	m_textureCoords.insert(m_textureCoords.end(), {
-			textureCoords.x                  , textureCoords.y + textureCoords.h,
-			textureCoords.x + textureCoords.w, textureCoords.y + textureCoords.h,
-			textureCoords.x + textureCoords.w, textureCoords.y,
-			textureCoords.x                  , textureCoords.y
+			textureCoords.bottomLeftU, textureCoords.topRightV,
+			textureCoords.topRightU  , textureCoords.topRightV,
+			textureCoords.topRightU  , textureCoords.bottomLeftV,
+			textureCoords.bottomLeftU, textureCoords.bottomLeftV
 		});
 
 	m_indices.insert(m_indices.end(), {

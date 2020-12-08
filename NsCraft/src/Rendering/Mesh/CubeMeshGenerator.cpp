@@ -6,7 +6,6 @@
 #include "../../World/Blocks/Block.h"
 #include "CubeFaces.h"
 #include "../../Math/Directions.h"
-#include "../../Math/FloatRect.h"
 
 CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture)
 	: m_topTexture(topTexture),

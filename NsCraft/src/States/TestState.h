@@ -4,7 +4,7 @@
 #include "../Rendering/Camera/Camera.h"
 #include <SFML/System/Vector2.hpp>
 #include "../Rendering/ChunkRenderer.h"
-#include "../Rendering/TextureAtlas.h"
+#include "../Rendering/Texture/TextureAtlas.h"
 
 class World;
 class ChunkMeshingSystem;

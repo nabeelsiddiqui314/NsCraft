@@ -3,8 +3,8 @@
 #include <queue>
 #include <unordered_map>
 #include <SFML/Graphics/Image.hpp>
-#include "../OpenGL/Texture.h"
-#include "../Math/FloatRect.h"
+#include "../../OpenGL/Texture.h"
+#include "TextureCoords.h"
 
 // Only supports square textures of equal width for now
 
@@ -16,7 +16,7 @@ public:
 	bool addTexture(const std::string& textureFilepath, const std::string& textureName);
 	void generateAtlas();
 
-	FloatRect getTextureCoordinates(const std::string& textureName) const;
+	TextureCoords getTextureCoordinates(const std::string& textureName) const;
 
 	void bindTexture();
 	void unbindTexture();
@@ -29,5 +29,5 @@ private:
 	sf::Image m_textureAtlasBuffer;
 	Texture m_texture;
 	std::queue<std::pair<std::string, sf::Image>> m_textureQueue;
-	std::unordered_map<std::string, FloatRect> m_textureCoordinateMap;
+	std::unordered_map<std::string, TextureCoords> m_textureCoordinateMap;
 };
