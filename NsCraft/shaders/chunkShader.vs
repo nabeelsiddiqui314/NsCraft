@@ -16,7 +16,6 @@ void main() {
 	gl_Position = u_projection * u_view * vec4(position, 1.0);
 	v_texCoords = texCoords;
 
-	float skyLightIntensity = 1 * faceLight;
-	float lighting = max((naturalLight + skyLight * skyLightIntensity) / 2, 0.2);
+	float lighting = max((naturalLight + skyLight) / 2, 0.2) * faceLight;
 	v_lighting = vec3(lighting);
 }
