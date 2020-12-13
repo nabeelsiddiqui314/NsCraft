@@ -60,6 +60,7 @@
     <ClCompile Include="src\World\Chunk\Chunk.cpp" />
     <ClCompile Include="src\World\Chunk\World.cpp" />
     <ClCompile Include="src\World\Generation\Composition\BiomeInterpolatedComposer.cpp" />
+    <ClCompile Include="src\World\Generation\Shape\BiomeInterpolatedHeightGen.cpp" />
     <ClCompile Include="src\World\Generation\Shape\ChunkShape.cpp" />
     <ClCompile Include="src\World\Generation\Shape\FlatHeightmapGenerator.cpp" />
     <ClCompile Include="src\World\Generation\Shape\Heightmap.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="src\States\TestState.h" />
     <ClInclude Include="src\States\IState.h" />
     <ClInclude Include="src\States\StateMachine.h" />
+    <ClInclude Include="src\Utilities\Flat2DArray.h" />
     <ClInclude Include="src\Utilities\ThreadPool.h" />
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
@@ -128,6 +130,7 @@
     <ClInclude Include="src\World\Generation\Composition\BiomeInterpolatedComposer.h" />
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h" />
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h" />
+    <ClInclude Include="src\World\Generation\Shape\BiomeInterpolatedHeightGen.h" />
     <ClInclude Include="src\World\Generation\Shape\ChunkShape.h" />
     <ClInclude Include="src\World\Generation\Shape\FlatHeightmapGenerator.h" />
     <ClInclude Include="src\World\Generation\Shape\Heightmap.h" />

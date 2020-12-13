@@ -13,7 +13,8 @@
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
-#include "../World/Generation/Shape/FlatHeightmapGenerator.h"
+#include "../World/Generation/Shape/HeightmapGeneratorCache.h"
+#include "../World/Generation/Shape/BiomeInterpolatedHeightGen.h"
 #include "../World/Generation/Composition/BiomeInterpolatedComposer.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
@@ -75,10 +76,10 @@ TestState::TestState()
 
 		NoiseProperties prop;
 		prop.octaves = 3;
-		prop.amplitude = 80;
-		prop.smoothness = 150;
+		prop.amplitude = 50;
+		prop.smoothness = 800;
 		prop.persistance = 4;
-		prop.lacunarity = 4;
+		prop.lacunarity = 6;
 
 		biome.setNoiseProperties(prop);
 
@@ -101,8 +102,8 @@ TestState::TestState()
 
 		NoiseProperties prop;
 		prop.octaves = 3;
-		prop.amplitude = 30;
-		prop.smoothness = 50;
+		prop.amplitude = 20;
+		prop.smoothness = 500;
 		prop.persistance = 4;
 		prop.lacunarity = 4;
 
@@ -111,16 +112,18 @@ TestState::TestState()
 		ColumnComposition composition;
 		composition.surfaceBlock = blockRegistry.getBlockIDFromName("sand");
 
-		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("bedrock"), 2},
+		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("sand"), 2},
 									 {blockRegistry.getBlockIDFromName("dirt"), 1} };
 
 		biome.setComposition(composition);
 
 	}
 
-	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212)),
-		                                                       std::make_shared<FlatHeightmapGenerator>(50),
-		                                                       std::make_shared<BiomeInterpolatedComposer>());
+	auto biomeGen = std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212));
+	auto shapeGen = std::make_shared<HeightmapGeneratorCache>(std::make_unique<BiomeInterpolatedHeightGen>(12212, biomeGen));
+	auto composer = std::make_shared<BiomeInterpolatedComposer>();
+
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(biomeGen, shapeGen, composer);
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);

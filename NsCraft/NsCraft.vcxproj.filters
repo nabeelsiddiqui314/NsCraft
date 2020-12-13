@@ -156,6 +156,9 @@
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Generation\Shape\BiomeInterpolatedHeightGen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -357,6 +360,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Generation\Shape\BiomeInterpolatedHeightGen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utilities\Flat2DArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

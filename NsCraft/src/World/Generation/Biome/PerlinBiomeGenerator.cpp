@@ -13,9 +13,9 @@ PerlinBiomeGenerator::PerlinBiomeGenerator(std::uint32_t seed) {
 
     properties.amplitude = 10;
     properties.smoothness = 500;
-    properties.octaves = 1;
-    properties.persistance = 1;
-    properties.lacunarity = 1;
+    properties.octaves = 3;
+    properties.persistance = 3;
+    properties.lacunarity = 4;
 
     m_landOceanNoise.setNoiseProperties(properties);
 
