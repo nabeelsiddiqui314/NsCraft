@@ -57,17 +57,18 @@ float BiomeInterpolatedHeightGen::getHeightAt(const Vector2& chunkPosition, cons
     float range = 9;
     float totalInfluence = 0;
 
+    const float totalDistance = sqrt(powf(range, 2) + powf(range, 2));
+
     std::unordered_map<Biome_ID, float> biomeInfluenceMap;
 
-    for (int x = -range; x < range; x++) {
-        for (int z = -range; z < range; z ++) {
+    for (int x = -range; x <= range; x++) {
+        for (int z = -range; z <= range; z ++) {
            auto offset = Vector2(x, z);
            auto [neighborChunkPos, neighborBlockPos] = getNeighborLocation(chunkPosition, blockPosition + offset);
 
            Biome_ID neighborBiomeID = m_biomeGenPtr->generateBiome(neighborChunkPos)->getBiomeAt(neighborBlockPos);
 
-            float distance = powf(x, 2) + powf(z, 2);
-            float influence = distance;
+            float influence = totalDistance - sqrt(powf(x, 2) + powf(z, 2));
             totalInfluence += influence;
 
             biomeInfluenceMap[neighborBiomeID] += influence;
