@@ -12,6 +12,10 @@ public:
 		return m_flat2DArray[position.x + position.y * width];
 	}
 
+	const T& operator[](const Vector2& position) const {
+		return m_flat2DArray[position.x + position.y * width];
+	}
+
 	void fill(const T& value) {
 		m_flat2DArray.fill(value);
 	}
