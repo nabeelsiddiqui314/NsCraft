@@ -60,13 +60,6 @@ TestState::TestState()
 	sandBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>("sand", "sand", "sand"));
 	sandBlock.setOpacity(LightDefs::MAX_OPACITY);
 
-	NoiseProperties noiseProperties;
-	noiseProperties.octaves = 3;
-	noiseProperties.amplitude = 200;
-	noiseProperties.smoothness = 150; 
-	noiseProperties.persistance = 4;
-	noiseProperties.lacunarity = 4;
-
 	auto& biomeRegistry = BiomeRegistry::getInstance();
 
 	{
@@ -76,10 +69,16 @@ TestState::TestState()
 
 		NoiseProperties prop;
 		prop.octaves = 3;
-		prop.amplitude = 50;
 		prop.smoothness = 800;
-		prop.persistance = 4;
-		prop.lacunarity = 6;
+		prop.gain = 0.5f;
+		prop.lacunarity = 4;
+		prop.baseValue = 45;
+		prop.variation = 30;
+
+		prop.warpOctaves = 4;
+		prop.warpFrequency = 0.015f;
+		prop.warpLacunarity = 2.40f;
+		prop.warpAmplitude = 22;;
 
 		biome.setNoiseProperties(prop);
 
@@ -102,10 +101,16 @@ TestState::TestState()
 
 		NoiseProperties prop;
 		prop.octaves = 3;
-		prop.amplitude = 20;
 		prop.smoothness = 500;
-		prop.persistance = 4;
+		prop.gain = 0.5f;
 		prop.lacunarity = 4;
+		prop.baseValue = 0;
+		prop.variation = 30;
+
+		prop.warpOctaves = 4;
+		prop.warpFrequency = 0.009f;
+		prop.warpLacunarity = 2.20f;
+		prop.warpAmplitude = 18;
 
 		biome.setNoiseProperties(prop);
 
@@ -236,7 +241,7 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 }
 
 void TestState::render() {
-	glClearColor(0.0f, 1.0f, 0.4f, 1.0f);
+	glClearColor(0.2f, 0.4f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_textureAtlas.bindTexture();

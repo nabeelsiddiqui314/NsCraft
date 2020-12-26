@@ -1,6 +1,6 @@
 #pragma once
 #include "IBiomeGenerator.h"
-#include "../../../Math/Noise.h"
+#include "../../../Math/SimplexNoise.h"
 
 class PerlinBiomeGenerator : public IBiomeGenerator {
 public:
@@ -9,7 +9,7 @@ public:
 public:
 	BiomeMapPtr generateBiome(const Vector2& position) override;
 private:
-	Noise m_landOceanNoise;
-	Noise m_temperatureNoise;
-	Noise m_rainfallNoise;
+	SimplexNoise m_landOceanNoise;
+	SimplexNoise m_temperatureNoise;
+	SimplexNoise m_rainfallNoise;
 };

@@ -11,27 +11,40 @@ PerlinBiomeGenerator::PerlinBiomeGenerator(std::uint32_t seed) {
 
     NoiseProperties properties;
 
-    properties.amplitude = 10;
-    properties.smoothness = 500;
     properties.octaves = 3;
-    properties.persistance = 3;
-    properties.lacunarity = 4;
+    properties.smoothness = 500;
+    properties.lacunarity = 2;
+    properties.variation = 10;
+
+    properties.warpOctaves = 5;
+    properties.warpFrequency = 0.02f;
+    properties.warpLacunarity = 2.60f;
+    properties.warpAmplitude = 40;
+    properties.warpGain = 0.8f;
 
     m_landOceanNoise.setNoiseProperties(properties);
 
-    properties.amplitude = 10;
-    properties.smoothness = 200;
-    properties.octaves = 1;
-    properties.persistance = 1;
-    properties.lacunarity = 1;
+    properties.octaves = 3;
+    properties.smoothness = 500;
+    properties.lacunarity = 4;
+    properties.variation = 10;
+
+    properties.warpOctaves = 5;
+    properties.warpFrequency = 0.015f;
+    properties.warpLacunarity = 2.40f;
+    properties.warpAmplitude = 27;
 
     m_temperatureNoise.setNoiseProperties(properties);
 
-    properties.amplitude = 10;
-    properties.smoothness = 200;
-    properties.octaves = 1;
-    properties.persistance = 1;
-    properties.lacunarity = 1;
+    properties.octaves = 3;
+    properties.smoothness = 500;
+    properties.lacunarity = 4;
+    properties.variation = 10;
+
+    properties.warpOctaves = 5;
+    properties.warpFrequency = 0.015f;
+    properties.warpLacunarity = 2.40f;
+    properties.warpAmplitude = 27;
 
     m_rainfallNoise.setNoiseProperties(properties);
 

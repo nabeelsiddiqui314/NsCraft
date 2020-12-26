@@ -1,6 +1,6 @@
 #pragma once
 #include "HeightmapGenerator.h"
-#include "../../../Math/Noise.h"
+#include "../../../Math/SimplexNoise.h"
 #include "../Biome/BiomeDefs.h"
 
 class IBiomeGenerator;
@@ -21,5 +21,5 @@ private:
 	float bilerp(float x, float y, float topLeft, float topRight, float bottomLeft, float bottomRight) const;
 private:
 	BiomeGenPtr m_biomeGenPtr;
-	Noise m_heightNoise;
+	SimplexNoise m_heightNoise;
 };
