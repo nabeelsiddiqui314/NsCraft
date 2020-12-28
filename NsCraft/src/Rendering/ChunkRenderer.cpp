@@ -1,16 +1,14 @@
 #include "ChunkRenderer.h"
-#include <GL/glew.h>
 #include "../OpenGL/VertexArray.h"
 #include "Camera/Camera.h"
 #include "Mesh/ChunkMesh.h"
 #include "../Math/AABB.h"
 #include "../World/Chunk/Chunk.h"
+#include "../Rendering/Renderer.h"
 
-ChunkRenderer::ChunkRenderer() : m_chunkShader("shaders/chunkShader.vs", "shaders/chunkShader.fs") {
+ChunkRenderer::ChunkRenderer() : m_chunkShader(std::make_shared<Shader>("shaders/chunkShader.vs", "shaders/chunkShader.fs")) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
-	m_chunkShader.bind();
 }
 
 void ChunkRenderer::addMesh(const Vector3& position, const ChunkMeshPtr& mesh) {
@@ -25,16 +23,11 @@ void ChunkRenderer::removeMesh(const Vector3& position) {
 void ChunkRenderer::renderChunks(const Camera& camera) {
 	loadMeshes();
 
-	m_chunkShader.setUniformMat4("u_view", camera.getView());
-	m_chunkShader.setUniformMat4("u_projection", camera.getProjection());
-
 	for (const auto& [position, chunkVao] : m_renderableChunkMap) {
 		AABB chunkBoundingBox = {position * Chunk::WIDTH, glm::vec3(Chunk::WIDTH)};
 
 		if (camera.getFrustum().isAABBinFrustum(chunkBoundingBox)) {
-			chunkVao->bind();
-			glDrawElements(GL_TRIANGLES, chunkVao->getIndexCount(), GL_UNSIGNED_INT, 0);
-			chunkVao->unbind();
+			Renderer::render(chunkVao, m_chunkShader);
 		}
 	}
 }

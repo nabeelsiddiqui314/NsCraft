@@ -27,5 +27,5 @@ private:
 private:
 	std::unordered_map<Vector3, VaoPtr> m_renderableChunkMap;
 	std::queue<std::pair<Vector3, ChunkMeshPtr>> m_meshToLoad;
-	Shader m_chunkShader;
+	std::shared_ptr<Shader> m_chunkShader;
 };

@@ -1,5 +1,4 @@
 #include "TestState.h"
-#include <GL/glew.h>
 #include "SFML/Window/Event.hpp"
 #include "StateMachine.h"
 
@@ -24,6 +23,7 @@
 #include "../World/Generation/Biome/BiomeRegistry.h"
 #include "../World/Generation/Biome/Biome.h"
 #include "../Lighting/LightDefs.h"
+#include "../Rendering/Renderer.h"
 
 TestState::TestState()
 	: m_camera(800.0f / 600.0f, 80.0f), 
@@ -158,7 +158,7 @@ bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 		m_lastMousePos = {event.mouseMove.x, event.mouseMove.y};
 		break;
 	case sf::Event::Resized:
-		glViewport(0, 0, event.size.width, event.size.height);
+		Renderer::resizeViewport(event.size.width, event.size.height);
 		m_camera.setAspectRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
 		break;
 	}
@@ -243,6 +243,8 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 void TestState::render() {
 	glClearColor(0.2f, 0.4f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	Renderer::begin(m_camera);
 
 	m_textureAtlas.bindTexture();
 	m_chunkRenderer.renderChunks(m_camera);
