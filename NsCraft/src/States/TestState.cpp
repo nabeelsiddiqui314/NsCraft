@@ -247,7 +247,7 @@ void TestState::render() {
 	Renderer::begin(m_camera);
 
 	m_textureAtlas.bindTexture();
-	m_chunkRenderer.renderChunks(m_camera);
+	m_chunkRenderer.renderChunks(m_camera.getFrustum());
 }
 
 bool TestState::allowUpdateBelow() {

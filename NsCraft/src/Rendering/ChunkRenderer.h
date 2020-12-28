@@ -4,24 +4,23 @@
 #include <queue>
 #include "../Math/Vector3.h"
 
-#include "../OpenGL/Texture.h"
-#include "../OpenGL/Shader.h"
-
-class Camera;
-class VertexArray;
+class Frustum;
 class ChunkMesh;
+class VertexArray;
+class Shader;
 
 class ChunkRenderer {
 private:
 	typedef std::shared_ptr<VertexArray> VaoPtr;
 	typedef std::shared_ptr<ChunkMesh> ChunkMeshPtr;
+	typedef std::shared_ptr<Shader> ShaderPtr;
 public:
 	ChunkRenderer();
 	~ChunkRenderer() = default;
 public:
 	void addMesh(const Vector3& position, const ChunkMeshPtr& mesh);
 	void removeMesh(const Vector3& position);
-	void renderChunks(const Camera& camera);
+	void renderChunks(const Frustum& viewFrustum);
 private:
 	void loadMeshes();
 private:

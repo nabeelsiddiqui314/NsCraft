@@ -1,6 +1,7 @@
 #include "ChunkRenderer.h"
 #include "../OpenGL/VertexArray.h"
-#include "Camera/Camera.h"
+#include "../OpenGL/Shader.h"
+#include "../Math/Frustum.h"
 #include "Mesh/ChunkMesh.h"
 #include "../Math/AABB.h"
 #include "../World/Chunk/Chunk.h"
@@ -20,13 +21,13 @@ void ChunkRenderer::removeMesh(const Vector3& position) {
 	m_renderableChunkMap.erase(position);
 }
 
-void ChunkRenderer::renderChunks(const Camera& camera) {
+void ChunkRenderer::renderChunks(const Frustum& viewFrustum) {
 	loadMeshes();
 
 	for (const auto& [position, chunkVao] : m_renderableChunkMap) {
 		AABB chunkBoundingBox = {position * Chunk::WIDTH, glm::vec3(Chunk::WIDTH)};
 
-		if (camera.getFrustum().isAABBinFrustum(chunkBoundingBox)) {
+		if (viewFrustum.isAABBinFrustum(chunkBoundingBox)) {
 			Renderer::render(chunkVao, m_chunkShader);
 		}
 	}
