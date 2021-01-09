@@ -13,18 +13,16 @@ CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::s
       m_sideTexture(sideTexture),
       m_bottomTexture(bottomTexture) {}
 
-void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& chunkPosition, const Vector3& blockPosition) {
-	Vector3 blockPositionWorld = chunkPosition * Chunk::WIDTH + blockPosition;
-
+void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& blockPosition) {
 	auto tryAddFace = [&](const Vector3& neighborOffset, const std::string& texture, const Quad& face) {
-		auto neighborPos = blockPositionWorld + neighborOffset;
+		auto neighborPos = blockPosition + neighborOffset;
 		auto neighborBlockID = world.getBlockIDAt(neighborPos);
 		
 		auto& blockRegistry = BlockRegistry::getInstance();
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborBlockID);
 
 		if (!neighborBlock.isCompletelyOpaque()) {
-			mesh.addQuad(blockPosition, texture, face, world.getSkyLightAt(neighborPos), world.getNaturalLightAt(neighborPos));
+			mesh.addQuad(texture, face, world.getSkyLightAt(neighborPos), world.getNaturalLightAt(neighborPos));
 		}
 	};
 

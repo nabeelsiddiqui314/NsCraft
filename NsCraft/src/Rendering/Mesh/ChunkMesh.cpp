@@ -9,12 +9,16 @@ ChunkMesh::ChunkMesh(const TextureAtlas& textureAtlas)
 	: m_textureAtlas(textureAtlas),
 	  m_currentIndex(0) {}
 
-void ChunkMesh::addQuad(const Vector3& position, const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight) {
+void ChunkMesh::setCurrentOrigin(const Vector3& origin) {
+	m_origin = origin;
+}
+
+void ChunkMesh::addQuad(const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
-		m_vertices.emplace_back(position.x + quad.vertices[faceIndex++]);
-		m_vertices.emplace_back(position.y + quad.vertices[faceIndex++]);
-		m_vertices.emplace_back(position.z + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.x + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.y + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.z + quad.vertices[faceIndex++]);
 
 		m_faceLighting.emplace_back(quad.faceLight);
 

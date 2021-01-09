@@ -4,8 +4,8 @@
 #include <GL/glew.h>
 #include "Quad.h"
 #include "../../OpenGL/VertexArray.h"
+#include "../../Math/Vector3.h"
 
-struct Vector3;
 class TextureAtlas;
 
 class ChunkMesh {
@@ -16,7 +16,8 @@ public:
 	ChunkMesh(const ChunkMesh&) = delete;
 	ChunkMesh& operator=(const ChunkMesh&) = delete;
 public:
-	void addQuad(const Vector3& position, const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight);
+	void setCurrentOrigin(const Vector3& origin);
+	void addQuad(const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight);
 
 	bool isEmpty() const;
 	std::shared_ptr<VertexArray> generateChunkVAO() const;
@@ -29,5 +30,6 @@ private:
 	std::vector<GLuint> m_indices;
 
 	const TextureAtlas& m_textureAtlas;
+	Vector3 m_origin;
 	GLuint m_currentIndex;
 };
