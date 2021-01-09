@@ -6,6 +6,7 @@
 #include "../Math/AABB.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Rendering/Renderer.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 ChunkRenderer::ChunkRenderer() : m_chunkShader(std::make_shared<Shader>("shaders/chunkShader.vs", "shaders/chunkShader.fs")) {
 	glEnable(GL_DEPTH_TEST);
@@ -28,7 +29,10 @@ void ChunkRenderer::renderChunks(const Frustum& viewFrustum) {
 		AABB chunkBoundingBox = {position * Chunk::WIDTH, glm::vec3(Chunk::WIDTH)};
 
 		if (viewFrustum.isAABBinFrustum(chunkBoundingBox)) {
-			Renderer::render(chunkVao, m_chunkShader);
+			glm::mat4 chunkModelMatrix = glm::mat4(1.0f);
+			chunkModelMatrix = glm::translate(chunkModelMatrix, glm::vec3(position * Chunk::WIDTH));
+
+			Renderer::render(chunkVao, m_chunkShader, chunkModelMatrix);
 		}
 	}
 }

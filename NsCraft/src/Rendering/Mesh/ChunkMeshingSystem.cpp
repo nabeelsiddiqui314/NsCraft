@@ -121,10 +121,10 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 		for (int x = 0; x < Chunk::WIDTH; x++) {
 			for (int y = 0; y < Chunk::WIDTH; y++) {
 				for (int z = 0; z < Chunk::WIDTH; z++) {
-					Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
-					Block_ID blockID = m_world->getBlockIDAt(blockPosition);
+					Vector3 blockPosition = { x, y, z };
+					Block_ID blockID = m_world->getBlockIDAt((chunkPosition * Chunk::WIDTH) + blockPosition);
 					const auto& block = blockRegistry.getBlockFromID(blockID);
-					block.getMeshGenerator()->generateMesh(*mesh, *m_world, blockPosition);
+					block.getMeshGenerator()->generateMesh(*mesh, *m_world, chunkPosition, blockPosition);
 				}
 			}
 		}

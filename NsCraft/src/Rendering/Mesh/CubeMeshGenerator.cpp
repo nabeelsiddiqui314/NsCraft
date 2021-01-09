@@ -6,15 +6,18 @@
 #include "../../World/Blocks/Block.h"
 #include "CubeFaces.h"
 #include "../../Math/Directions.h"
+#include "../../World/Chunk/Chunk.h"
 
 CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture)
 	: m_topTexture(topTexture),
       m_sideTexture(sideTexture),
       m_bottomTexture(bottomTexture) {}
 
-void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& blockPosition) {
+void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const World& world, const Vector3& chunkPosition, const Vector3& blockPosition) {
+	Vector3 blockPositionWorld = chunkPosition * Chunk::WIDTH + blockPosition;
+
 	auto tryAddFace = [&](const Vector3& neighborOffset, const std::string& texture, const Quad& face) {
-		auto neighborPos = blockPosition + neighborOffset;
+		auto neighborPos = blockPositionWorld + neighborOffset;
 		auto neighborBlockID = world.getBlockIDAt(neighborPos);
 		
 		auto& blockRegistry = BlockRegistry::getInstance();
