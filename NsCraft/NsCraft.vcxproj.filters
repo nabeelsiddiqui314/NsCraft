@@ -162,6 +162,12 @@
     <ClCompile Include="src\Rendering\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\World\Chunk\PaddedChunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\Chunk\ChunkNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -372,6 +378,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Chunk\PaddedChunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Chunk\ChunkNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

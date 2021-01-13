@@ -16,15 +16,12 @@ World::~World() {}
 
 void World::loadChunk(const Vector3& position) {
 	if (!doesChunkExist(position) && position.y >= 0 && position.y < m_maxHeight) {
-		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-			auto chunk = m_chunkGenerator->generateChunk(*this, position);
-			m_chunkMap.emplace(std::make_pair(position, chunk));
+		auto chunk = m_chunkGenerator->generateChunk(*this, position);
+		m_chunkMap.emplace(std::make_pair(position, chunk));
 
-			if (m_metaChunkMap.find(position) != m_metaChunkMap.end()) {
-				m_metaChunkMap.at(position).applyModification(chunk);
-				m_metaChunkMap.erase(position);
-			}
+		if (m_metaChunkMap.find(position) != m_metaChunkMap.end()) {
+			m_metaChunkMap.at(position).applyModification(chunk);
+			m_metaChunkMap.erase(position);
 		}
 
 		ChunkLoadEvent event;
@@ -36,16 +33,21 @@ void World::loadChunk(const Vector3& position) {
 
 void World::unloadChunk(const Vector3& position) {
 	if (doesChunkExist(position)) {
-		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-			m_chunkMap.erase(position);
-		}
+		m_chunkMap.erase(position);
 
 		ChunkUnloadEvent event;
 		event.chunkPosition = position;
 
 		notifyListeners(event);
 	}
+}
+
+World::ChunkPtr World::getChunk(const Vector3& position) const {
+	if (doesChunkExist(position)) {
+		return m_chunkMap.at(position);
+	}
+
+	return nullptr;
 }
 
 void World::forEachChunk(const ForEachFunc& func) const {
@@ -110,7 +112,6 @@ Block_ID World::getBlockIDAt(const Vector3& position) const {
 	auto [chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		std::lock_guard<std::mutex> lock(m_mutex);
 		return m_chunkMap.at(chunkPosition)->getBlock(blockPosition);
 	}
 
@@ -149,7 +150,6 @@ std::uint8_t World::getSkyLightAt(const Vector3& position) const {
 	auto [chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		std::lock_guard<std::mutex> lock(m_mutex);
 		return m_chunkMap.at(chunkPosition)->getSkyLight(blockPosition);
 	}
 
@@ -160,7 +160,6 @@ std::uint8_t World::getNaturalLightAt(const Vector3& position) const {
 	auto [chunkPosition, blockPosition] = getBlockLocation(position);
 
 	if (doesChunkExist(chunkPosition)) {
-		std::lock_guard<std::mutex> lock(m_mutex);
 		return m_chunkMap.at(chunkPosition)->getNaturalLight(blockPosition);
 	}
 

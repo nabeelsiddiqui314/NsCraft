@@ -7,7 +7,6 @@
 #include "../../Math/Vector3.h"
 #include "../Blocks/BlockDefs.h"
 #include "MetaChunk.h"
-#include <mutex>
 
 class Chunk;
 class IChunkGenerator;
@@ -24,6 +23,8 @@ public:
 public:
 	void loadChunk(const Vector3& position);
 	void unloadChunk(const Vector3& position);
+
+	ChunkPtr getChunk(const Vector3& position) const;
 
 	void forEachChunk(const ForEachFunc& func) const;
 	
@@ -50,5 +51,4 @@ private:
 	std::unordered_map<Vector3, MetaChunk> m_metaChunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
 	const int m_maxHeight;
-	mutable std::mutex m_mutex;
 };

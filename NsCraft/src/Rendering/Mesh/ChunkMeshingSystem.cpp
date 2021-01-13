@@ -10,6 +10,7 @@
 #include "../../World/Blocks/BlockRegistry.h"
 #include "../../World/Blocks/Block.h"
 #include "../../World/Chunk/Chunk.h"
+#include "../../World/Chunk/PaddedChunk.h"
 #include "IMeshGenerator.h"
 #include <vector>
 #include "../../EventSystem/EventDispatcher.h"
@@ -113,7 +114,19 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 		return;
 	}
 
-	m_meshThreadPool.enqueueTask([this, chunkPosition]() {
+	ChunkNeighborhood chunkNeighborhood;
+
+	chunkNeighborhood.centre = m_world->getChunk(chunkPosition);
+	chunkNeighborhood.top = m_world->getChunk(chunkPosition + Directions::Up);
+	chunkNeighborhood.bottom = m_world->getChunk(chunkPosition + Directions::Down);
+	chunkNeighborhood.left = m_world->getChunk(chunkPosition + Directions::Left);
+	chunkNeighborhood.right = m_world->getChunk(chunkPosition + Directions::Right);
+	chunkNeighborhood.front = m_world->getChunk(chunkPosition + Directions::Front);
+	chunkNeighborhood.back = m_world->getChunk(chunkPosition + Directions::Back);
+
+	PaddedChunk paddedChunk(chunkNeighborhood);
+
+	m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
 		auto mesh = std::make_shared<ChunkMesh>(m_textureAtlas);
 
 		auto& blockRegistry = BlockRegistry::getInstance();
@@ -121,11 +134,20 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 		for (int x = 0; x < Chunk::WIDTH; x++) {
 			for (int y = 0; y < Chunk::WIDTH; y++) {
 				for (int z = 0; z < Chunk::WIDTH; z++) {
-					Vector3 blockPosition = (chunkPosition * Chunk::WIDTH) + Vector3(x, y, z);
-					Block_ID blockID = m_world->getBlockIDAt(blockPosition);
-					const auto& block = blockRegistry.getBlockFromID(blockID);
-					mesh->setCurrentOrigin({x, y, z});
-					block.getMeshGenerator()->generateMesh(*mesh, *m_world, blockPosition);
+					Vector3 blockPosition = { x, y, z };
+
+					Neighborhood neighborhood;
+					neighborhood.centre = paddedChunk.getNode(blockPosition);
+					neighborhood.top = paddedChunk.getNode(blockPosition + Directions::Up);
+					neighborhood.bottom = paddedChunk.getNode(blockPosition + Directions::Down);
+					neighborhood.front = paddedChunk.getNode(blockPosition + Directions::Front);
+					neighborhood.back = paddedChunk.getNode(blockPosition + Directions::Back);
+					neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
+					neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
+
+					const Block& block = blockRegistry.getBlockFromID(neighborhood.centre.getBlockID());
+					mesh->setCurrentOrigin(blockPosition);
+					block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
 				}
 			}
 		}

@@ -49,7 +49,9 @@
     <ClCompile Include="src\Utilities\ThreadPool.cpp" />
     <ClCompile Include="src\World\Blocks\Block.cpp" />
     <ClCompile Include="src\World\Blocks\BlockRegistry.cpp" />
+    <ClCompile Include="src\World\Chunk\ChunkNode.cpp" />
     <ClCompile Include="src\World\Chunk\MetaChunk.cpp" />
+    <ClCompile Include="src\World\Chunk\PaddedChunk.cpp" />
     <ClCompile Include="src\World\Generation\Biome\Biome.cpp" />
     <ClCompile Include="src\World\Generation\Biome\BiomeGeneratorCache.cpp" />
     <ClCompile Include="src\World\Generation\Biome\BiomeMap.cpp" />
@@ -111,7 +113,9 @@
     <ClInclude Include="src\World\Blocks\Block.h" />
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
+    <ClInclude Include="src\World\Chunk\ChunkNode.h" />
     <ClInclude Include="src\World\Chunk\MetaChunk.h" />
+    <ClInclude Include="src\World\Chunk\PaddedChunk.h" />
     <ClInclude Include="src\World\Events\BlockModifiedEvent.h" />
     <ClInclude Include="src\World\Generation\Biome\Biome.h" />
     <ClInclude Include="src\World\Generation\Biome\BiomeDefs.h" />

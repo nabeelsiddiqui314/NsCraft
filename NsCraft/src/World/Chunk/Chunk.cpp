@@ -6,7 +6,7 @@
 Chunk::Chunk() : Chunk(0) {}
 
 Chunk::Chunk(Block_ID blockID) : m_opaqueBlockCount(0) {
-	m_blocks.fill(blockID);
+	m_nodes.fill(blockID);
 
 	auto& blockRegistry = BlockRegistry::getInstance();
 	auto& block = blockRegistry.getBlockFromID(blockID);
@@ -18,10 +18,10 @@ Chunk::Chunk(Block_ID blockID) : m_opaqueBlockCount(0) {
 
 void Chunk::setBlock(const Vector3& position, Block_ID blockID) {
 	std::size_t index = getIndex(position);
-	Block_ID previousBlockID = m_blocks[index];
+	Block_ID previousBlockID = m_nodes[index].getBlockID();
 
 	if (previousBlockID != blockID) {
-		m_blocks[index] = blockID;
+		m_nodes[index].setBlockID(blockID);
 
 		auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -38,23 +38,27 @@ void Chunk::setBlock(const Vector3& position, Block_ID blockID) {
 }
 
 Block_ID Chunk::getBlock(const Vector3& position) const {
-	return m_blocks[getIndex(position)];
+	return m_nodes[getIndex(position)].getBlockID();
 }
 
 void Chunk::setSkyLight(const Vector3& position, std::uint8_t value) {
-	m_lightMap[getIndex(position)].setSkyLight(value);
+	m_nodes[getIndex(position)].setSkyLight(value);
 }
 
 void Chunk::setNaturalLight(const Vector3& position, std::uint8_t value) {
-	m_lightMap[getIndex(position)].setNaturalLight(value);
+	m_nodes[getIndex(position)].setNaturalLight(value);
 }
 
 std::uint8_t Chunk::getSkyLight(const Vector3& position) const {
-	return m_lightMap[getIndex(position)].getSkyLight();
+	return m_nodes[getIndex(position)].getSkyLight();
 }
 
 std::uint8_t Chunk::getNaturalLight(const Vector3& position) const {
-	return m_lightMap[getIndex(position)].getNaturalLight();
+	return m_nodes[getIndex(position)].getNaturalLight();
+}
+
+ChunkNode Chunk::getNode(const Vector3& position) const {
+	return m_nodes[getIndex(position)];
 }
 
 

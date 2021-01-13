@@ -8,7 +8,7 @@ public:
 	CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture);
 	~CubeMeshGenerator() = default;
 public:
-	void generateMesh(ChunkMesh& mesh, const World& world, const Vector3& blockPosition) override;
+	void generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) override;
 private:
 	std::string m_topTexture;
 	std::string m_sideTexture;
