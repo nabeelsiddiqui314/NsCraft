@@ -40,6 +40,7 @@ public:
 	std::uint8_t getSkyLightAt(const Vector3& position) const;
 	std::uint8_t getNaturalLightAt(const Vector3& position) const;
 
+	bool isChunkFullyInvisible(const Vector3& position) const;
 	bool isChunkFullyOpaque(const Vector3& position) const;
 	
 	int getMaxHeight() const;

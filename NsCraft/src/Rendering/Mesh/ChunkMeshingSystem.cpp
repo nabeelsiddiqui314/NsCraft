@@ -104,6 +104,10 @@ void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
 }
 
 void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
+	if (m_world->isChunkFullyInvisible(chunkPosition)) {
+		return;
+	}
+
 	if (m_world->isChunkFullyOpaque(chunkPosition) &&
 		m_world->isChunkFullyOpaque(chunkPosition + Directions::Up) &&
 		m_world->isChunkFullyOpaque(chunkPosition + Directions::Down) &&
@@ -136,8 +140,16 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 				for (int z = 0; z < Chunk::WIDTH; z++) {
 					Vector3 blockPosition = { x, y, z };
 
+					ChunkNode currentNode = paddedChunk.getNode(blockPosition);
+
+					const Block& block = blockRegistry.getBlockFromID(currentNode.getBlockID());
+
+					if (block.isInvisible()) {
+						continue;
+					}
+
 					Neighborhood neighborhood;
-					neighborhood.centre = paddedChunk.getNode(blockPosition);
+					neighborhood.centre = currentNode;
 					neighborhood.top = paddedChunk.getNode(blockPosition + Directions::Up);
 					neighborhood.bottom = paddedChunk.getNode(blockPosition + Directions::Down);
 					neighborhood.front = paddedChunk.getNode(blockPosition + Directions::Front);
@@ -145,7 +157,6 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 					neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
 					neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
 
-					const Block& block = blockRegistry.getBlockFromID(neighborhood.centre.getBlockID());
 					mesh->setCurrentOrigin(blockPosition);
 					block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
 				}

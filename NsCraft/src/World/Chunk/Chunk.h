@@ -23,10 +23,12 @@ public:
 
 	ChunkNode getNode(const Vector3& position) const;
 
+	bool isFullyInvisible() const;
 	bool isFullyOpaque() const;
 private:
 	std::size_t getIndex(const Vector3& position) const;
 private:
 	std::array<ChunkNode, WIDTH * WIDTH * WIDTH> m_nodes;
+	std::uint32_t m_invisibleBlockCount;
 	std::uint32_t m_opaqueBlockCount;
 };

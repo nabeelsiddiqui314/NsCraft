@@ -11,6 +11,9 @@ Chunk::Chunk(Block_ID blockID) : m_opaqueBlockCount(0) {
 	auto& blockRegistry = BlockRegistry::getInstance();
 	auto& block = blockRegistry.getBlockFromID(blockID);
 
+	if (block.isInvisible()) {
+		m_invisibleBlockCount = WIDTH * WIDTH * WIDTH;
+	}
 	if (block.isCompletelyOpaque()) {
 		m_opaqueBlockCount = WIDTH * WIDTH * WIDTH;
 	}
@@ -27,6 +30,14 @@ void Chunk::setBlock(const Vector3& position, Block_ID blockID) {
 
 		auto& previousBlock = blockRegistry.getBlockFromID(previousBlockID);
 		auto& block = blockRegistry.getBlockFromID(blockID);
+
+
+		if (previousBlock.isInvisible() && !block.isInvisible()) {
+			m_invisibleBlockCount--;
+		}
+		else if (!previousBlock.isInvisible() && block.isInvisible()) {
+			m_invisibleBlockCount++;
+		}
 
 		if (previousBlock.isCompletelyOpaque() && !block.isCompletelyOpaque()) {
 			m_opaqueBlockCount--;
@@ -61,6 +72,10 @@ ChunkNode Chunk::getNode(const Vector3& position) const {
 	return m_nodes[getIndex(position)];
 }
 
+
+bool Chunk::isFullyInvisible() const {
+	return m_invisibleBlockCount == WIDTH * WIDTH * WIDTH;
+}
 
 bool Chunk::isFullyOpaque() const {
 	return m_opaqueBlockCount == WIDTH * WIDTH * WIDTH;

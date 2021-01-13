@@ -101,7 +101,6 @@
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h" />
     <ClInclude Include="src\Rendering\Mesh\CubeFaces.h" />
     <ClInclude Include="src\Rendering\Mesh\CubeMeshGenerator.h" />
-    <ClInclude Include="src\Rendering\Mesh\EmptyMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
     <ClInclude Include="src\Rendering\Texture\TextureAtlas.h" />

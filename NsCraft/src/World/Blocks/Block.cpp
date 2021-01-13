@@ -1,11 +1,10 @@
 #include "Block.h"
-#include "../../Rendering/Mesh/EmptyMeshGenerator.h"
 #include "../../Lighting/LightDefs.h"
 
 Block::Block()
-	: m_meshGenerator(std::make_shared<EmptyMeshGenerator>()),
-      m_opacity(0),
-      m_luminocity(0) {}
+	: m_opacity(0),
+      m_luminocity(0) {
+}
 
 void Block::setMeshGenerator(const MeshGeneratorPtr& meshGenerator) {
 	m_meshGenerator = meshGenerator;
@@ -21,6 +20,10 @@ void Block::setOpacity(std::uint8_t opacity) {
 
 std::uint8_t Block::getOpacity() const {
 	return m_opacity;
+}
+
+bool Block::isInvisible() const {
+	return !m_meshGenerator;
 }
 
 bool Block::isCompletelyOpaque() const {

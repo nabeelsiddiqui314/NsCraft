@@ -166,6 +166,14 @@ std::uint8_t World::getNaturalLightAt(const Vector3& position) const {
 	return 0;
 }
 
+bool World::isChunkFullyInvisible(const Vector3& position) const {
+	if (doesChunkExist(position)) {
+		return m_chunkMap.at(position)->isFullyInvisible();
+	}
+
+	return true;
+}
+
 bool World::isChunkFullyOpaque(const Vector3& position) const {
 	if (doesChunkExist(position)) {
 		return m_chunkMap.at(position)->isFullyOpaque();
