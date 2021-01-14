@@ -8,6 +8,7 @@ class ChunkNode {
 public:
 	ChunkNode();
 	ChunkNode(Block_ID blockID);
+	~ChunkNode() = default;
 public:
 	void setBlockID(Block_ID blockID);
 	Block_ID getBlockID() const;
