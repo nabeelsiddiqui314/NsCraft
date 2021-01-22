@@ -4,9 +4,25 @@
 #include "../../../Math/SimplexNoise.h"
 #include "BiomeDefs.h"
 
+struct BlockLayer {
+	BlockLayer() = default;
+
+	// To make it easier to add elements to the initializer list
+	BlockLayer(Block_ID _block) : block(_block) {}
+	BlockLayer(Block_ID _block, int _height) : block(_block), height(_height) {}
+
+	Block_ID block = 0;
+	int height = 1;
+};
+
+
 struct ColumnComposition {
-	Block_ID surfaceBlock;
-	std::vector<std::pair<Block_ID, int>> middleBlocks;
+	ColumnComposition() = default;
+
+	// Composition can be set equal to an initializer list due to implicit conversion
+	ColumnComposition(const std::initializer_list<BlockLayer>& _layers) : layers(_layers) {}
+
+	std::vector<BlockLayer> layers;
 };
 
 class Biome {

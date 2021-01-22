@@ -82,13 +82,9 @@ TestState::TestState()
 		biome.setNoiseProperties(prop);
 
 		ColumnComposition composition;
-		composition.surfaceBlock = blockRegistry.getBlockIDFromName("grass");
-
-		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("dirt"), 2},
-									 {blockRegistry.getBlockIDFromName("sand"), 3},
-									 {blockRegistry.getBlockIDFromName("dirt"), 4},
-									 {blockRegistry.getBlockIDFromName("sand"), 2},
-			{blockRegistry.getBlockIDFromName("bedrock"), 1 } };
+		composition = { blockRegistry.getBlockIDFromName("grass"),
+						{ blockRegistry.getBlockIDFromName("dirt"), 3 },
+						blockRegistry.getBlockIDFromName("bedrock") };
 
 		biome.setComposition(composition);
 	}
@@ -114,10 +110,9 @@ TestState::TestState()
 		biome.setNoiseProperties(prop);
 
 		ColumnComposition composition;
-		composition.surfaceBlock = blockRegistry.getBlockIDFromName("sand");
-
-		composition.middleBlocks = { {blockRegistry.getBlockIDFromName("sand"), 2},
-									 {blockRegistry.getBlockIDFromName("dirt"), 1} };
+		composition = {	{ blockRegistry.getBlockIDFromName("sand"), 3 },
+						{ blockRegistry.getBlockIDFromName("dirt"), 5 },
+						blockRegistry.getBlockIDFromName("bedrock") };
 
 		biome.setComposition(composition);
 

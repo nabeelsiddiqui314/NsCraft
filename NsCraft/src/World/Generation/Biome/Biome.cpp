@@ -49,21 +49,20 @@ const NoiseProperties& Biome::getNoiseProperties() const {
 }
 
 Block_ID Biome::getBlockAtDepth(int depth) const {
-	if (depth == 0) {
-		return m_composition.surfaceBlock;
-	}
+	if (m_composition.layers.size() == 0)
+		return 0;
 
-	int totalBlockDepth = 1;
+	int totalBlockDepth = 0;
 
-	for (auto& [block, blockDepth] : m_composition.middleBlocks) {
-		totalBlockDepth += blockDepth;
+	for (auto& layer : m_composition.layers) {
+		totalBlockDepth += layer.height;
 
 		if (depth < totalBlockDepth) {
-			return block;
+			return layer.block;
 		}
 	}
 
-	auto& [block, blockDepth] = m_composition.middleBlocks.back();
+	auto& layer = m_composition.layers.back();
 
-	return block;
+	return layer.block;
 }
