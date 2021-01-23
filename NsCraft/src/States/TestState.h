@@ -24,7 +24,7 @@ public:
 private:
 	Camera m_camera;
 	TextureAtlas m_textureAtlas;
-	ChunkRenderer m_chunkRenderer;
+	std::unique_ptr<ChunkRenderer> m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
 	std::shared_ptr<BlockLightingSystem> m_blockLightingSystem;

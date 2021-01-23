@@ -1,6 +1,7 @@
 #include "TestState.h"
 #include "SFML/Window/Event.hpp"
 #include "StateMachine.h"
+#include <GL/glew.h>
 
 #include "../World/Chunk/World.h"
 #include "../World/Blocks/BlockRegistry.h"
@@ -32,7 +33,10 @@ TestState::TestState()
 	m_textureAtlas.addTexture("res/grass_side.png", "grass_side");
 	m_textureAtlas.addTexture("res/bedrock.png", "bedrock");
 	m_textureAtlas.addTexture("res/sand.png", "sand");
-	m_textureAtlas.generateAtlas();
+
+	auto texture = m_textureAtlas.generateAtlas();
+
+	m_chunkRenderer = std::make_unique<ChunkRenderer>(texture);
 
 	auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -125,11 +129,13 @@ TestState::TestState()
 	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(biomeGen, shapeGen, composer);
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
-	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, m_chunkRenderer);
+	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, m_textureAtlas, *m_chunkRenderer);
 	m_blockLightingSystem = std::make_shared<BlockLightingSystem>(m_world);
 
 	m_world->registerListener(m_chunkMeshingSystem);
 	m_world->registerListener(m_blockLightingSystem);
+
+	Renderer::init();
 }
 
 bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
@@ -240,8 +246,7 @@ void TestState::render() {
 
 	Renderer::begin(m_camera);
 
-	m_textureAtlas.bindTexture();
-	m_chunkRenderer.renderChunks(m_camera.getFrustum());
+	m_chunkRenderer->renderChunks(m_camera.getFrustum());
 }
 
 bool TestState::allowUpdateBelow() {

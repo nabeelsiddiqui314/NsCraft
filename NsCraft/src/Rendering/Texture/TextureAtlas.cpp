@@ -1,8 +1,9 @@
 #include "TextureAtlas.h"
 #include <math.h>
+#include "../../OpenGL/Texture.h"
 
 TextureAtlas::TextureAtlas(std::uint32_t textureWidth) 
-	: m_textureWidth(textureWidth) {}
+	: m_textureWidth(textureWidth), m_texture(std::make_shared<Texture>()) {}
 
 bool TextureAtlas::addTexture(const std::string& textureFilepath, const std::string& textureName) {
 	sf::Image texture;
@@ -24,7 +25,7 @@ bool TextureAtlas::addTexture(const std::string& textureFilepath, const std::str
 	return false;
 }
 
-void TextureAtlas::generateAtlas() {
+std::shared_ptr<Texture> TextureAtlas::generateAtlas() {
 	auto gridWidth = getNearestSquare(m_textureQueue.size());
 	auto textureAtlasWidth = getNearestPowerOf2(gridWidth * m_textureWidth);
 
@@ -51,19 +52,13 @@ void TextureAtlas::generateAtlas() {
 		m_textureQueue.pop();
 	}
 
-	m_texture.loadFromImage(m_textureAtlasBuffer);
+	m_texture->loadFromImage(m_textureAtlasBuffer);
+
+	return m_texture;
 }
 
 TextureCoords TextureAtlas::getTextureCoordinates(const std::string& textureName) const {
 	return m_textureCoordinateMap.at(textureName);
-}
-
-void TextureAtlas::bindTexture() {
-	m_texture.bind();
-}
-
-void TextureAtlas::unbindTexture() {
-	m_texture.unbind();
 }
 
 std::uint32_t TextureAtlas::getNearestSquare(std::uint32_t value) const {

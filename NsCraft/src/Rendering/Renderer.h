@@ -5,7 +5,7 @@
 
 class Camera;
 class VertexArray;
-class Shader;
+class Material;
 
 class Renderer {
 private:
@@ -14,9 +14,11 @@ private:
 		glm::mat4 projection;
 	};
 public:
+	static void init();
+
 	static void resizeViewport(std::uint32_t windowWidth, std::uint32_t windowHeight);
 	static void begin(const Camera& camera);
-	static void render(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Shader>& shader, const glm::mat4& modelMatrix = glm::mat4(1.0f));
+	static void render(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, const glm::mat4& modelMatrix = glm::mat4(1.0f));
 private:
 	static CameraMatrices s_cameraMatrices;
 };

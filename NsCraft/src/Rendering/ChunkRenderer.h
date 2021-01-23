@@ -7,15 +7,16 @@
 class Frustum;
 class ChunkMesh;
 class VertexArray;
-class Shader;
+class Material;
+class Texture;
 
 class ChunkRenderer {
 private:
 	typedef std::shared_ptr<VertexArray> VaoPtr;
 	typedef std::shared_ptr<ChunkMesh> ChunkMeshPtr;
-	typedef std::shared_ptr<Shader> ShaderPtr;
+	typedef std::shared_ptr<Material> MaterialPtr;
 public:
-	ChunkRenderer();
+	ChunkRenderer(const std::shared_ptr<Texture>& texture);
 	~ChunkRenderer() = default;
 public:
 	void addMesh(const Vector3& position, const ChunkMeshPtr& mesh);
@@ -26,5 +27,5 @@ private:
 private:
 	std::unordered_map<Vector3, VaoPtr> m_renderableChunkMap;
 	std::queue<std::pair<Vector3, ChunkMeshPtr>> m_meshToLoad;
-	std::shared_ptr<Shader> m_chunkShader;
+	MaterialPtr m_chunkMaterial;
 };
