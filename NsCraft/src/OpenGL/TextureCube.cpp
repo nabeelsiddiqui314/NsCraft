@@ -14,7 +14,7 @@ TextureCube::TextureCube(const FaceTextures& textures) {
 	texturesVec.emplace_back(textures.back);
 
 	glGenTextures(1, &m_textureHandle);
-	bind();
+	glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureHandle);
 
 	for (std::uint32_t i = 0; i < texturesVec.size(); i++) {
 		sf::Image imageBuffer;
