@@ -16,7 +16,7 @@ public:
 	TextureCube(const FaceTextures& textures);
 	~TextureCube();
 public:
-	void bind();
+	void bind(std::uint8_t slot = 0);
 	void unbind();
 private:
 	GLuint m_textureHandle;

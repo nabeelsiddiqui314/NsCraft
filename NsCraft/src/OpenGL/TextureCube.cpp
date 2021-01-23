@@ -34,7 +34,8 @@ TextureCube::~TextureCube() {
 	glDeleteTextures(1, &m_textureHandle);
 }
 
-void TextureCube::bind() {
+void TextureCube::bind(std::uint8_t slot) {
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, m_textureHandle);
 }
 
