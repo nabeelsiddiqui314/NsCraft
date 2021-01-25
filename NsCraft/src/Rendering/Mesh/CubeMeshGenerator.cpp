@@ -2,7 +2,7 @@
 #include "ChunkMesh.h"
 #include "../../World/Blocks/BlockRegistry.h"
 #include "../../World/Blocks/Block.h"
-#include "CubeFaces.h"
+#include "../../Geometry/BlockFaces.h"
 
 CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture)
 	: m_topTexture(topTexture),
@@ -10,7 +10,7 @@ CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::s
       m_bottomTexture(bottomTexture) {}
 
 void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) {
-	auto tryAddFace = [&](ChunkNode node, const std::string& texture, const Quad& face) {
+	auto tryAddFace = [&](ChunkNode node, const std::string& texture, const BlockFace& face) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		const auto& neighborBlock = blockRegistry.getBlockFromID(node.getBlockID());
 
@@ -19,10 +19,10 @@ void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const Neighborhood& neighb
 		}
 	};
 
-	tryAddFace(neighborhood.top,    m_topTexture,    CubeFaces::Top);
-	tryAddFace(neighborhood.bottom, m_bottomTexture, CubeFaces::Bottom);
-	tryAddFace(neighborhood.right,  m_sideTexture,   CubeFaces::Right);
-	tryAddFace(neighborhood.left,   m_sideTexture,   CubeFaces::Left);
-	tryAddFace(neighborhood.front,  m_sideTexture,   CubeFaces::Front);
-	tryAddFace(neighborhood.back,   m_sideTexture,   CubeFaces::Back);
+	tryAddFace(neighborhood.top,    m_topTexture,    BlockFaces::Top);
+	tryAddFace(neighborhood.bottom, m_bottomTexture, BlockFaces::Bottom);
+	tryAddFace(neighborhood.right,  m_sideTexture,   BlockFaces::Right);
+	tryAddFace(neighborhood.left,   m_sideTexture,   BlockFaces::Left);
+	tryAddFace(neighborhood.front,  m_sideTexture,   BlockFaces::Front);
+	tryAddFace(neighborhood.back,   m_sideTexture,   BlockFaces::Back);
 }

@@ -79,6 +79,7 @@
     <ClInclude Include="src\EventSystem\EventDispatcher.h" />
     <ClInclude Include="src\EventSystem\IEventListener.h" />
     <ClInclude Include="src\EventSystem\Subject.h" />
+    <ClInclude Include="src\Geometry\BlockFaces.h" />
     <ClInclude Include="src\Lighting\BlockLightingSystem.h" />
     <ClInclude Include="src\Lighting\LightDefs.h" />
     <ClInclude Include="src\Math\AABB.h" />

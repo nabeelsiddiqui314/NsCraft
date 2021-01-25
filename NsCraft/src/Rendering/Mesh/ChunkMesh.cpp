@@ -13,14 +13,14 @@ void ChunkMesh::setCurrentOrigin(const Vector3& origin) {
 	m_origin = origin;
 }
 
-void ChunkMesh::addQuad(const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight) {
+void ChunkMesh::addQuad(const std::string& texture, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
-		m_vertices.emplace_back(m_origin.x + quad.vertices[faceIndex++]);
-		m_vertices.emplace_back(m_origin.y + quad.vertices[faceIndex++]);
-		m_vertices.emplace_back(m_origin.z + quad.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.x + face.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.y + face.vertices[faceIndex++]);
+		m_vertices.emplace_back(m_origin.z + face.vertices[faceIndex++]);
 
-		m_faceLighting.emplace_back(quad.faceLight);
+		m_faceLighting.emplace_back(face.faceLight);
 
 		float skyLightNormalized = (float)skyLight / 16.0f;
 		float naturalLightNormalized = (float)naturalLight / 16.0f;
@@ -38,14 +38,10 @@ void ChunkMesh::addQuad(const std::string& texture, const Quad& quad, std::uint8
 			textureCoords.bottomLeftU, textureCoords.bottomLeftV
 		});
 
-	m_indices.insert(m_indices.end(), {
-			m_currentIndex,
-			m_currentIndex + 1,
-			m_currentIndex + 2,
-			m_currentIndex,
-			m_currentIndex + 2,
-			m_currentIndex + 3
-		});
+	for (auto& index : BlockFaces::indicesOrder) {
+		m_indices.emplace_back(m_currentIndex + index);
+	}
+
 	m_currentIndex += 4;
 }
 

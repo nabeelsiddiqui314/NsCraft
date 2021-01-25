@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <GL/glew.h>
-#include "Quad.h"
+#include "../../Geometry/BlockFaces.h"
 #include "../../OpenGL/VertexArray.h"
 #include "../../Math/Vector3.h"
 
@@ -17,7 +17,7 @@ public:
 	ChunkMesh& operator=(const ChunkMesh&) = delete;
 public:
 	void setCurrentOrigin(const Vector3& origin);
-	void addQuad(const std::string& texture, const Quad& quad, std::uint8_t skyLight, std::uint8_t naturalLight);
+	void addQuad(const std::string& texture, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight);
 
 	bool isEmpty() const;
 	std::shared_ptr<VertexArray> generateChunkVAO() const;
