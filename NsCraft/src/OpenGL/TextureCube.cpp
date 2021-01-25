@@ -19,8 +19,8 @@ TextureCube::TextureCube(const FaceTextures& textures) {
 	for (std::uint32_t i = 0; i < texturesVec.size(); i++) {
 		sf::Image imageBuffer;
 		imageBuffer.loadFromFile(texturesVec[i]);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, imageBuffer.getSize().x, imageBuffer.getSize().y,
-			         0, GL_RGB, GL_UNSIGNED_BYTE, imageBuffer.getPixelsPtr());
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, imageBuffer.getSize().x, imageBuffer.getSize().y,
+			         0, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer.getPixelsPtr());
 	}
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
