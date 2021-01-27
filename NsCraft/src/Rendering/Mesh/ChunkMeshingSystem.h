@@ -5,7 +5,6 @@
 #include "../../Utilities/ThreadPool.h"
 
 class World;
-class TextureAtlas;
 class ChunkRenderer;
 struct Vector3;
 struct ChunkLoadEvent;
@@ -14,7 +13,7 @@ struct ChunkModifyEvent;
 
 class ChunkMeshingSystem : public IEventListener {
 public:
-	ChunkMeshingSystem(const std::shared_ptr<World>& world, const TextureAtlas& textureAtlas, ChunkRenderer& renderer);
+	ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer);
 	~ChunkMeshingSystem() = default;
 public:
 	void onEvent(IEvent& event) override;
@@ -29,7 +28,6 @@ private:
 	void meshChunk(const Vector3& chunkPosition);
 private:
 	std::shared_ptr<World> m_world;
-	const TextureAtlas& m_textureAtlas;
 	ChunkRenderer& m_renderer;
 	ThreadPool m_meshThreadPool;
 	std::set<Vector3> m_chunksToMesh;

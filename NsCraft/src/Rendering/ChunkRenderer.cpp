@@ -14,7 +14,7 @@ ChunkRenderer::ChunkRenderer(const std::shared_ptr<Texture>& texture) {
 	auto shader = std::make_shared<Shader>("shaders/chunkShader.vs", "shaders/chunkShader.fs");
 	m_chunkMaterial = std::make_shared<Material>(shader);
 	m_chunkMaterial->setCullMode(CullMode::BACK);
-	m_chunkMaterial->setTexture("u_texture", texture);
+	m_chunkMaterial->setTexture("u_blocksTexture", texture);
 }
 
 void ChunkRenderer::addMesh(const Vector3& position, const ChunkMeshPtr& mesh) {

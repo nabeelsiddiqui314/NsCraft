@@ -3,17 +3,15 @@
 #include "../Texture/TextureCoords.h"
 #include "../../OpenGL/VertexBuffer.h"
 #include "../../OpenGL/IndexBuffer.h"
-#include "../Texture/TextureAtlas.h"
 
-ChunkMesh::ChunkMesh(const TextureAtlas& textureAtlas)
-	: m_textureAtlas(textureAtlas),
-	  m_currentIndex(0) {}
+ChunkMesh::ChunkMesh()
+	: m_currentIndex(0) {}
 
 void ChunkMesh::setCurrentOrigin(const Vector3& origin) {
 	m_origin = origin;
 }
 
-void ChunkMesh::addQuad(const std::string& texture, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight) {
+void ChunkMesh::addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
 		m_vertices.emplace_back(m_origin.x + face.vertices[faceIndex++]);
@@ -27,15 +25,14 @@ void ChunkMesh::addQuad(const std::string& texture, const BlockFace& face, std::
 
 		m_skyLight.emplace_back(skyLightNormalized);
 		m_naturalLight.emplace_back(naturalLightNormalized);
+		m_textureIndices.emplace_back(textureIndex);
 	}
 
-	TextureCoords textureCoords = m_textureAtlas.getTextureCoordinates(texture);
-
 	m_textureCoords.insert(m_textureCoords.end(), {
-			textureCoords.bottomLeftU, textureCoords.topRightV,
-			textureCoords.topRightU  , textureCoords.topRightV,
-			textureCoords.topRightU  , textureCoords.bottomLeftV,
-			textureCoords.bottomLeftU, textureCoords.bottomLeftV
+			0.0f, 1.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f,
+			0.0f, 0.0f
 		});
 
 	for (auto& index : BlockFaces::indicesOrder) {
@@ -55,6 +52,7 @@ std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 
 	auto verticesBuffer = std::make_shared<VertexBuffer>(&m_vertices.front(), m_vertices.size());
 	auto textureCoordBuffer = std::make_shared<VertexBuffer>(&m_textureCoords.front(), m_textureCoords.size());
+	auto textureIndexBuffer = std::make_shared<VertexBuffer>(&m_textureIndices.front(), m_textureIndices.size());
 	auto faceLightBuffer = std::make_shared<VertexBuffer>(&m_faceLighting.front(), m_faceLighting.size());
 	auto skyLightBuffer = std::make_shared<VertexBuffer>(&m_skyLight.front(), m_skyLight.size());
 	auto naturalLightBuffer = std::make_shared<VertexBuffer>(&m_naturalLight.front(), m_naturalLight.size());
@@ -62,6 +60,7 @@ std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 
 	vao->addVertexBuffer(verticesBuffer, 3);
 	vao->addVertexBuffer(textureCoordBuffer, 2);
+	vao->addVertexBuffer(textureIndexBuffer, 1);
 	vao->addVertexBuffer(faceLightBuffer, 1);
 	vao->addVertexBuffer(skyLightBuffer, 1);
 	vao->addVertexBuffer(naturalLightBuffer, 1);

@@ -1,16 +1,17 @@
 #pragma once
 #include <memory>
 #include <string>
+#include <GL/glew.h>
 #include "IMeshGenerator.h"
 
 class CubeMeshGenerator : public IMeshGenerator {
 public:
-	CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture);
+	CubeMeshGenerator(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture);
 	~CubeMeshGenerator() = default;
 public:
 	void generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) override;
 private:
-	std::string m_topTexture;
-	std::string m_sideTexture;
-	std::string m_bottomTexture;
+	GLuint m_topTexture;
+	GLuint m_sideTexture;
+	GLuint m_bottomTexture;
 };

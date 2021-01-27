@@ -4,7 +4,6 @@
 #include "../Rendering/Camera/Camera.h"
 #include <SFML/System/Vector2.hpp>
 #include "../Rendering/ChunkRenderer.h"
-#include "../Rendering/Texture/TextureAtlas.h"
 
 class World;
 class ChunkMeshingSystem;
@@ -23,7 +22,6 @@ public:
 	bool allowRenderingBelow() override;
 private:
 	Camera m_camera;
-	TextureAtlas m_textureAtlas;
 	std::unique_ptr<ChunkRenderer> m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;

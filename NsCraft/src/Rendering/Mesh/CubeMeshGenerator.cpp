@@ -4,13 +4,13 @@
 #include "../../World/Blocks/Block.h"
 #include "../../Geometry/BlockFaces.h"
 
-CubeMeshGenerator::CubeMeshGenerator(const std::string& topTexture, const std::string& sideTexture, const std::string& bottomTexture)
+CubeMeshGenerator::CubeMeshGenerator(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture)
 	: m_topTexture(topTexture),
       m_sideTexture(sideTexture),
       m_bottomTexture(bottomTexture) {}
 
 void CubeMeshGenerator::generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) {
-	auto tryAddFace = [&](ChunkNode node, const std::string& texture, const BlockFace& face) {
+	auto tryAddFace = [&](ChunkNode node, GLuint texture, const BlockFace& face) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		const auto& neighborBlock = blockRegistry.getBlockFromID(node.getBlockID());
 

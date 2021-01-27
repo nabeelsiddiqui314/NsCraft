@@ -15,9 +15,8 @@
 #include <vector>
 #include "../../EventSystem/EventDispatcher.h"
 
-ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, const TextureAtlas& textureAtlas, ChunkRenderer& renderer)
-	: m_world(world), 
-	  m_textureAtlas(textureAtlas),
+ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer)
+	: m_world(world),
       m_renderer(renderer),
 	  m_meshThreadPool(1)
       {}
@@ -131,7 +130,7 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 	PaddedChunk paddedChunk(chunkNeighborhood);
 
 	m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
-		auto mesh = std::make_shared<ChunkMesh>(m_textureAtlas);
+		auto mesh = std::make_shared<ChunkMesh>();
 
 		auto& blockRegistry = BlockRegistry::getInstance();
 
