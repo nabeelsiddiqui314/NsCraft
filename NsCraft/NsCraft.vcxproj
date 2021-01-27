@@ -25,6 +25,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math\AABB.cpp" />
     <ClCompile Include="src\OpenGL\Material.cpp" />
+    <ClCompile Include="src\OpenGL\TextureArray.cpp" />
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
@@ -84,6 +85,7 @@
     <ClInclude Include="src\Lighting\LightDefs.h" />
     <ClInclude Include="src\Math\AABB.h" />
     <ClInclude Include="src\OpenGL\Material.h" />
+    <ClInclude Include="src\OpenGL\TextureArray.h" />
     <ClInclude Include="src\OpenGL\TextureCube.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
