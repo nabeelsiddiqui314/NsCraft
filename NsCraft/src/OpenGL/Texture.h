@@ -1,23 +1,11 @@
 #pragma once
 #include <GL/glew.h>
-#include <string>
 
-namespace sf {
-	class Image;
-}
-
-class Texture
-{
+class Texture {
 public:
-	Texture();
-	~Texture();
+	Texture() = default;
+	virtual ~Texture() = default;
 public:
-	void loadFromPath(const std::string& path);
-	void loadFromImage(const sf::Image& image);
-	void bind(std::uint8_t slot = 0);
-	void unbind();
-private:
-	void deleteTexture();
-private:
-	GLuint m_texture;
+	virtual void bind(GLuint slot = 0) = 0;
+	virtual void unbind() = 0;
 };

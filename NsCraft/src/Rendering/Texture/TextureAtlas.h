@@ -6,7 +6,7 @@
 #include <SFML/Graphics/Image.hpp>
 #include "TextureCoords.h"
 
-class Texture;
+class Texture2D;
 
 // Only supports square textures of equal width for now
 
@@ -16,7 +16,7 @@ public:
 	~TextureAtlas() = default;
 public:
 	bool addTexture(const std::string& textureFilepath, const std::string& textureName);
-	std::shared_ptr<Texture> generateAtlas();
+	std::shared_ptr<Texture2D> generateAtlas();
 
 	TextureCoords getTextureCoordinates(const std::string& textureName) const;
 private:
@@ -24,7 +24,7 @@ private:
 	std::uint32_t getNearestPowerOf2(std::uint32_t value) const;
 private:
 	const std::uint32_t m_textureWidth;
-	std::shared_ptr<Texture> m_texture;
+	std::shared_ptr<Texture2D> m_texture;
 
 	sf::Image m_textureAtlasBuffer;
 	std::queue<std::pair<std::string, sf::Image>> m_textureQueue;

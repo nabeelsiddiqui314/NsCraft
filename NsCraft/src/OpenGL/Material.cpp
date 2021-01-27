@@ -22,10 +22,6 @@ void Material::setTexture(const std::string& name, const std::shared_ptr<Texture
 	m_textures[name] = texture;
 }
 
-void Material::setTexture(const std::string& name, const std::shared_ptr<TextureCube>& texture) {
-	m_textureCubes[name] = texture;
-}
-
 void Material::bind() {
 	m_shader->bind();
 
@@ -44,12 +40,6 @@ void Material::bind() {
 	std::uint8_t textureUnit = 0;
 
 	for (auto& [name, texture] : m_textures) {
-		texture->bind(textureUnit);
-		m_shader->setUniform1i(name, textureUnit);
-		textureUnit++;
-	}
-
-	for (auto& [name, texture] : m_textureCubes) {
 		texture->bind(textureUnit);
 		m_shader->setUniform1i(name, textureUnit);
 		textureUnit++;

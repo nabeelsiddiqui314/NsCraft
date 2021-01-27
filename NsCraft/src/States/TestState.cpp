@@ -24,8 +24,9 @@
 #include "../World/Generation/Biome/Biome.h"
 #include "../Lighting/LightDefs.h"
 #include "../Rendering/Renderer.h"
+#include "../OpenGL/Texture2D.h"
 
-TestState::TestState()
+TestState::TestState() 
 	: m_camera(800.0f / 600.0f, 80.0f), 
 	  m_textureAtlas(16) {
 	m_textureAtlas.addTexture("res/dirt.png", "dirt");

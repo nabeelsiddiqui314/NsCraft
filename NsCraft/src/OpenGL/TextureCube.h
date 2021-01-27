@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <GL/glew.h>
+#include "Texture.h"
 
 struct FaceTextures {
 	std::string top;
@@ -11,13 +12,13 @@ struct FaceTextures {
 	std::string back;
 };
 
-class TextureCube {
+class TextureCube : public Texture {
 public:
 	TextureCube(const FaceTextures& textures);
 	~TextureCube();
 public:
-	void bind(std::uint8_t slot = 0);
-	void unbind();
+	void bind(GLuint slot = 0) override;
+	void unbind() override;
 private:
 	GLuint m_textureHandle;
 };

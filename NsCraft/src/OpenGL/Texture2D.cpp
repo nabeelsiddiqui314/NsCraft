@@ -1,17 +1,17 @@
-#include "Texture.h"
+#include "Texture2D.h"
 #include <SFML/Graphics/Image.hpp>
 
-Texture::Texture()
+Texture2D::Texture2D()
 	: m_texture(0)
 {}
 
-void Texture::loadFromPath(const std::string& path) {
+void Texture2D::loadFromPath(const std::string& path) {
 	sf::Image image;
 	image.loadFromFile(path);
 	loadFromImage(image);
 }
 
-void Texture::loadFromImage(const sf::Image& image) {
+void Texture2D::loadFromImage(const sf::Image& image) {
 	deleteTexture();
 
 	glGenTextures(1, &m_texture);
@@ -27,19 +27,19 @@ void Texture::loadFromImage(const sf::Image& image) {
 	unbind();
 }
 
-void Texture::bind(std::uint8_t slot) {
+void Texture2D::bind(GLuint slot) {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
-void Texture::unbind() {
+void Texture2D::unbind() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::deleteTexture() {
+void Texture2D::deleteTexture() {
 	glDeleteTextures(1, &m_texture);
 }
 
-Texture::~Texture() {
+Texture2D::~Texture2D() {
 	deleteTexture();
 }

@@ -37,7 +37,7 @@
     <ClCompile Include="src\Math\VoxelRaycast.cpp" />
     <ClCompile Include="src\OpenGL\IndexBuffer.cpp" />
     <ClCompile Include="src\OpenGL\Shader.cpp" />
-    <ClCompile Include="src\OpenGL\Texture.cpp" />
+    <ClCompile Include="src\OpenGL\Texture2D.cpp" />
     <ClCompile Include="src\OpenGL\VertexArray.cpp" />
     <ClCompile Include="src\OpenGL\VertexBuffer.cpp" />
     <ClCompile Include="src\Profiling\ScopeTimer.cpp" />
@@ -85,6 +85,7 @@
     <ClInclude Include="src\Lighting\LightDefs.h" />
     <ClInclude Include="src\Math\AABB.h" />
     <ClInclude Include="src\OpenGL\Material.h" />
+    <ClInclude Include="src\OpenGL\Texture.h" />
     <ClInclude Include="src\OpenGL\TextureArray.h" />
     <ClInclude Include="src\OpenGL\TextureCube.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
@@ -98,7 +99,7 @@
     <ClInclude Include="src\Math\VoxelRaycast.h" />
     <ClInclude Include="src\OpenGL\IndexBuffer.h" />
     <ClInclude Include="src\OpenGL\Shader.h" />
-    <ClInclude Include="src\OpenGL\Texture.h" />
+    <ClInclude Include="src\OpenGL\Texture2D.h" />
     <ClInclude Include="src\OpenGL\VertexArray.h" />
     <ClInclude Include="src\OpenGL\VertexBuffer.h" />
     <ClInclude Include="src\Profiling\ScopeTimer.h" />

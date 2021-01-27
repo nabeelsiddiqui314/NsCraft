@@ -3,8 +3,9 @@
 #include <string>
 #include <GL/glew.h>
 #include <vector>
+#include "Texture.h"
 
-class TextureArray {
+class TextureArray : public Texture {
 public:
 	TextureArray(std::uint32_t width, std::uint32_t height);
 	~TextureArray();
@@ -12,8 +13,8 @@ public:
 	GLuint addTexture(const std::string& filepath);
 	void generateArray();
 
-	void bind(std::uint8_t slot = 0);
-	void unbind();
+	void bind(GLuint slot = 0) override;
+	void unbind() override;
 private:
 	std::uint32_t m_width;
 	std::uint32_t m_height;

@@ -37,7 +37,7 @@ void TextureArray::generateArray() {
 	glTexParameteri(GL_TEXTURE_2D_ARRAY, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-void TextureArray::bind(std::uint8_t slot) {
+void TextureArray::bind(GLuint slot) {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D_ARRAY, m_textureArrayHandle);
 }

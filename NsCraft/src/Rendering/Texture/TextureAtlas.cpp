@@ -1,9 +1,9 @@
 #include "TextureAtlas.h"
 #include <math.h>
-#include "../../OpenGL/Texture.h"
+#include "../../OpenGL/Texture2D.h"
 
 TextureAtlas::TextureAtlas(std::uint32_t textureWidth) 
-	: m_textureWidth(textureWidth), m_texture(std::make_shared<Texture>()) {}
+	: m_textureWidth(textureWidth), m_texture(std::make_shared<Texture2D>()) {}
 
 bool TextureAtlas::addTexture(const std::string& textureFilepath, const std::string& textureName) {
 	sf::Image texture;
@@ -25,7 +25,7 @@ bool TextureAtlas::addTexture(const std::string& textureFilepath, const std::str
 	return false;
 }
 
-std::shared_ptr<Texture> TextureAtlas::generateAtlas() {
+std::shared_ptr<Texture2D> TextureAtlas::generateAtlas() {
 	auto gridWidth = getNearestSquare(m_textureQueue.size());
 	auto textureAtlasWidth = getNearestPowerOf2(gridWidth * m_textureWidth);
 

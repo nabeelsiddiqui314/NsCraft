@@ -6,7 +6,6 @@
 
 class Shader;
 class Texture;
-class TextureCube;
 class Renderer;
 
 enum class CullMode {
@@ -27,7 +26,6 @@ public:
 	void setVector(const std::string& name, const glm::vec4& vector);
 	
 	void setTexture(const std::string& name, const std::shared_ptr<Texture>& texture);
-	void setTexture(const std::string& name, const std::shared_ptr<TextureCube>& texture);
 	
 	void bind();
 
@@ -39,7 +37,6 @@ private:
 	std::unordered_map<std::string, glm::vec3> m_vec3Uniforms;
 	std::unordered_map<std::string, glm::vec4> m_vec4Uniforms;
 	std::unordered_map<std::string, std::shared_ptr<Texture>> m_textures;
-	std::unordered_map<std::string, std::shared_ptr<TextureCube>> m_textureCubes;
 
 	CullMode m_cullMode = CullMode::BACK;
 };
