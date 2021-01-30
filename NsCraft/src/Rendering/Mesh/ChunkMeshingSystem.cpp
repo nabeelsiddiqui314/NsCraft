@@ -103,66 +103,70 @@ void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
 }
 
 void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
-	if (m_world->isChunkFullyInvisible(chunkPosition)) {
-		return;
-	}
+	if (!m_world->isChunkFullyInvisible(chunkPosition) && !isChunkOccluded(chunkPosition)) { // optimization to prevent unnecessary processing
+		ChunkNeighborhood chunkNeighborhood;
 
-	if (m_world->isChunkFullyOpaque(chunkPosition) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Up) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Down) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Left) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Right) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Front) &&
-		m_world->isChunkFullyOpaque(chunkPosition + Directions::Back)) {
-		return;
-	}
+		chunkNeighborhood.centre = m_world->getChunk(chunkPosition);
+		chunkNeighborhood.top = m_world->getChunk(chunkPosition + Directions::Up);
+		chunkNeighborhood.bottom = m_world->getChunk(chunkPosition + Directions::Down);
+		chunkNeighborhood.left = m_world->getChunk(chunkPosition + Directions::Left);
+		chunkNeighborhood.right = m_world->getChunk(chunkPosition + Directions::Right);
+		chunkNeighborhood.front = m_world->getChunk(chunkPosition + Directions::Front);
+		chunkNeighborhood.back = m_world->getChunk(chunkPosition + Directions::Back);
 
-	ChunkNeighborhood chunkNeighborhood;
+		PaddedChunk paddedChunk(chunkNeighborhood);
 
-	chunkNeighborhood.centre = m_world->getChunk(chunkPosition);
-	chunkNeighborhood.top = m_world->getChunk(chunkPosition + Directions::Up);
-	chunkNeighborhood.bottom = m_world->getChunk(chunkPosition + Directions::Down);
-	chunkNeighborhood.left = m_world->getChunk(chunkPosition + Directions::Left);
-	chunkNeighborhood.right = m_world->getChunk(chunkPosition + Directions::Right);
-	chunkNeighborhood.front = m_world->getChunk(chunkPosition + Directions::Front);
-	chunkNeighborhood.back = m_world->getChunk(chunkPosition + Directions::Back);
+		m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
+			auto mesh = std::make_shared<ChunkMesh>();
 
-	PaddedChunk paddedChunk(chunkNeighborhood);
+			auto& blockRegistry = BlockRegistry::getInstance();
 
-	m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
-		auto mesh = std::make_shared<ChunkMesh>();
+			for (int x = 0; x < Chunk::WIDTH; x++) {
+				for (int y = 0; y < Chunk::WIDTH; y++) {
+					for (int z = 0; z < Chunk::WIDTH; z++) {
+						Vector3 blockPosition = { x, y, z };
 
-		auto& blockRegistry = BlockRegistry::getInstance();
+						ChunkNode currentNode = paddedChunk.getNode(blockPosition);
 
-		for (int x = 0; x < Chunk::WIDTH; x++) {
-			for (int y = 0; y < Chunk::WIDTH; y++) {
-				for (int z = 0; z < Chunk::WIDTH; z++) {
-					Vector3 blockPosition = { x, y, z };
+						const Block& block = blockRegistry.getBlockFromID(currentNode.getBlockID());
 
-					ChunkNode currentNode = paddedChunk.getNode(blockPosition);
+						if (block.isInvisible()) {
+							continue;
+						}
 
-					const Block& block = blockRegistry.getBlockFromID(currentNode.getBlockID());
+						Neighborhood neighborhood;
+						neighborhood.centre = currentNode;
+						neighborhood.top = paddedChunk.getNode(blockPosition + Directions::Up);
+						neighborhood.bottom = paddedChunk.getNode(blockPosition + Directions::Down);
+						neighborhood.front = paddedChunk.getNode(blockPosition + Directions::Front);
+						neighborhood.back = paddedChunk.getNode(blockPosition + Directions::Back);
+						neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
+						neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
 
-					if (block.isInvisible()) {
-						continue;
+						mesh->setCurrentOrigin(blockPosition);
+						block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
 					}
-
-					Neighborhood neighborhood;
-					neighborhood.centre = currentNode;
-					neighborhood.top = paddedChunk.getNode(blockPosition + Directions::Up);
-					neighborhood.bottom = paddedChunk.getNode(blockPosition + Directions::Down);
-					neighborhood.front = paddedChunk.getNode(blockPosition + Directions::Front);
-					neighborhood.back = paddedChunk.getNode(blockPosition + Directions::Back);
-					neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
-					neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
-
-					mesh->setCurrentOrigin(blockPosition);
-					block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
 				}
 			}
-		}
-		if (!mesh->isEmpty()) {
-			m_renderer.addMesh(chunkPosition, mesh);
-		}
-	});
+			if (!mesh->isEmpty()) {
+				m_renderer.addMesh(chunkPosition, mesh);
+			}
+			else {
+				m_renderer.removeMesh(chunkPosition);
+			}
+		});
+	}
+	else {
+		m_renderer.removeMesh(chunkPosition);
+	}
+}
+
+bool ChunkMeshingSystem::isChunkOccluded(const Vector3& position) {
+	return m_world->isChunkFullyOpaque(position) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Up) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Down) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Left) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Right) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Front) &&
+		   m_world->isChunkFullyOpaque(position + Directions::Back);
 }
