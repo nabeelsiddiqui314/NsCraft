@@ -19,8 +19,8 @@ public:
 	ChunkRenderer();
 	~ChunkRenderer() = default;
 public:
-	void addMesh(const Vector3& position, const FullMeshPtr& meshes);
-	void removeMesh(const Vector3& position);
+	void enqueueMesh(const Vector3& position, const FullMeshPtr& meshes);
+	void removeChunk(const Vector3& position);
 	void renderChunks(const Frustum& viewFrustum);
 private:
 	void loadMeshes();

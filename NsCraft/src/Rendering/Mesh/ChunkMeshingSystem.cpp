@@ -49,7 +49,7 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) {
 
 void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
 	const auto& chunkPosiiton = event.chunkPosition;
-	m_renderer.removeMesh(chunkPosiiton);
+	m_renderer.removeChunk(chunkPosiiton);
 }
 
 void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
@@ -150,11 +150,11 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 					}
 				}
 			}
-			m_renderer.addMesh(chunkPosition, meshes);
+			m_renderer.enqueueMesh(chunkPosition, meshes);
 		});
 	}
 	else {
-		m_renderer.removeMesh(chunkPosition);
+		m_renderer.removeChunk(chunkPosition);
 	}
 }
 

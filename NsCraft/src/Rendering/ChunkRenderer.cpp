@@ -11,12 +11,12 @@
 
 ChunkRenderer::ChunkRenderer() {}
 
-void ChunkRenderer::addMesh(const Vector3& position, const FullMeshPtr& meshes) {
+void ChunkRenderer::enqueueMesh(const Vector3& position, const FullMeshPtr& meshes) {
 	m_meshToLoad.emplace(std::make_pair(position, meshes));
 }
 
 
-void ChunkRenderer::removeMesh(const Vector3& position) {
+void ChunkRenderer::removeChunk(const Vector3& position) {
 	m_renderableChunkMap.erase(position);
 }
 
@@ -41,7 +41,7 @@ void ChunkRenderer::loadMeshes() {
 	while (!m_meshToLoad.empty()) {
 		auto& [position, mesh] = m_meshToLoad.front();
 
-		removeMesh(position);
+		m_renderableChunkMap.erase(position);
 		m_renderableChunkMap.emplace(std::make_pair(position, mesh->getRenderables()));
 
 		m_meshToLoad.pop();
