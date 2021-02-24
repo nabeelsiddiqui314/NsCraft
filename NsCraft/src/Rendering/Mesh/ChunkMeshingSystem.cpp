@@ -6,7 +6,7 @@
 #include "../../World/Events/ChunkModifyEvent.h"
 #include "../../Math/Directions.h"
 #include "../ChunkRenderer.h"
-#include "ChunkMesh.h"
+#include "FullChunkMesh.h"
 #include "../../World/Blocks/BlockRegistry.h"
 #include "../../World/Blocks/Block.h"
 #include "../../World/Chunk/Chunk.h"
@@ -117,7 +117,7 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 		PaddedChunk paddedChunk(chunkNeighborhood);
 
 		m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
-			auto mesh = std::make_shared<ChunkMesh>();
+			auto meshes = std::make_shared<FullChunkMesh>();
 
 			auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -143,17 +143,14 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 						neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
 						neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
 
+						auto mesh = meshes->getOrCreateSubMesh(block.getMaterial());
+
 						mesh->setCurrentOrigin(blockPosition);
 						block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
 					}
 				}
 			}
-			if (!mesh->isEmpty()) {
-				m_renderer.addMesh(chunkPosition, mesh);
-			}
-			else {
-				m_renderer.removeMesh(chunkPosition);
-			}
+			m_renderer.addMesh(chunkPosition, meshes);
 		});
 	}
 	else {

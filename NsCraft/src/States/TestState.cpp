@@ -25,6 +25,8 @@
 #include "../Lighting/LightDefs.h"
 #include "../Rendering/Renderer.h"
 #include "../OpenGL/TextureArray.h"
+#include "../OpenGL/Shader.h"
+#include "../OpenGL/Material.h"
 
 TestState::TestState() 
 	: m_camera(800.0f / 600.0f, 80.0f) {
@@ -36,9 +38,14 @@ TestState::TestState()
 	auto bedrockTex = texture->addTexture("res/bedrock.png");
 	auto sandTex = texture->addTexture("res/sand.png");
 
+	auto shader = std::make_shared<Shader>("shaders/chunkShader.vs", "shaders/chunkShader.fs");
+	std::shared_ptr<Material> solidM = std::make_shared<Material>(shader);
+	solidM->setCullMode(CullMode::BACK);
+	solidM->setTexture("u_blocksTexture", texture);
+
 	texture->generateArray();
 
-	m_chunkRenderer = std::make_unique<ChunkRenderer>(texture);
+	m_chunkRenderer = std::make_unique<ChunkRenderer>();
 
 	auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -47,23 +54,28 @@ TestState::TestState()
 	auto& grassBlock = blockRegistry.registerBlock("grass");
 	grassBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(grassTopTex, grassSideTex, dirtTex));
 	grassBlock.setOpacity(LightDefs::MAX_OPACITY);
+	grassBlock.setMaterial(solidM);
 
 	auto& dirtBlock = blockRegistry.registerBlock("dirt");
 	dirtBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(dirtTex, dirtTex, dirtTex));
 	dirtBlock.setOpacity(LightDefs::MAX_OPACITY);
+	dirtBlock.setMaterial(solidM);
 
 	auto& bedrock = blockRegistry.registerBlock("bedrock");
 	bedrock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(bedrockTex, bedrockTex, bedrockTex));
 	bedrock.setOpacity(LightDefs::MAX_OPACITY);
+	bedrock.setMaterial(solidM);
 
 	auto& lightTest = blockRegistry.registerBlock("lightTest");
 	lightTest.setMeshGenerator(std::make_shared<CubeMeshGenerator>(bedrockTex, bedrockTex, bedrockTex));
 	lightTest.setOpacity(LightDefs::MAX_OPACITY);
 	lightTest.setLuminocity(LightDefs::MAX_LUMINOCITY);
+	lightTest.setMaterial(solidM);
 
 	auto& sandBlock = blockRegistry.registerBlock("sand");
 	sandBlock.setMeshGenerator(std::make_shared<CubeMeshGenerator>(sandTex, sandTex, sandTex));
 	sandBlock.setOpacity(LightDefs::MAX_OPACITY);
+	sandBlock.setMaterial(solidM);
 
 	auto& biomeRegistry = BiomeRegistry::getInstance();
 

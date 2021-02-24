@@ -14,6 +14,14 @@ Block::MeshGeneratorPtr Block::getMeshGenerator() const {
 	return m_meshGenerator;
 }
 
+void Block::setMaterial(const MaterialPtr& material) {
+	m_material = material;
+}
+
+Block::MaterialPtr Block::getMaterial() const {
+	return m_material;
+}
+
 void Block::setOpacity(std::uint8_t opacity) {
 	m_opacity = std::min(opacity, LightDefs::MAX_OPACITY);
 }

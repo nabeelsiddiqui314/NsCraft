@@ -27,6 +27,7 @@
     <ClCompile Include="src\OpenGL\Material.cpp" />
     <ClCompile Include="src\OpenGL\TextureArray.cpp" />
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
+    <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
     <ClCompile Include="src\Math\Frustum.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="src\OpenGL\Texture.h" />
     <ClInclude Include="src\OpenGL\TextureArray.h" />
     <ClInclude Include="src\OpenGL\TextureCube.h" />
+    <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
     <ClInclude Include="src\Math\Frustum.h" />
