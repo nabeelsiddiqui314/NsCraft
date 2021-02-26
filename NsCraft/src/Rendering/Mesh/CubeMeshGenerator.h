@@ -1,6 +1,4 @@
 #pragma once
-#include <memory>
-#include <string>
 #include <GL/glew.h>
 #include "IMeshGenerator.h"
 
