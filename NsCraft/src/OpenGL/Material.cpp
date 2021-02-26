@@ -46,10 +46,18 @@ void Material::bind() {
 	}
 }
 
-void Material::setCullMode(CullMode cullMode) {
+void Material::setCullMode(const CullMode& cullMode) {
 	m_cullMode = cullMode;
 }
 
 CullMode Material::getCullMode() const{
 	return m_cullMode;
+}
+
+void Material::setBlendMode(const BlendMode& blendMode) {
+	m_blendMode = blendMode;
+}
+
+BlendMode Material::getBlendMode() const {
+	return m_blendMode;
 }

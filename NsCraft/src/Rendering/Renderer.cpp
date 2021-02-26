@@ -9,6 +9,8 @@ Renderer::CameraMatrices Renderer::s_cameraMatrices;
 
 void Renderer::init() {
 	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glAlphaFunc(GL_GREATER, 0.1f);
 }
 
 void Renderer::resizeViewport(std::uint32_t windowWidth, std::uint32_t windowHeight) {
@@ -32,6 +34,21 @@ void Renderer::render(const std::shared_ptr<VertexArray>& vao, const std::shared
 		break;
 	case CullMode::OFF:
 		glDisable(GL_CULL_FACE);
+		break;
+	}
+
+	switch (material->getBlendMode()) {
+	case BlendMode::OPAQUE:
+		glDisable(GL_ALPHA_TEST);
+		glDisable(GL_BLEND);
+		break;
+	case BlendMode::CUT_OUT:
+		glEnable(GL_ALPHA_TEST);
+		glDisable(GL_BLEND);
+		break;
+	case BlendMode::TRANSPARENT:
+		glDisable(GL_ALPHA_TEST);
+		glEnable(GL_BLEND);
 		break;
 	}
 

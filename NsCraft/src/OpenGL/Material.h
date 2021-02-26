@@ -14,6 +14,12 @@ enum class CullMode {
 	OFF
 };
 
+enum class BlendMode {
+	OPAQUE,
+	CUT_OUT,
+	TRANSPARENT
+};
+
 class Material {
 	friend Renderer;
 public:
@@ -29,8 +35,11 @@ public:
 	
 	void bind();
 
-	void setCullMode(CullMode cullMode);
+	void setCullMode(const CullMode& cullMode);
 	CullMode getCullMode() const;
+
+	void setBlendMode(const BlendMode& blendMode);
+	BlendMode getBlendMode() const;
 private:
 	std::shared_ptr<Shader> m_shader;
 	std::unordered_map<std::string, float> m_scalarUniforms;
@@ -39,4 +48,5 @@ private:
 	std::unordered_map<std::string, std::shared_ptr<Texture>> m_textures;
 
 	CullMode m_cullMode = CullMode::BACK;
+	BlendMode m_blendMode = BlendMode::OPAQUE;
 };
