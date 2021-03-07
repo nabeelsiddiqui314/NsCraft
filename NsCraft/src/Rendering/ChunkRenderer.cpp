@@ -31,7 +31,7 @@ void ChunkRenderer::renderChunks(const Frustum& viewFrustum) {
 			chunkModelMatrix = glm::translate(chunkModelMatrix, glm::vec3(position * Chunk::WIDTH));
 
 			for (auto& renderable : renderables) {
-				Renderer::render(renderable.vao, renderable.material, chunkModelMatrix);
+				Renderer::submit(renderable.vao, renderable.material, chunkModelMatrix);
 			}
 		}
 	}

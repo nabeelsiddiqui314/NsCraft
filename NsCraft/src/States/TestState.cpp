@@ -261,6 +261,8 @@ void TestState::render() {
 	Renderer::begin(m_camera);
 
 	m_chunkRenderer->renderChunks(m_camera.getFrustum());
+
+	Renderer::render();
 }
 
 bool TestState::allowUpdateBelow() {
