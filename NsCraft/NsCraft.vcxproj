@@ -29,6 +29,7 @@
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
     <ClCompile Include="src\Rendering\Mesh\CrossMeshGenerator.cpp" />
     <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp" />
+    <ClCompile Include="src\Rendering\Mesh\LiquidMeshGenerator.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
     <ClCompile Include="src\Math\Frustum.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="src\OpenGL\TextureCube.h" />
     <ClInclude Include="src\Rendering\Mesh\CrossMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
+    <ClInclude Include="src\Rendering\Mesh\LiquidMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
     <ClInclude Include="src\Math\Frustum.h" />

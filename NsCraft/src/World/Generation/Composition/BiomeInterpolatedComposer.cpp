@@ -6,9 +6,11 @@
 #include "../Biome/BiomeMap.h"
 #include "../Biome/Biome.h"
 #include "../Biome/BiomeRegistry.h"
+#include "../../Blocks/BlockRegistry.h"
 
 void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) {
 	auto& biomeRegistry = BiomeRegistry::getInstance();
+	auto& blockRegistry = BlockRegistry::getInstance();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
 		for (int z = 0; z < Chunk::WIDTH; z++) {
@@ -21,6 +23,11 @@ void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, c
 					auto positionData = shape.getPostionData({x, y, z});
 					Block_ID block = biome.getBlockAtDepth(positionData.distanceFromTop);
 					chunk.setBlock({x, y, z}, block);
+				}
+				else {
+					if (y + position.y * Chunk::WIDTH < 30) {
+						chunk.setBlock({x, y, z}, blockRegistry.getBlockIDFromName("water"));
+					}
 				}
 			}
 		}
