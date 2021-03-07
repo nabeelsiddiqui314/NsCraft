@@ -1,5 +1,6 @@
 #pragma once
 
+struct Vector3;
 class Chunk;
 class ChunkShape;
 class BiomeMap;
@@ -9,5 +10,5 @@ public:
 	ITerrainComposer() = default;
 	virtual ~ITerrainComposer() = default;
 public:
-	virtual void compose(Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) = 0;
+	virtual void compose(const Vector3& position, Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) = 0;
 };

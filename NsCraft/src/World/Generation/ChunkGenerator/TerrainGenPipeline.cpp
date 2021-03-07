@@ -24,7 +24,7 @@ std::shared_ptr<Chunk> TerrainGenPipeline::generateChunk(World& world, const Vec
     auto biomeMap = m_biomeGenerator->generateBiome({position.x, position.z});
 
     auto chunkShape = m_shapeGenerator->generateShape(position, *biomeMap);
-    m_terrainComposer->compose(*chunk, *chunkShape, *biomeMap);
+    m_terrainComposer->compose(position, *chunk, *chunkShape, *biomeMap);
 
     for (auto& terrainDecorator : m_terrainDecorators) {
         terrainDecorator->decorate(position, *chunk, *chunkShape, world);

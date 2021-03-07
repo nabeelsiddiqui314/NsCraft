@@ -6,5 +6,5 @@ public:
 	BiomeInterpolatedComposer() = default;
 	~BiomeInterpolatedComposer() = default;
 public:
-	void compose(Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) override;
+	void compose(const Vector3& position, Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) override;
 };

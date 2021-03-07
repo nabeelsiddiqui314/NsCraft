@@ -7,7 +7,7 @@
 #include "../Biome/Biome.h"
 #include "../Biome/BiomeRegistry.h"
 
-void BiomeInterpolatedComposer::compose(Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) {
+void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) {
 	auto& biomeRegistry = BiomeRegistry::getInstance();
 
 	for (int x = 0; x < Chunk::WIDTH; x++) {
