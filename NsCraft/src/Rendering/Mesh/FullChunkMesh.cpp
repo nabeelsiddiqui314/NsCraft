@@ -10,7 +10,9 @@ std::vector<ChunkRenderable> FullChunkMesh::getRenderables() {
     renderables.reserve(m_chunkMeshes.size());
 
     for (auto& [material, mesh] : m_chunkMeshes) {
-        renderables.push_back({material, mesh.generateChunkVAO()});
+        if (!mesh.isEmpty()) {
+            renderables.push_back({ material, mesh.generateChunkVAO() });
+        }
     }
 
     return renderables;
