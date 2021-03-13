@@ -17,3 +17,13 @@ std::vector<ChunkRenderable> FullChunkMesh::getRenderables() {
 
     return renderables;
 }
+
+bool FullChunkMesh::isCompletelyEmpty() const {
+    for (auto& [material, mesh] : m_chunkMeshes) {
+        if (!mesh.isEmpty()) {
+            return false;
+        }
+    }
+
+    return true;
+}

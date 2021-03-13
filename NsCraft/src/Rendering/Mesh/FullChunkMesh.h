@@ -19,6 +19,8 @@ public:
 public:
 	ChunkMesh* getOrCreateSubMesh(const std::shared_ptr<Material>& material);
 	std::vector<ChunkRenderable> getRenderables();
+
+	bool isCompletelyEmpty() const;
 private:
 	std::unordered_map<std::shared_ptr<Material>, ChunkMesh> m_chunkMeshes;
 };
