@@ -12,9 +12,9 @@ public:
 
 	const Vector3 operator+(const Vector3& other) const;
 	const Vector3 operator-(const Vector3& other) const;
-	const Vector3 operator*(const Vector3& other) const;
-	const Vector3 operator/(const Vector3& other) const;
-	const Vector3 operator%(const Vector3& other) const;
+	
+	int dot(const Vector3& other) const;
+	Vector3 cross(const Vector3& other);
 
 	const Vector3 operator+(int other) const;
 	const Vector3 operator-(int other) const;
@@ -24,9 +24,6 @@ public:
 
 	void operator+=(const Vector3& other);
 	void operator-=(const Vector3& other);
-	void operator*=(const Vector3& other);
-	void operator/=(const Vector3& other);
-	void operator%=(const Vector3& other);
 
 	bool operator==(const Vector3& other) const;
 	bool operator!=(const Vector3& other) const;

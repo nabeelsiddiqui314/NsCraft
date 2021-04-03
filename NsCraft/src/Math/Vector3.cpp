@@ -15,16 +15,14 @@ const Vector3 Vector3::operator-(const Vector3& other) const {
 	return { x - other.x, y - other.y, z - other.z };
 }
 
-const Vector3 Vector3::operator*(const Vector3& other) const {
-	return { x * other.x, y * other.y, z * other.z };
+int Vector3::dot(const Vector3& other) const {
+	return x * other.x + y * other.y + z * other.z;
 }
 
-const Vector3 Vector3::operator/(const Vector3& other) const {
-	return { x / other.x, y / other.y, z / other.z };
-}
-
-const Vector3 Vector3::operator%(const Vector3& other) const {
-	return {x % other.x, y % other.y, z % other.z };
+Vector3 Vector3::cross(const Vector3& other) {
+	return { y * other.z - other.y * z,
+	         other.x * z - x * other.z,
+	         x * other.y - other.x * y };
 }
 
 const Vector3 Vector3::operator+(int other) const {
@@ -57,24 +55,6 @@ void Vector3::operator-=(const Vector3& other) {
 	x -= other.x;
 	y -= other.y;
 	z -= other.z;
-}
-
-void Vector3::operator*=(const Vector3& other) {
-	x *= other.x;
-	y *= other.y;
-	z *= other.z;
-}
-
-void Vector3::operator/=(const Vector3& other) {
-	x /= other.x;
-	y /= other.y;
-	z /= other.z;
-}
-
-void Vector3::operator%=(const Vector3& other) {
-	x %= other.x;
-	y %= other.y;
-	z %= other.z;
 }
 
 bool Vector3::operator==(const Vector3& other) const {
