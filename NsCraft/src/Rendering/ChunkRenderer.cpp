@@ -41,7 +41,7 @@ void ChunkRenderer::loadMeshes() {
 	while (!m_meshToLoad.empty()) {
 		auto& [position, mesh] = m_meshToLoad.front();
 
-		if (!mesh->isCompletelyEmpty()) {
+ 		if (!mesh->isCompletelyEmpty()) {
 			m_renderableChunkMap.erase(position);
 			m_renderableChunkMap.emplace(std::make_pair(position, mesh->getRenderables()));
 		}

@@ -7,7 +7,7 @@ public:
 	CrossMeshGenerator(GLuint texture);
 	~CrossMeshGenerator() = default;
 public:
-	void generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) override;
+	void generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) override;
 private:
 	GLuint m_texture;
 };

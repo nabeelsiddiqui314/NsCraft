@@ -39,12 +39,13 @@ void ChunkMeshingSystem::generateChunkMeshes() {
 void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 
-	enqueueChunkToMesh(chunkPosition + Directions::Up);
-	enqueueChunkToMesh(chunkPosition + Directions::Down);
-	enqueueChunkToMesh(chunkPosition + Directions::Right);
-	enqueueChunkToMesh(chunkPosition + Directions::Left);
-	enqueueChunkToMesh(chunkPosition + Directions::Front);
-	enqueueChunkToMesh(chunkPosition + Directions::Back);
+	for (int x = -1; x <= 1; x++) {
+		for (int y = -1; y <= 1; y++) {
+			for (int z = -1; z <= 1; z++) {
+				enqueueChunkToMesh(chunkPosition + Vector3(x, y, z));
+			}
+		}
+	}
 }
 
 void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
@@ -97,24 +98,27 @@ void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
 }
 
 void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
-	if (m_world->doesChunkExist(chunkPosition) && m_world->doesChunkHaveAllNeighbors(chunkPosition)) {
+	if (m_world->doesChunkExist(chunkPosition)) {
+		for (int x = -1; x <= 1; x++) {
+			for (int z = -1; z <= 1; z++) {
+				for (int y = -1; y <= 1; y++) {
+					if (chunkPosition.y == 0 && y < 0 ||
+						chunkPosition.y == m_world->getMaxHeight() - 1 && y > 0) {
+						continue;
+					}
+					if (!m_world->doesChunkExist(chunkPosition + Vector3(x, y, z))) {
+						return;
+					}
+				}
+			}
+		}
 		m_chunksToMesh.emplace(chunkPosition);
 	}
 }
 
 void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 	if (!m_world->isChunkFullyInvisible(chunkPosition) && !isChunkOccluded(chunkPosition)) { // optimization to prevent unnecessary processing
-		ChunkNeighborhood chunkNeighborhood;
-
-		chunkNeighborhood.centre = m_world->getChunk(chunkPosition);
-		chunkNeighborhood.top = m_world->getChunk(chunkPosition + Directions::Up);
-		chunkNeighborhood.bottom = m_world->getChunk(chunkPosition + Directions::Down);
-		chunkNeighborhood.left = m_world->getChunk(chunkPosition + Directions::Left);
-		chunkNeighborhood.right = m_world->getChunk(chunkPosition + Directions::Right);
-		chunkNeighborhood.front = m_world->getChunk(chunkPosition + Directions::Front);
-		chunkNeighborhood.back = m_world->getChunk(chunkPosition + Directions::Back);
-
-		PaddedChunk paddedChunk(chunkNeighborhood);
+		PaddedChunk paddedChunk(chunkPosition, *m_world);
 
 		m_meshThreadPool.enqueueTask([this, paddedChunk, chunkPosition]() {
 			auto meshes = std::make_shared<FullChunkMesh>();
@@ -134,19 +138,10 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 							continue;
 						}
 
-						Neighborhood neighborhood;
-						neighborhood.centre = currentNode;
-						neighborhood.top = paddedChunk.getNode(blockPosition + Directions::Up);
-						neighborhood.bottom = paddedChunk.getNode(blockPosition + Directions::Down);
-						neighborhood.front = paddedChunk.getNode(blockPosition + Directions::Front);
-						neighborhood.back = paddedChunk.getNode(blockPosition + Directions::Back);
-						neighborhood.left = paddedChunk.getNode(blockPosition + Directions::Left);
-						neighborhood.right = paddedChunk.getNode(blockPosition + Directions::Right);
-
 						auto mesh = meshes->getOrCreateSubMesh(block.getMaterial());
 
 						mesh->setCurrentOrigin(blockPosition);
-						block.getMeshGenerator()->generateMesh(*mesh, neighborhood);
+						block.getMeshGenerator()->generateMesh({x, y, z}, *mesh, paddedChunk);
 					}
 				}
 			}

@@ -1,13 +1,21 @@
 #include "PaddedChunk.h"
-#include "../../Math/Vector3.h"
+#include "Chunk.h"
+#include "World.h"
 
-PaddedChunk::PaddedChunk(const ChunkNeighborhood& neighborhood) 
-	: m_neighborhood(neighborhood) {
-    
+PaddedChunk::PaddedChunk(const Vector3& chunkPosition, const World& world) {
+    for (int x = -1; x <= 1; x++) {
+        for (int y = -1; y <= 1; y++) {
+            for (int z = -1; z <= 1; z++) {
+                m_neighborhood.emplace(std::make_pair(Vector3(x, y, z), world.getChunk(chunkPosition + Vector3(x, y, z))));
+            }
+        }
+    }
 }
 
 ChunkNode PaddedChunk::getNode(const Vector3& position) const {
-	auto [chunk, blockPosition] = getBlockLocation(position);
+	auto [chunkPosition, blockPosition] = getBlockLocation(position);
+
+    auto& chunk = m_neighborhood.at(chunkPosition);
 
     if (!chunk) {
         return ChunkNode();
@@ -16,37 +24,37 @@ ChunkNode PaddedChunk::getNode(const Vector3& position) const {
 	return chunk->getNode(blockPosition);
 }
 
-std::pair<ChunkPtr, Vector3> PaddedChunk::getBlockLocation(const Vector3& position) const {
-    ChunkPtr chunk = m_neighborhood.centre;
+std::pair<Vector3, Vector3> PaddedChunk::getBlockLocation(const Vector3& position) const {
+    Vector3 newChunkPosition = {0, 0, 0};
     Vector3 newBlockPosition = position;
 
     if (position.x < 0) {
         newBlockPosition.x = Chunk::WIDTH - abs(newBlockPosition.x);
-        chunk = m_neighborhood.left;
+        newChunkPosition.x = -1;
     }
     else if (position.x >= Chunk::WIDTH) {
         newBlockPosition.x = newBlockPosition.x % Chunk::WIDTH;
-        chunk = m_neighborhood.right;
+        newChunkPosition.x = 1;
     }
 
     else if (position.y < 0) {
         newBlockPosition.y = Chunk::WIDTH - abs(newBlockPosition.y);
-        chunk = m_neighborhood.bottom;
+        newChunkPosition.y = -1;
     }
     else if (position.y >= Chunk::WIDTH) {
         newBlockPosition.y = newBlockPosition.y % Chunk::WIDTH;
-        chunk = m_neighborhood.top;
+        newChunkPosition.y = 1;
     }
 
     else if (position.z < 0) {
         newBlockPosition.z = Chunk::WIDTH - abs(newBlockPosition.z);
-        chunk = m_neighborhood.back;
+        newChunkPosition.z = -1;
     }
 
     else if (position.z >= Chunk::WIDTH) {
         newBlockPosition.z = newBlockPosition.z % Chunk::WIDTH;
-        chunk = m_neighborhood.front;
+        newChunkPosition.z = 1;
     }
 
-    return {chunk, newBlockPosition};
+    return {newChunkPosition, newBlockPosition};
 }

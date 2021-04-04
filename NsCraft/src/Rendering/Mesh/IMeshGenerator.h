@@ -1,21 +1,10 @@
 #pragma once
-#include "../../World/Chunk/ChunkNode.h"
 
 class ChunkMesh;
 struct Vector3;
-class World;
-
-struct Neighborhood {
-	ChunkNode centre;
-	ChunkNode left;
-	ChunkNode right;
-	ChunkNode top;
-	ChunkNode bottom;
-	ChunkNode front;
-	ChunkNode back;
-};
+class PaddedChunk;
 
 class IMeshGenerator {
 public:
-	virtual void generateMesh(ChunkMesh& mesh, const Neighborhood& neighborhood) = 0;
+	virtual void generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) = 0;
 };
