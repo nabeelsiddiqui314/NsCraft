@@ -19,30 +19,40 @@ int Vector3::dot(const Vector3& other) const {
 	return x * other.x + y * other.y + z * other.z;
 }
 
-Vector3 Vector3::cross(const Vector3& other) {
+Vector3 Vector3::cross(const Vector3& other) const {
 	return { y * other.z - other.y * z,
 	         other.x * z - x * other.z,
 	         x * other.y - other.x * y };
 }
 
-const Vector3 Vector3::operator+(int other) const {
-	return {x + other, y + other, z + other};
+const Vector3 Vector3::operator*(int scalar) const {
+	return { x * scalar, y * scalar, z * scalar };
 }
 
-const Vector3 Vector3::operator-(int other) const {
-	return { x - other, y - other, z - other };
+const Vector3 Vector3::operator/(int scalar) const {
+	return { x / scalar, y / scalar, z / scalar };
 }
 
-const Vector3 Vector3::operator*(int other) const {
-	return { x * other, y * other, z * other };
+const Vector3 Vector3::operator%(int scalar) const {
+	return { x % scalar, y % scalar, z % scalar };
 }
 
-const Vector3 Vector3::operator/(int other) const {
-	return { x / other, y / other, z / other };
+void Vector3::operator*=(int scalar) {
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
 }
 
-const Vector3 Vector3::operator%(int other) const {
-	return { x % other, y % other, z % other };
+void Vector3::operator/=(int scalar) {
+	x /= scalar;
+	y /= scalar;
+	z /= scalar;
+}
+
+void Vector3::operator%=(int scalar) {
+	x %= scalar;
+	y %= scalar;
+	z %= scalar;
 }
 
 void Vector3::operator+=(const Vector3& other) {

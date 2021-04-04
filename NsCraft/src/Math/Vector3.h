@@ -14,13 +14,15 @@ public:
 	const Vector3 operator-(const Vector3& other) const;
 	
 	int dot(const Vector3& other) const;
-	Vector3 cross(const Vector3& other);
+	Vector3 cross(const Vector3& other) const;
 
-	const Vector3 operator+(int other) const;
-	const Vector3 operator-(int other) const;
-	const Vector3 operator*(int other) const;
-	const Vector3 operator/(int other) const;
-	const Vector3 operator%(int other) const;
+	const Vector3 operator*(int scalar) const;
+	const Vector3 operator/(int scalar) const;
+	const Vector3 operator%(int scalar) const;
+
+	void operator*=(int scalar);
+	void operator/=(int scalar);
+	void operator%=(int scalar);
 
 	void operator+=(const Vector3& other);
 	void operator-=(const Vector3& other);
