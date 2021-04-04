@@ -26,6 +26,7 @@ private:
 	std::vector<GLfloat> m_faceLighting;
 	std::vector<GLfloat> m_skyLight;
 	std::vector<GLfloat> m_naturalLight;
+	std::vector<GLfloat> m_ambientLight;
 	std::vector<GLuint> m_indices;
 
 	Vector3 m_origin;

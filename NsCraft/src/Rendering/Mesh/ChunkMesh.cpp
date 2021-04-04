@@ -18,6 +18,8 @@ void ChunkMesh::addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t
 		m_vertices.emplace_back(m_origin.y + face.vertices[faceIndex++]);
 		m_vertices.emplace_back(m_origin.z + face.vertices[faceIndex++]);
 
+		m_ambientLight.emplace_back(face.ambientLight[i]);
+
 		m_faceLighting.emplace_back(face.faceLight);
 
 		float skyLightNormalized = (float)skyLight / 16.0f;
@@ -56,6 +58,7 @@ std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 	auto faceLightBuffer = std::make_shared<VertexBuffer>(&m_faceLighting.front(), m_faceLighting.size());
 	auto skyLightBuffer = std::make_shared<VertexBuffer>(&m_skyLight.front(), m_skyLight.size());
 	auto naturalLightBuffer = std::make_shared<VertexBuffer>(&m_naturalLight.front(), m_naturalLight.size());
+	auto ambientLightBuffer = std::make_shared<VertexBuffer>(&m_ambientLight.front(), m_ambientLight.size());
 	auto indexBuffer = std::make_shared<IndexBuffer>(&m_indices.front(), m_indices.size());
 
 	vao->addVertexBuffer(verticesBuffer, 3);
@@ -64,6 +67,7 @@ std::shared_ptr<VertexArray> ChunkMesh::generateChunkVAO() const {
 	vao->addVertexBuffer(faceLightBuffer, 1);
 	vao->addVertexBuffer(skyLightBuffer, 1);
 	vao->addVertexBuffer(naturalLightBuffer, 1);
+	vao->addVertexBuffer(ambientLightBuffer, 1);
 	vao->setIndexBuffer(indexBuffer);
 
 	return vao;
