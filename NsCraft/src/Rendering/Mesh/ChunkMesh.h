@@ -15,7 +15,8 @@ public:
 	ChunkMesh& operator=(const ChunkMesh&) = delete;
 public:
 	void setCurrentOrigin(const Vector3& origin);
-	void addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight);
+	void addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight, 
+		         const std::array<GLfloat, 4>& ambientLight = { 1.0f, 1.0f, 1.0f, 1.0f });
 
 	bool isEmpty() const;
 	std::shared_ptr<VertexArray> generateChunkVAO() const;

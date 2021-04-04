@@ -11,14 +11,15 @@ void ChunkMesh::setCurrentOrigin(const Vector3& origin) {
 	m_origin = origin;
 }
 
-void ChunkMesh::addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight) {
+void ChunkMesh::addQuad(GLuint textureIndex, const BlockFace& face, std::uint8_t skyLight, std::uint8_t naturalLight,
+                        const std::array<GLfloat, 4>& ambientLight) {
 	int faceIndex = 0;
 	for (int i = 0; i < 4; i++) {
 		m_vertices.emplace_back(m_origin.x + face.vertices[faceIndex++]);
 		m_vertices.emplace_back(m_origin.y + face.vertices[faceIndex++]);
 		m_vertices.emplace_back(m_origin.z + face.vertices[faceIndex++]);
 
-		m_ambientLight.emplace_back(face.ambientLight[i]);
+		m_ambientLight.emplace_back(ambientLight[i]);
 
 		m_faceLighting.emplace_back(face.faceLight);
 

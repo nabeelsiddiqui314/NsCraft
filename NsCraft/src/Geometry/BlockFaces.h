@@ -5,7 +5,6 @@
 struct BlockFace {
 	std::array<GLfloat, 12> vertices;
 	GLfloat faceLight;
-	std::array<GLfloat, 4> ambientLight = {1.0f, 1.0f, 1.0f, 1.0f};
 };
 
 namespace BlockFaces {
