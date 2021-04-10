@@ -4,6 +4,7 @@
 #include <queue>
 #include "../Math/Vector3.h"
 #include "Mesh/FullChunkMesh.h"
+#include <mutex>
 
 class Frustum;
 class VertexArray;
@@ -27,4 +28,5 @@ private:
 private:
 	std::unordered_map<Vector3, std::vector<ChunkRenderable>> m_renderableChunkMap;
 	std::queue<std::pair<Vector3, FullMeshPtr>> m_meshToLoad;
+	std::mutex m_meshQueueMutex;
 };

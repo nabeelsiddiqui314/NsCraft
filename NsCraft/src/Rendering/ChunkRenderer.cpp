@@ -12,6 +12,7 @@
 ChunkRenderer::ChunkRenderer() {}
 
 void ChunkRenderer::enqueueMesh(const Vector3& position, const FullMeshPtr& meshes) {
+	std::lock_guard<std::mutex> lock(m_meshQueueMutex);
 	m_meshToLoad.emplace(std::make_pair(position, meshes));
 }
 
@@ -38,6 +39,7 @@ void ChunkRenderer::renderChunks(const Frustum& viewFrustum) {
 }
 
 void ChunkRenderer::loadMeshes() {
+	std::lock_guard<std::mutex> lock(m_meshQueueMutex);
 	while (!m_meshToLoad.empty()) {
 		auto& [position, mesh] = m_meshToLoad.front();
 
