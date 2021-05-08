@@ -1,12 +1,11 @@
 #pragma once
-#include "HeightmapGenerator.h"
+#include "IHeightmapGenerator.h"
 #include "../../../Math/SimplexNoise.h"
-#include "../Biome/BiomeDefs.h"
 
 class IBiomeGenerator;
 typedef std::shared_ptr<IBiomeGenerator> BiomeGenPtr;
 
-class BiomeInterpolatedHeightGen : public HeightmapGenerator {
+class BiomeInterpolatedHeightGen : public IHeightmapGenerator {
 public:
 	BiomeInterpolatedHeightGen(std::uint32_t seed, BiomeGenPtr biomeGenerator);
 	~BiomeInterpolatedHeightGen() = default;

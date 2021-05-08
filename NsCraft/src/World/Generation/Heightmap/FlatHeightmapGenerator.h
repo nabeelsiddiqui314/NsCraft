@@ -1,7 +1,7 @@
 #pragma once
-#include "HeightmapGenerator.h"
+#include "IHeightmapGenerator.h"
 
-class FlatHeightmapGenerator : public HeightmapGenerator {
+class FlatHeightmapGenerator : public IHeightmapGenerator {
 public:
 	FlatHeightmapGenerator(int height);
 	~FlatHeightmapGenerator() = default;

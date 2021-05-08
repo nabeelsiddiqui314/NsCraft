@@ -1,7 +1,7 @@
 #include "HeightmapGeneratorCache.h"
 #include "Heightmap.h"
 
-HeightmapGeneratorCache::HeightmapGeneratorCache(std::unique_ptr<HeightmapGenerator> heightmapGenerator) 
+HeightmapGeneratorCache::HeightmapGeneratorCache(std::unique_ptr<IHeightmapGenerator> heightmapGenerator) 
 	: m_heightmapGenerator(std::move(heightmapGenerator)) {}
 
 HeightmapPtr HeightmapGeneratorCache::generateHeightmap(const Vector2& position, const BiomeMap& biomeMap) {

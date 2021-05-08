@@ -1,6 +1,6 @@
 #include "BiomeInterpolatedComposer.h"
 #include "../../Chunk/Chunk.h"
-#include "../Shape/ChunkShape.h"
+#include "../Heightmap/Heightmap.h"
 #include "../../../Math/Vector3.h"
 #include "../../../Math/Vector2.h"
 #include "../Biome/BiomeMap.h"
@@ -8,7 +8,7 @@
 #include "../Biome/BiomeRegistry.h"
 #include "../../Blocks/BlockRegistry.h"
 
-void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, const ChunkShape& shape, const BiomeMap& biomeMap) {
+void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, const Heightmap& heightmap, const BiomeMap& biomeMap) {
 	auto& biomeRegistry = BiomeRegistry::getInstance();
 	auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -18,10 +18,13 @@ void BiomeInterpolatedComposer::compose(const Vector3& position, Chunk& chunk, c
 
 			//todo : interpolation to make the transition natural
 
+			int height = heightmap.getHeightAt({x, z});
+
 			for (int y = 0; y < Chunk::WIDTH; y++) {
-				if (shape.getDensity({x, y, z}) == Density::SOLID) {
-					auto positionData = shape.getPostionData({x, y, z});
-					Block_ID block = biome.getBlockAtDepth(positionData.distanceFromTop);
+				int yWorld = y + position.y * Chunk::WIDTH;
+
+				if (yWorld <= height) {
+					Block_ID block = biome.getBlockAtDepth(height - yWorld);
 					chunk.setBlock({x, y, z}, block);
 				}
 				else {

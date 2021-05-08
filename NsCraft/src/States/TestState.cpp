@@ -13,8 +13,8 @@
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
-#include "../World/Generation/Shape/HeightmapGeneratorCache.h"
-#include "../World/Generation/Shape/BiomeInterpolatedHeightGen.h"
+#include "../World/Generation/Heightmap/HeightmapGeneratorCache.h"
+#include "../World/Generation/Heightmap/BiomeInterpolatedHeightGen.h"
 #include "../World/Generation/Composition/BiomeInterpolatedComposer.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Lighting/BlockLightingSystem.h"
@@ -162,10 +162,10 @@ TestState::TestState()
 	}
 
 	auto biomeGen = std::make_shared<BiomeGeneratorCache>(std::make_unique<PerlinBiomeGenerator>(12212));
-	auto shapeGen = std::make_shared<HeightmapGeneratorCache>(std::make_unique<BiomeInterpolatedHeightGen>(12212, biomeGen));
+	auto heightGen = std::make_shared<HeightmapGeneratorCache>(std::make_unique<BiomeInterpolatedHeightGen>(12212, biomeGen));
 	auto composer = std::make_shared<BiomeInterpolatedComposer>();
 
-	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(biomeGen, shapeGen, composer);
+	auto chunkGenerator = std::make_unique<TerrainGenPipeline>(biomeGen, heightGen, composer);
 
 	m_world = std::make_shared<World>(std::move(chunkGenerator), 10);
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, *m_chunkRenderer);
