@@ -187,24 +187,12 @@ int World::getMaxHeight() const {
 }
 
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
-	auto blockPosition = position % Chunk::WIDTH;
+	Vector3 chunkPosition;
+	chunkPosition.x = floor((float)position.x / (float)Chunk::WIDTH);
+	chunkPosition.y = floor((float)position.y / (float)Chunk::WIDTH);
+	chunkPosition.z = floor((float)position.z / (float)Chunk::WIDTH);
 
-	if (blockPosition.x < 0) {
-		blockPosition.x = abs(blockPosition.x);
-		blockPosition.x = Chunk::WIDTH - blockPosition.x;
-	}
+	auto blockPosition = position - chunkPosition * Chunk::WIDTH;
 
-	if (blockPosition.y < 0) {
-		blockPosition.y = abs(blockPosition.y);
-		blockPosition.y = Chunk::WIDTH - blockPosition.y;
-	}
-
-	if (blockPosition.z < 0) {
-		blockPosition.z = abs(blockPosition.z);
-		blockPosition.z = Chunk::WIDTH - blockPosition.z;
-	}
-
-	const auto& chunkPosition = (position - blockPosition) / Chunk::WIDTH;
-
-	return {chunkPosition, blockPosition};
+	return { chunkPosition, blockPosition };
 }
