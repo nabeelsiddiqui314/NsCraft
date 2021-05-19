@@ -24,6 +24,7 @@
     <ClCompile Include="src\Lighting\BlockLightingSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Math\AABB.cpp" />
+    <ClCompile Include="src\Math\CellularNoise.cpp" />
     <ClCompile Include="src\OpenGL\Material.cpp" />
     <ClCompile Include="src\OpenGL\TextureArray.cpp" />
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
@@ -85,6 +86,7 @@
     <ClInclude Include="src\Lighting\BlockLightingSystem.h" />
     <ClInclude Include="src\Lighting\LightDefs.h" />
     <ClInclude Include="src\Math\AABB.h" />
+    <ClInclude Include="src\Math\CellularNoise.h" />
     <ClInclude Include="src\OpenGL\Material.h" />
     <ClInclude Include="src\OpenGL\Texture.h" />
     <ClInclude Include="src\OpenGL\TextureArray.h" />
