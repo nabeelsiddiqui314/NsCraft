@@ -4,7 +4,7 @@
 #include <array>
 #include "IMeshGenerator.h"
 
-class Vector2;
+struct Vector2;
 
 class CubeMeshGenerator : public IMeshGenerator {
 public:
