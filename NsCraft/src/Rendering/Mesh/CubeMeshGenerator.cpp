@@ -13,61 +13,16 @@ CubeMeshGenerator::CubeMeshGenerator(GLuint topTexture, GLuint sideTexture, GLui
       m_bottomTexture(bottomTexture) {}
 
 void CubeMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
-	auto tryAddFace = [&](const Vector3& neighborOffset, GLuint texture, const BlockFace& face) {
+	auto tryAddFace = [&](const Vector3& faceDirection, GLuint texture, const BlockFace& face) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 
-		ChunkNode neighborNode = chunk.getNode(position + neighborOffset);
+		ChunkNode neighborNode = chunk.getNode(position + faceDirection);
 
 		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborNode.getBlockID());
 
 		if (!neighborBlock.isCompletelyOpaque()) {
-			std::array<GLfloat, 4> ambientLight;
-
-			for (int y = 0; y <= 1; y++) {
-				for (int x = 0; x <= 1; x++) {
-					std::size_t index = x + y * 2;
-			
-					Vector2 vert = { x, y };
-			
-					if (vert == Vector2(0, 1)) {
-						vert = {1, 1};
-					}
-					else if (vert == Vector2(1, 1)) {
-						vert = { 0, 1 };
-					}
-			
-					Vector3 side1, side2, corner;
-			
-					if (neighborOffset == Directions::Up || 
-						neighborOffset == Directions::Down) {
-						side1 = {-1, 0, 0};
-						side2 = neighborOffset.cross(Directions::Left);
-					}
-					else {
-						side1 = neighborOffset.cross(Directions::Up);
-						side2 = {0, -1, 0};
-					}
-			
-					if (vert.x == 1)
-						side1 *= -1;
-					if (vert.y == 1)
-						side2 *= -1;
-			
-					corner = side1 + side2 + neighborOffset;
-					side1 += neighborOffset;
-					side2 += neighborOffset;
-			
-					const auto& side1Block = blockRegistry.getBlockFromID(chunk.getNode(position + side1).getBlockID());
-					const auto& side2Block = blockRegistry.getBlockFromID(chunk.getNode(position + side2).getBlockID());
-					const auto& cornerBlock = blockRegistry.getBlockFromID(chunk.getNode(position + corner).getBlockID());
-			
-					ambientLight[index] = getAmbientOcclusion(side1Block.isCompletelyOpaque(), 
-						                                           side2Block.isCompletelyOpaque(), 
-						                                           cornerBlock.isCompletelyOpaque());
-				}
-			}
-
-			mesh.addQuad(texture, face, neighborNode.getSkyLight(), neighborNode.getNaturalLight(), ambientLight);
+			auto ambientLighting = getFaceAmbientLighting(chunk, position, faceDirection);
+			mesh.addQuad(texture, face, neighborNode.getSkyLight(), neighborNode.getNaturalLight(), ambientLighting);
 		}
 	};
 
@@ -79,7 +34,66 @@ void CubeMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, c
 	tryAddFace(Directions::Back, m_sideTexture,   BlockFaces::Back);
 }
 
-float CubeMeshGenerator::getAmbientOcclusion(bool side1, bool side2, bool corner) {
+std::array<GLfloat, 4> CubeMeshGenerator::getFaceAmbientLighting(const PaddedChunk& chunk, const Vector3& blockPosition, const Vector3& faceDirection) const {
+	std::array<GLfloat, 4> ambientLight;
+
+	auto& blockRegistry = BlockRegistry::getInstance();
+
+	for (int y = 0; y <= 1; y++) {
+		for (int x = 0; x <= 1; x++) {
+			std::size_t index = x + y * 2;
+
+			Vector2 vert = { x, y };
+
+			if (vert == Vector2(0, 1)) {
+				vert = { 1, 1 };
+			}
+			else if (vert == Vector2(1, 1)) {
+				vert = { 0, 1 };
+			}
+
+			auto [side1, side2, corner] = computeVertexNeighbors(faceDirection, vert);
+
+			const auto& side1Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side1).getBlockID());
+			const auto& side2Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side2).getBlockID());
+			const auto& cornerBlock = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + corner).getBlockID());
+
+			ambientLight[index] = getAmbientOcclusion(side1Block.isCompletelyOpaque(),
+				side2Block.isCompletelyOpaque(),
+				cornerBlock.isCompletelyOpaque());
+		}
+	}
+
+	return ambientLight;
+}
+
+std::tuple<Vector3, Vector3, Vector3> CubeMeshGenerator::computeVertexNeighbors(const Vector3& faceDirection, const Vector2& vertex) const {
+	Vector3 side1, side2, corner;
+
+	if (faceDirection == Directions::Up || faceDirection == Directions::Down) {
+		side1 = { -1, 0, 0 };
+		side2 = faceDirection.cross(Directions::Left);
+	}
+	else {
+		side1 = faceDirection.cross(Directions::Up);
+		side2 = { 0, -1, 0 };
+	}
+
+	if (vertex.x == 1) {
+		side1 *= -1;
+	}
+	if (vertex.y == 1) {
+		side2 *= -1;
+	}
+
+	corner = side1 + side2 + faceDirection;
+	side1 += faceDirection;
+	side2 += faceDirection;
+
+	return { side1, side2, corner };
+}
+
+float CubeMeshGenerator::getAmbientOcclusion(bool side1, bool side2, bool corner) const {
 	if (side1 && side2) {
 		return 0.0f;
 	}
