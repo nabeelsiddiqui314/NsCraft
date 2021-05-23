@@ -1,7 +1,7 @@
-#include "Camera.h"
+#include "PerspectiveCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-Camera::Camera(float aspectRatio, float fov)
+PerspectiveCamera::PerspectiveCamera(float aspectRatio, float fov)
 	: m_position(0.0f, 0.0f, 0.0f),
       m_worldUp(0.0f, 1.0f, 0.0f),
       m_up(0.0f, 1.0f, 0.0f),
@@ -12,34 +12,34 @@ Camera::Camera(float aspectRatio, float fov)
       m_aspectRatio(aspectRatio),
       m_fov(fov) {}
 
-glm::mat4 Camera::getView() const {
+glm::mat4 PerspectiveCamera::getView() const {
 	return m_view;
 }
 
-glm::mat4 Camera::getProjection() const {
+glm::mat4 PerspectiveCamera::getProjection() const {
 	return m_projection;
 }
 
-void Camera::setAspectRatio(float aspectRatio) {
+void PerspectiveCamera::setAspectRatio(float aspectRatio) {
 	m_aspectRatio = aspectRatio;
 	updateProjection();
 }
 
-void Camera::setFOV(float fov) {
+void PerspectiveCamera::setFOV(float fov) {
 	m_fov = fov;
 	updateProjection();
 }
 
-void Camera::setPosition(const glm::vec3& position) {
+void PerspectiveCamera::setPosition(const glm::vec3& position) {
 	m_position = position;
 	updateView();
 }
 
-void Camera::move(const glm::vec3& moveVector) {
+void PerspectiveCamera::move(const glm::vec3& moveVector) {
 	setPosition(m_position + moveVector);
 }
 
-void Camera::rotate(float yaw, float pitch) {
+void PerspectiveCamera::rotate(float yaw, float pitch) {
 	m_yaw += yaw;
 	m_pitch += pitch;
 
@@ -51,23 +51,23 @@ void Camera::rotate(float yaw, float pitch) {
 	updateView();
 }
 
-glm::vec3 Camera::getFront() const {
+glm::vec3 PerspectiveCamera::getFront() const {
 	return m_front;
 }
 
-glm::vec3 Camera::getRight() const {
+glm::vec3 PerspectiveCamera::getRight() const {
 	return m_right;
 }
 
-glm::vec3 Camera::getPosition() const {
+glm::vec3 PerspectiveCamera::getPosition() const {
 	return m_position;
 }
 
-const Frustum& Camera::getFrustum() const {
+const Frustum& PerspectiveCamera::getFrustum() const {
 	return m_frustum;
 }
 
-void Camera::updateView() {
+void PerspectiveCamera::updateView() {
 	glm::vec3 front;
 	front.x = cosf(glm::radians(m_yaw)) * cosf(glm::radians(m_pitch));
 	front.y = sinf(glm::radians(m_pitch));
@@ -82,7 +82,7 @@ void Camera::updateView() {
 	m_frustum.update(m_view, m_projection);
 }
 
-void Camera::updateProjection() {
+void PerspectiveCamera::updateProjection() {
 	m_projection = glm::perspective(glm::radians(m_fov), m_aspectRatio, 0.1f, 1000.0f);
 	m_frustum.update(m_view, m_projection);
 }

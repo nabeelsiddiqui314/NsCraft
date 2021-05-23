@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-class Camera;
+class ICamera;
 class VertexArray;
 class Material;
 
@@ -24,7 +24,7 @@ public:
 	static void init();
 
 	static void resizeViewport(std::uint32_t windowWidth, std::uint32_t windowHeight);
-	static void begin(const Camera& camera);
+	static void begin(const ICamera& camera);
 	static void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, const glm::mat4& modelMatrix = glm::mat4(1.0f));
 	static void render();
 private:

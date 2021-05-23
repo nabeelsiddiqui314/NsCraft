@@ -1,14 +1,14 @@
 #pragma once
-#include <glm/glm.hpp>
+#include "ICamera.h"
 #include "../../Math/Frustum.h"
 
-class Camera {
+class PerspectiveCamera : public ICamera {
 public:
-	Camera(float aspectRatio, float fov);
-	~Camera() = default;
+	PerspectiveCamera(float aspectRatio, float fov);
+	~PerspectiveCamera() = default;
 public:
-	glm::mat4 getView() const;
-	glm::mat4 getProjection() const;
+	glm::mat4 getView() const override;
+	glm::mat4 getProjection() const override;
 
 	void setAspectRatio(float aspectRatio);
 	void setFOV(float fov);

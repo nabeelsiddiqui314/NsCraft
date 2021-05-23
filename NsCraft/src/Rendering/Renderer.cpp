@@ -1,6 +1,6 @@
 #include "Renderer.h"
 #include <GL/glew.h>
-#include "Camera/Camera.h"
+#include "Camera/ICamera.h"
 #include "../OpenGL/VertexArray.h"
 #include "../OpenGL/Shader.h"
 #include "../OpenGL/Material.h"
@@ -19,7 +19,7 @@ void Renderer::resizeViewport(std::uint32_t windowWidth, std::uint32_t windowHei
 	glViewport(0, 0, windowWidth, windowHeight);
 }
 
-void Renderer::begin(const Camera& camera) {
+void Renderer::begin(const ICamera& camera) {
 	s_cameraMatrices.view = camera.getView();
 	s_cameraMatrices.projection = camera.getProjection();
 }

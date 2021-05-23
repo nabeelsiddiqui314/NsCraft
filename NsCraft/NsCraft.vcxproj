@@ -45,7 +45,7 @@
     <ClCompile Include="src\OpenGL\VertexArray.cpp" />
     <ClCompile Include="src\OpenGL\VertexBuffer.cpp" />
     <ClCompile Include="src\Profiling\ScopeTimer.cpp" />
-    <ClCompile Include="src\Rendering\Camera\Camera.cpp" />
+    <ClCompile Include="src\Rendering\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Rendering\ChunkRenderer.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp" />
@@ -91,6 +91,7 @@
     <ClInclude Include="src\OpenGL\Texture.h" />
     <ClInclude Include="src\OpenGL\TextureArray.h" />
     <ClInclude Include="src\OpenGL\TextureCube.h" />
+    <ClInclude Include="src\Rendering\Camera\ICamera.h" />
     <ClInclude Include="src\Rendering\Mesh\CrossMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\LiquidMeshGenerator.h" />
@@ -109,7 +110,7 @@
     <ClInclude Include="src\OpenGL\VertexArray.h" />
     <ClInclude Include="src\OpenGL\VertexBuffer.h" />
     <ClInclude Include="src\Profiling\ScopeTimer.h" />
-    <ClInclude Include="src\Rendering\Camera\Camera.h" />
+    <ClInclude Include="src\Rendering\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\Rendering\ChunkRenderer.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h" />

@@ -1,7 +1,7 @@
 #pragma once
 #include "IState.h"
 #include <memory>
-#include "../Rendering/Camera/Camera.h"
+#include "../Rendering/Camera/PerspectiveCamera.h"
 #include <SFML/System/Vector2.hpp>
 #include "../Rendering/ChunkRenderer.h"
 
@@ -21,7 +21,7 @@ public:
 	bool allowUpdateBelow() override;
 	bool allowRenderingBelow() override;
 private:
-	Camera m_camera;
+	PerspectiveCamera m_camera;
 	std::unique_ptr<ChunkRenderer> m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
