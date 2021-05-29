@@ -28,6 +28,7 @@
     <ClCompile Include="src\OpenGL\Material.cpp" />
     <ClCompile Include="src\OpenGL\TextureArray.cpp" />
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
+    <ClCompile Include="src\Rendering\Camera\OrthographpicCamera.cpp" />
     <ClCompile Include="src\Rendering\Mesh\CrossMeshGenerator.cpp" />
     <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\LiquidMeshGenerator.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="src\OpenGL\TextureArray.h" />
     <ClInclude Include="src\OpenGL\TextureCube.h" />
     <ClInclude Include="src\Rendering\Camera\ICamera.h" />
+    <ClInclude Include="src\Rendering\Camera\OrthographpicCamera.h" />
     <ClInclude Include="src\Rendering\Mesh\CrossMeshGenerator.h" />
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\LiquidMeshGenerator.h" />
