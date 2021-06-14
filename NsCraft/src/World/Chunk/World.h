@@ -3,20 +3,21 @@
 #include <unordered_map>
 #include <vector>
 #include <functional>
-#include "../../EventSystem/Subject.h"
 #include "../../Math/Vector3.h"
 #include "../Blocks/BlockDefs.h"
 #include "MetaChunk.h"
 
 class Chunk;
 class IChunkGenerator;
-struct IEvent;
+class IWorldObserver;
+struct IWorldEvent;
 
-class World : public Subject {
+class World {
 private:
 	typedef std::shared_ptr<Chunk> ChunkPtr;
 	typedef std::unique_ptr<IChunkGenerator> ChunkGeneratorPtr;
 	typedef std::function<void(const Vector3&)> ForEachFunc;
+	typedef std::weak_ptr<IWorldObserver> ObserverPtr;
 public:
 	World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight);
 	~World();
@@ -44,12 +45,18 @@ public:
 	bool isChunkFullyOpaque(const Vector3& position) const;
 	
 	int getMaxHeight() const;
+
+	void registerObserver(const ObserverPtr& observer);
 private:
 	// gets chunk position and block position from world position
 	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
+
+	void notifyObservers(IWorldEvent& event);
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_chunkMap;
 	std::unordered_map<Vector3, MetaChunk> m_metaChunkMap;
 	std::unique_ptr<IChunkGenerator> m_chunkGenerator;
 	const int m_maxHeight;
+
+	std::vector<ObserverPtr> m_observers;
 };

@@ -212,12 +212,6 @@
     <ClInclude Include="src\World\Chunk\World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\World\Events\ChunkLoadEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Events\ChunkUnloadEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math\Directions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -240,9 +234,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\EventSystem\IEventListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Events\ChunkModifyEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\ChunkGenerator\IChunkGenerator.h">
@@ -282,9 +273,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Lighting\LightNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\World\Events\BlockModifiedEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\VoxelRaycast.h">
@@ -426,6 +414,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Camera\OrthographpicCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Events\WorldEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Events\Events.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\World\Events\IWorldObserver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

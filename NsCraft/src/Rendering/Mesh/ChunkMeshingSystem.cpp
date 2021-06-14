@@ -1,9 +1,7 @@
 #include "ChunkMeshingSystem.h"
 #include "../../World/Chunk/World.h"
 #include "../../Math/Vector3.h"
-#include "../../World/Events/ChunkLoadEvent.h"
-#include "../../World/Events/ChunkUnloadEvent.h"
-#include "../../World/Events/ChunkModifyEvent.h"
+#include "../../World/Events/Events.h"
 #include "../../Math/Directions.h"
 #include "../ChunkRenderer.h"
 #include "FullChunkMesh.h"
@@ -13,7 +11,6 @@
 #include "../../World/Chunk/PaddedChunk.h"
 #include "IMeshGenerator.h"
 #include <vector>
-#include "../../EventSystem/EventDispatcher.h"
 
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer)
 	: m_world(world),
@@ -21,22 +18,7 @@ ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, Chun
 	  m_meshThreadPool(1)
       {}
 
-void ChunkMeshingSystem::onEvent(IEvent& event) {
-	EventDispatcher dispatcher(event);
-	dispatcher.dispatch<ChunkLoadEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkLoad));
-	dispatcher.dispatch<ChunkUnloadEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkUnload));
-	dispatcher.dispatch<ChunkModifyEvent>(BIND_EVENT(ChunkMeshingSystem::onChunkModify));
-}
-
-void ChunkMeshingSystem::generateChunkMeshes() {
-	for (auto& chunkPosition : m_chunksToMesh) {
-		meshChunk(chunkPosition);
-	}
-
-	m_chunksToMesh.clear();
-}
-
-void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) {
+void ChunkMeshingSystem::onEvent(ChunkLoadEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 
 	for (int x = -1; x <= 1; x++) {
@@ -48,12 +30,12 @@ void ChunkMeshingSystem::onChunkLoad(ChunkLoadEvent& event) {
 	}
 }
 
-void ChunkMeshingSystem::onChunkUnload(ChunkUnloadEvent& event) const {
+void ChunkMeshingSystem::onEvent(ChunkUnloadEvent& event) {
 	const auto& chunkPosiiton = event.chunkPosition;
 	m_renderer.removeChunk(chunkPosiiton);
 }
 
-void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
+void ChunkMeshingSystem::onEvent(ChunkModifyEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 	const auto& blockPosition = event.blockPosition;
 
@@ -95,6 +77,14 @@ void ChunkMeshingSystem::onChunkModify(ChunkModifyEvent& event) {
 		chunk.z += 1;
 		enqueueChunkToMesh(chunk);
 	}
+}
+
+void ChunkMeshingSystem::generateChunkMeshes() {
+	for (auto& chunkPosition : m_chunksToMesh) {
+		meshChunk(chunkPosition);
+	}
+
+	m_chunksToMesh.clear();
 }
 
 void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {

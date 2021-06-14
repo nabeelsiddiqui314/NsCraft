@@ -1,7 +1,6 @@
 #include "BlockLightingSystem.h"
-#include "../EventSystem/EventDispatcher.h"
 #include "../World/Chunk/World.h"
-#include "../World/Events/BlockModifiedEvent.h"
+#include "../World/Events/Events.h"
 #include "../World/Blocks/BlockRegistry.h"
 #include "../World/Blocks/Block.h"
 #include "../World/Chunk/Chunk.h"
@@ -10,12 +9,7 @@
 BlockLightingSystem::BlockLightingSystem(const std::shared_ptr<World>& world)
 	: m_world(world) {}
 
-void BlockLightingSystem::onEvent(IEvent& event) {
-	EventDispatcher dispatcher(event);
-	dispatcher.dispatch<BlockModifiedEvent>(BIND_EVENT(BlockLightingSystem::onBlockModified));
-}
-
-void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
+void BlockLightingSystem::onEvent(BlockModifyEvent& event) {
 	if (m_world->doesChunkHaveAllNeighbors(event.chunkPosition)) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
@@ -28,11 +22,11 @@ void BlockLightingSystem::onBlockModified(BlockModifiedEvent& event) {
 			addLight(blockPosition, newBlock.getLuminocity());
 		}
 		else if (newBlock.getLuminocity() == 0 &&
-				    previousBlock.getLuminocity() > 0) {
+			previousBlock.getLuminocity() > 0) {
 			removeLight(blockPosition);
 		}
 		else if (newBlock.getLuminocity() == 0 &&
-				    previousBlock.getLuminocity() == 0) {
+			previousBlock.getLuminocity() == 0) {
 			editBlock(blockPosition);
 		}
 	}

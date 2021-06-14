@@ -130,9 +130,11 @@
     <ClInclude Include="src\World\Blocks\BlockRegistry.h" />
     <ClInclude Include="src\World\Blocks\BlockDefs.h" />
     <ClInclude Include="src\World\Chunk\ChunkNode.h" />
+    <ClInclude Include="src\World\Events\IWorldObserver.h" />
     <ClInclude Include="src\World\Chunk\MetaChunk.h" />
     <ClInclude Include="src\World\Chunk\PaddedChunk.h" />
-    <ClInclude Include="src\World\Events\BlockModifiedEvent.h" />
+    <ClInclude Include="src\World\Events\Events.h" />
+    <ClInclude Include="src\World\Events\WorldEvent.h" />
     <ClInclude Include="src\World\Generation\Biome\Biome.h" />
     <ClInclude Include="src\World\Generation\Biome\BiomeDefs.h" />
     <ClInclude Include="src\World\Generation\Biome\BiomeGeneratorCache.h" />
@@ -146,9 +148,6 @@
     <ClInclude Include="src\World\Chunk\Chunk.h" />
     <ClInclude Include="src\World\Chunk\World.h" />
     <ClInclude Include="src\World\Generation\ChunkGenerator\IChunkGenerator.h" />
-    <ClInclude Include="src\World\Events\ChunkLoadEvent.h" />
-    <ClInclude Include="src\World\Events\ChunkModifyEvent.h" />
-    <ClInclude Include="src\World\Events\ChunkUnloadEvent.h" />
     <ClInclude Include="src\World\Generation\Composition\BiomeInterpolatedComposer.h" />
     <ClInclude Include="src\World\Generation\Composition\ITerrainComposer.h" />
     <ClInclude Include="src\World\Generation\Decoration\ITerrainDecorator.h" />

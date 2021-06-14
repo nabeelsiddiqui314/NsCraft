@@ -171,8 +171,8 @@ TestState::TestState()
 	m_chunkMeshingSystem = std::make_shared<ChunkMeshingSystem>(m_world, *m_chunkRenderer);
 	m_blockLightingSystem = std::make_shared<BlockLightingSystem>(m_world);
 
-	m_world->registerListener(m_chunkMeshingSystem);
-	m_world->registerListener(m_blockLightingSystem);
+	m_world->registerObserver(m_chunkMeshingSystem);
+	m_world->registerObserver(m_blockLightingSystem);
 
 	Renderer::init();
 }

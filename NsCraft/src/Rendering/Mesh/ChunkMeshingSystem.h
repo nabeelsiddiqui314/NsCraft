@@ -1,29 +1,24 @@
 #pragma once
 #include <memory>
 #include <set>
-#include "../../EventSystem/IEventListener.h"
+#include "../../World/Events/IWorldObserver.h"
 #include "../../Utilities/ThreadPool.h"
 
 class World;
 class ChunkRenderer;
 struct Vector3;
-struct ChunkLoadEvent;
-struct ChunkUnloadEvent;
-struct ChunkModifyEvent;
 
-class ChunkMeshingSystem : public IEventListener {
+class ChunkMeshingSystem : public IWorldObserver {
 public:
 	ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer);
 	~ChunkMeshingSystem() = default;
 public:
-	void onEvent(IEvent& event) override;
-	
+	void onEvent(ChunkLoadEvent& event) override;
+	void onEvent(ChunkUnloadEvent& event) override;
+	void onEvent(ChunkModifyEvent& event) override;
+
 	void generateChunkMeshes();
 private:
-	void onChunkLoad(ChunkLoadEvent& event);
-	void onChunkUnload(ChunkUnloadEvent& event) const;
-	void onChunkModify(ChunkModifyEvent& event);
-
 	void enqueueChunkToMesh(const Vector3& chunkPosition);
 	void meshChunk(const Vector3& chunkPosition);
 	bool isChunkOccluded(const Vector3& position);

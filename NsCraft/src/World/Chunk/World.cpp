@@ -2,11 +2,7 @@
 #include "Chunk.h"
 #include "../Generation/ChunkGenerator/IChunkGenerator.h"
 #include <algorithm>
-#include "../Events/ChunkLoadEvent.h"
-#include "../Events/ChunkUnloadEvent.h"
-#include "../Events/ChunkModifyEvent.h"
-#include "../Events/BlockModifiedEvent.h"
-#include "../../EventSystem/Event.h"
+#include "../Events/Events.h"
 #include "../../Math/Directions.h"
 
 World::World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight) 
@@ -27,7 +23,7 @@ void World::loadChunk(const Vector3& position) {
 		ChunkLoadEvent event;
 		event.chunkPosition = position;
 
-		notifyListeners(event);
+		notifyObservers(event);
 	}
 }
 
@@ -38,7 +34,7 @@ void World::unloadChunk(const Vector3& position) {
 		ChunkUnloadEvent event;
 		event.chunkPosition = position;
 
-		notifyListeners(event);
+		notifyObservers(event);
 	}
 }
 
@@ -92,15 +88,15 @@ void World::setBlockIDAt(const Vector3& position, Block_ID blockID) {
 			chunkModEvent.chunkPosition = chunkPosition;
 			chunkModEvent.blockPosition = blockPosition;
 
-			notifyListeners(chunkModEvent);
+			notifyObservers(chunkModEvent);
 
-			BlockModifiedEvent blockModEvent;
+			BlockModifyEvent blockModEvent;
 			blockModEvent.chunkPosition = chunkPosition;
 			blockModEvent.blockPosition = blockPosition;
 			blockModEvent.previousBlock = previousBlockID;
 			blockModEvent.newBlock = blockID;
 
-			notifyListeners(blockModEvent);
+			notifyObservers(blockModEvent);
 		}
 	}
 	else {
@@ -128,7 +124,7 @@ void World::setSkyLightAt(const Vector3& position, std::uint8_t value) {
 		chunkModEvent.chunkPosition = chunkPosition;
 		chunkModEvent.blockPosition = blockPosition;
 
-		notifyListeners(chunkModEvent);
+		notifyObservers(chunkModEvent);
 	}
 }
 
@@ -142,7 +138,7 @@ void World::setNaturalLightAt(const Vector3& position, std::uint8_t value) {
 		chunkModEvent.chunkPosition = chunkPosition;
 		chunkModEvent.blockPosition = blockPosition;
 
-		notifyListeners(chunkModEvent);
+		notifyObservers(chunkModEvent);
 	}
 }
 
@@ -186,6 +182,10 @@ int World::getMaxHeight() const {
 	return m_maxHeight;
 }
 
+void World::registerObserver(const ObserverPtr& observer) {
+	m_observers.emplace_back(observer);
+}
+
 std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
 	Vector3 chunkPosition;
 	chunkPosition.x = floor((float)position.x / (float)Chunk::WIDTH);
@@ -195,4 +195,10 @@ std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) co
 	auto blockPosition = position - chunkPosition * Chunk::WIDTH;
 
 	return { chunkPosition, blockPosition };
+}
+
+void World::notifyObservers(IWorldEvent& event) {
+	for (auto& observer : m_observers) {
+		event.handleEvent(*observer.lock());
+	}
 }

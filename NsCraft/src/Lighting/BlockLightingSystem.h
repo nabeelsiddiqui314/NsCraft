@@ -1,14 +1,13 @@
 #pragma once
 #include <memory>
 #include <queue>
-#include "../EventSystem/IEventListener.h"
+#include "../World/Events/IWorldObserver.h"
 #include "../Math/Vector3.h"
 
 class World;
 struct Vector3;
-struct BlockModifiedEvent;
 
-class BlockLightingSystem : public IEventListener {
+class BlockLightingSystem : public IWorldObserver {
 private:
 	struct LightRemovalNode {
 		LightRemovalNode(const Vector3& _position, std::uint8_t _value) 
@@ -22,10 +21,8 @@ public:
 	BlockLightingSystem(const std::shared_ptr<World>& world);
 	~BlockLightingSystem() = default;
 public:
-	void onEvent(IEvent& event) override;
+	void onEvent(BlockModifyEvent& event) override;
 private:
-	void onBlockModified(BlockModifiedEvent& event);
-
 	void addLight(const Vector3& blockPosition, std::uint8_t luminocity);
 	void removeLight(const Vector3& blockPosition);
 	void editBlock(const Vector3& blockPosition);
