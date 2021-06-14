@@ -13,9 +13,9 @@ public:
 	ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer);
 	~ChunkMeshingSystem() = default;
 public:
-	void onEvent(ChunkLoadEvent& event) override;
-	void onEvent(ChunkUnloadEvent& event) override;
-	void onEvent(ChunkModifyEvent& event) override;
+	void onEvent(const ChunkLoadEvent& event) override;
+	void onEvent(const ChunkUnloadEvent& event) override;
+	void onEvent(const ChunkModifyEvent& event) override;
 
 	void generateChunkMeshes();
 private:

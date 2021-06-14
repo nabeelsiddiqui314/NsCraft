@@ -10,8 +10,8 @@ public:
 	IWorldObserver() = default;
 	virtual ~IWorldObserver() = default;
 public:
-	virtual void onEvent(ChunkLoadEvent& event) {}
-	virtual void onEvent(ChunkUnloadEvent& event) {}
-	virtual void onEvent(ChunkModifyEvent& event) {}
-	virtual void onEvent(BlockModifyEvent& event) {}
+	virtual void onEvent(const ChunkLoadEvent& event) {}
+	virtual void onEvent(const ChunkUnloadEvent& event) {}
+	virtual void onEvent(const ChunkModifyEvent& event) {}
+	virtual void onEvent(const BlockModifyEvent& event) {}
 };

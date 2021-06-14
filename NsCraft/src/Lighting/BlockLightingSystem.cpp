@@ -9,7 +9,7 @@
 BlockLightingSystem::BlockLightingSystem(const std::shared_ptr<World>& world)
 	: m_world(world) {}
 
-void BlockLightingSystem::onEvent(BlockModifyEvent& event) {
+void BlockLightingSystem::onEvent(const BlockModifyEvent& event) {
 	if (m_world->doesChunkHaveAllNeighbors(event.chunkPosition)) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);

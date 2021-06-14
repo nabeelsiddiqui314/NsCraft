@@ -21,7 +21,7 @@ public:
 	BlockLightingSystem(const std::shared_ptr<World>& world);
 	~BlockLightingSystem() = default;
 public:
-	void onEvent(BlockModifyEvent& event) override;
+	void onEvent(const BlockModifyEvent& event) override;
 private:
 	void addLight(const Vector3& blockPosition, std::uint8_t luminocity);
 	void removeLight(const Vector3& blockPosition);

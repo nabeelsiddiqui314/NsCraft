@@ -18,7 +18,7 @@ ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, Chun
 	  m_meshThreadPool(1)
       {}
 
-void ChunkMeshingSystem::onEvent(ChunkLoadEvent& event) {
+void ChunkMeshingSystem::onEvent(const ChunkLoadEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 
 	for (int x = -1; x <= 1; x++) {
@@ -30,12 +30,12 @@ void ChunkMeshingSystem::onEvent(ChunkLoadEvent& event) {
 	}
 }
 
-void ChunkMeshingSystem::onEvent(ChunkUnloadEvent& event) {
+void ChunkMeshingSystem::onEvent(const ChunkUnloadEvent& event) {
 	const auto& chunkPosiiton = event.chunkPosition;
 	m_renderer.removeChunk(chunkPosiiton);
 }
 
-void ChunkMeshingSystem::onEvent(ChunkModifyEvent& event) {
+void ChunkMeshingSystem::onEvent(const ChunkModifyEvent& event) {
 	const auto& chunkPosition = event.chunkPosition;
 	const auto& blockPosition = event.blockPosition;
 
