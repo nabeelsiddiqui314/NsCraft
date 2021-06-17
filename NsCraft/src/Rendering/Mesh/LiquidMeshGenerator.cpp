@@ -16,10 +16,10 @@ void LiquidMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh,
 		ChunkNode node = chunk.getNode(position);
 		ChunkNode neighborNode = chunk.getNode(position + neighborOffset);
 
-		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborNode.getBlockID());
+		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborNode.blockID);
 
-		if (!neighborBlock.isCompletelyOpaque() && node.getBlockID() != neighborNode.getBlockID()) {
-			mesh.addQuad(m_texture, face, neighborNode.getSkyLight(), neighborNode.getNaturalLight());
+		if (!neighborBlock.isCompletelyOpaque() && node.blockID != neighborNode.blockID) {
+			mesh.addQuad(m_texture, face, neighborNode.skyLight, neighborNode.naturalLight);
 		}
 	};
 

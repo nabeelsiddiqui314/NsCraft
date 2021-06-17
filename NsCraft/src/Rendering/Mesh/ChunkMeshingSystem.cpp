@@ -122,7 +122,7 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 
 						ChunkNode currentNode = paddedChunk.getNode(blockPosition);
 
-						const Block& block = blockRegistry.getBlockFromID(currentNode.getBlockID());
+						const Block& block = blockRegistry.getBlockFromID(currentNode.blockID);
 
 						if (block.isInvisible()) {
 							continue;

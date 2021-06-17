@@ -1,6 +1,7 @@
 #pragma once
 #include <array>
-#include "ChunkNode.h"
+#include "../Blocks/BlockDefs.h"
+#include "../../Lighting/LightNode.h"
 
 struct Vector3;
 
@@ -21,14 +22,13 @@ public:
 	std::uint8_t getSkyLight(const Vector3& position) const;
 	std::uint8_t getNaturalLight(const Vector3& position) const;
 
-	ChunkNode getNode(const Vector3& position) const;
-
 	bool isFullyInvisible() const;
 	bool isFullyOpaque() const;
 private:
 	std::size_t getIndex(const Vector3& position) const;
 private:
-	std::array<ChunkNode, WIDTH * WIDTH * WIDTH> m_nodes;
+	std::array<Block_ID, WIDTH * WIDTH * WIDTH> m_blocks;
+	std::array<LightNode, WIDTH* WIDTH* WIDTH> m_lightNodes;
 	std::uint32_t m_invisibleBlockCount;
 	std::uint32_t m_opaqueBlockCount;
 };

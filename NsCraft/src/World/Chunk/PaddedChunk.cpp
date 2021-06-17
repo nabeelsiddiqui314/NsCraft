@@ -17,11 +17,15 @@ ChunkNode PaddedChunk::getNode(const Vector3& position) const {
 
     auto& chunk = m_neighborhood.at(chunkPosition);
 
-    if (!chunk) {
-        return ChunkNode();
+    ChunkNode node;
+
+    if (chunk) {
+        node.blockID = chunk->getBlock(blockPosition);
+        node.skyLight = chunk->getSkyLight(blockPosition);
+        node.naturalLight = chunk->getNaturalLight(blockPosition);
     }
 
-	return chunk->getNode(blockPosition);
+    return node;
 }
 
 std::pair<Vector3, Vector3> PaddedChunk::getBlockLocation(const Vector3& position) const {

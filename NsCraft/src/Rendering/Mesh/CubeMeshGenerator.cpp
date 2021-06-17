@@ -18,11 +18,11 @@ void CubeMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, c
 
 		ChunkNode neighborNode = chunk.getNode(position + faceDirection);
 
-		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborNode.getBlockID());
+		const auto& neighborBlock = blockRegistry.getBlockFromID(neighborNode.blockID);
 
 		if (!neighborBlock.isCompletelyOpaque()) {
 			auto ambientLighting = getFaceAmbientLighting(chunk, position, faceDirection);
-			mesh.addQuad(texture, face, neighborNode.getSkyLight(), neighborNode.getNaturalLight(), ambientLighting);
+			mesh.addQuad(texture, face, neighborNode.skyLight, neighborNode.naturalLight, ambientLighting);
 		}
 	};
 
@@ -54,9 +54,9 @@ std::array<GLfloat, 4> CubeMeshGenerator::getFaceAmbientLighting(const PaddedChu
 
 			auto [side1, side2, corner] = computeVertexNeighbors(faceDirection, vert);
 
-			const auto& side1Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side1).getBlockID());
-			const auto& side2Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side2).getBlockID());
-			const auto& cornerBlock = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + corner).getBlockID());
+			const auto& side1Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side1).blockID);
+			const auto& side2Block = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + side2).blockID);
+			const auto& cornerBlock = blockRegistry.getBlockFromID(chunk.getNode(blockPosition + corner).blockID);
 
 			ambientLight[index] = getAmbientOcclusion(side1Block.isCompletelyOpaque(),
 				side2Block.isCompletelyOpaque(),

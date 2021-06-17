@@ -2,13 +2,19 @@
 #include <memory>
 #include <unordered_map>
 #include "../../Math/Vector3.h"
-#include "ChunkNode.h"
+#include "../Blocks/BlockDefs.h"
 
 struct Vector3;
 class World;
 class Chunk;
 
 typedef std::shared_ptr<Chunk> ChunkPtr;
+
+struct ChunkNode {
+	Block_ID blockID = 0;
+	std::uint8_t skyLight = 0;
+	std::uint8_t naturalLight = 0;
+};
 
 class PaddedChunk {
 public:
