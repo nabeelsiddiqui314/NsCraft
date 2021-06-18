@@ -8,7 +8,7 @@ class Chunk;
 class MetaChunk {
 public:
 	void modifyBlock(const Vector3& blockPosition, Block_ID id);
-	void applyModification(const std::shared_ptr<Chunk>& chunk) const;
+	void applyModification(Chunk& chunk) const;
 private:
 	std::unordered_map<Vector3, Block_ID> m_modifiedBlocks;
 };

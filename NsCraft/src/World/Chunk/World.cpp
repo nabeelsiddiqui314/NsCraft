@@ -16,7 +16,7 @@ void World::loadChunk(const Vector3& position) {
 		m_chunkMap.emplace(std::make_pair(position, chunk));
 
 		if (m_metaChunkMap.find(position) != m_metaChunkMap.end()) {
-			m_metaChunkMap.at(position).applyModification(chunk);
+			m_metaChunkMap.at(position).applyModification(*chunk);
 			m_metaChunkMap.erase(position);
 		}
 
