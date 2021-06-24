@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Blocks/BlockDefs.h"
-#include "../../../Math/SimplexNoise.h"
+#include "../../../Math//Noise/SimplexNoise.h"
 #include "BiomeDefs.h"
 
 struct BlockLayer {

@@ -99,9 +99,6 @@
     <ClCompile Include="src\World\Generation\Composition\BiomeInterpolatedComposer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\SimplexNoise.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\World\Chunk\PaddedChunk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -174,13 +171,16 @@
     <ClCompile Include="src\World\Generation\Biome\PerlinBiomeGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\CellularNoise.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Camera\PerspectiveCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Camera\OrthographpicCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Noise\CellularNoise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Noise\SimplexNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -302,9 +302,6 @@
     <ClInclude Include="src\Utilities\Flat2DArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\SimplexNoise.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\World\Chunk\PaddedChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -398,9 +395,6 @@
     <ClInclude Include="src\World\Generation\Biome\PerlinBiomeGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Math\CellularNoise.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rendering\Camera\ICamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -417,6 +411,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Events\IWorldObserver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Noise\CellularNoise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Noise\SimplexNoise.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

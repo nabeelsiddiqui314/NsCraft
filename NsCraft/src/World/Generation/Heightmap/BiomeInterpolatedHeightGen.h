@@ -1,6 +1,6 @@
 #pragma once
 #include "IHeightmapGenerator.h"
-#include "../../../Math/SimplexNoise.h"
+#include "../../../Math/Noise/SimplexNoise.h"
 
 class IBiomeGenerator;
 typedef std::shared_ptr<IBiomeGenerator> BiomeGenPtr;

@@ -1,6 +1,6 @@
 #pragma once
 #include "IBiomeGenerator.h"
-#include "../../../Math/SimplexNoise.h"
+#include "../../../Math/Noise/SimplexNoise.h"
 
 class PerlinBiomeGenerator : public IBiomeGenerator {
 public:

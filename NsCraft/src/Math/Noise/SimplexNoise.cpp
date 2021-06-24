@@ -1,5 +1,5 @@
 #include "SimplexNoise.h"
-#include "Vector2.h"
+#include "../Vector2.h"
 #include <glm/gtc/noise.hpp>
 
 SimplexNoise::SimplexNoise() {
