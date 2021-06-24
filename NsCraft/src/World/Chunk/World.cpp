@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "../Events/Events.h"
 #include "../../Math/Directions.h"
+#include "../../Math/CoordinateConversion.h"
 
 World::World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight) 
 	: m_chunkGenerator(std::move(chunkGenerator)), m_maxHeight(maxHeight) {}
@@ -186,15 +187,8 @@ void World::registerObserver(const ObserverPtr& observer) {
 	m_observers.emplace_back(observer);
 }
 
-std::tuple<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
-	Vector3 chunkPosition;
-	chunkPosition.x = floor((float)position.x / (float)Chunk::WIDTH);
-	chunkPosition.y = floor((float)position.y / (float)Chunk::WIDTH);
-	chunkPosition.z = floor((float)position.z / (float)Chunk::WIDTH);
-
-	auto blockPosition = position - chunkPosition * Chunk::WIDTH;
-
-	return { chunkPosition, blockPosition };
+std::pair<Vector3, Vector3> World::getBlockLocation(const Vector3& position) const {
+	return CoordinateConversion::worldToChunk(position, Chunk::WIDTH);
 }
 
 void World::notifyObservers(IWorldEvent& event) {

@@ -3,6 +3,7 @@
 #include "Biome.h"
 #include "BiomeMap.h"
 #include "BiomeRegistry.h"
+#include "../../../Math/CoordinateConversion.h"
 
 PerlinBiomeGenerator::PerlinBiomeGenerator(std::uint32_t seed) {
     m_landOceanNoise.setSeed(seed);
@@ -57,7 +58,7 @@ BiomeMapPtr PerlinBiomeGenerator::generateBiome(const Vector2& position) {
 
     for (int x = 0; x < Chunk::WIDTH; x++) {
         for (int z = 0; z < Chunk::WIDTH; z++) {
-            Vector2 worldPosition = position * Chunk::WIDTH + Vector2(x, z);
+            Vector2 worldPosition = CoordinateConversion::chunkToWorld(position, {x, z}, Chunk::WIDTH);
 
             float temperature = m_temperatureNoise.getNoiseAt(worldPosition);
             float rainfall = m_rainfallNoise.getNoiseAt(worldPosition);

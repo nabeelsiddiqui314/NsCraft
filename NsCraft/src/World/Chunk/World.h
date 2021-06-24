@@ -49,7 +49,7 @@ public:
 	void registerObserver(const ObserverPtr& observer);
 private:
 	// gets chunk position and block position from world position
-	std::tuple<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
+	std::pair<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
 
 	void notifyObservers(IWorldEvent& event);
 private:

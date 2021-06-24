@@ -5,6 +5,7 @@
 #include "../World/Blocks/Block.h"
 #include "../World/Chunk/Chunk.h"
 #include "../Math/Directions.h"
+#include "../Math/CoordinateConversion.h"
 
 BlockLightingSystem::BlockLightingSystem(const std::shared_ptr<World>& world)
 	: m_world(world) {}
@@ -15,7 +16,7 @@ void BlockLightingSystem::onEvent(const BlockModifyEvent& event) {
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
 		auto& newBlock = blockRegistry.getBlockFromID(event.newBlock);
 
-		Vector3 blockPosition = event.chunkPosition * Chunk::WIDTH + event.blockPosition;
+		Vector3 blockPosition = CoordinateConversion::chunkToWorld(event.chunkPosition, event.blockPosition, Chunk::WIDTH);
 
 		if (newBlock.getLuminocity() > 0 &&
 			previousBlock.getLuminocity() == 0) {

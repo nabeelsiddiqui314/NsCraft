@@ -23,7 +23,5 @@ public:
 public:
 	ChunkNode getNode(const Vector3& position) const;
 private:
-	std::pair<Vector3, Vector3> getBlockLocation(const Vector3& position) const;
-private:
 	std::unordered_map<Vector3, ChunkPtr> m_neighborhood;
 };
