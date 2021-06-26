@@ -7,6 +7,7 @@
 #include "Heightmap.h"
 #include <unordered_map>
 #include "../../../Utilities/Flat2DArray.h"
+#include "../../../Math/CoordinateConversion.h"
 
 BiomeInterpolatedHeightGen::BiomeInterpolatedHeightGen(std::uint32_t seed, BiomeGenPtr biomeGenerator) 
     : m_biomeGenPtr(biomeGenerator) {
@@ -64,9 +65,9 @@ float BiomeInterpolatedHeightGen::getHeightAt(const Vector2& chunkPosition, cons
     for (int x = -range; x <= range; x++) {
         for (int z = -range; z <= range; z ++) {
            auto offset = Vector2(x, z);
-           auto [neighborChunkPos, neighborBlockPos] = getNeighborLocation(chunkPosition, blockPosition + offset);
+           auto [neighborOffset, neighborBlockPos] = CoordinateConversion::worldToChunk(blockPosition + offset, Chunk::WIDTH);
 
-           Biome_ID neighborBiomeID = m_biomeGenPtr->generateBiome(neighborChunkPos)->getBiomeAt(neighborBlockPos);
+           Biome_ID neighborBiomeID = m_biomeGenPtr->generateBiome(chunkPosition + neighborOffset)->getBiomeAt(neighborBlockPos);
 
             float influence = totalDistance - sqrt(powf(x, 2) + powf(z, 2));
             totalInfluence += influence;
@@ -88,35 +89,6 @@ float BiomeInterpolatedHeightGen::getHeightAt(const Vector2& chunkPosition, cons
     }
 
     return totalHeight / totalInfluence;
-}
-
-std::pair<Vector2, Vector2> BiomeInterpolatedHeightGen::getNeighborLocation(const Vector2& chunkPosition, 
-                                                                            const Vector2& blockPosition) const {
-
-    auto newChunkPosition = chunkPosition;
-    auto newBlockPosition = blockPosition;
-
-    if (newBlockPosition.x < 0) {
-        newBlockPosition.x = Chunk::WIDTH - abs(newBlockPosition.x);
-        newChunkPosition.x -= 1;
-    }
-
-    if (newBlockPosition.x >= Chunk::WIDTH) {
-        newBlockPosition.x = newBlockPosition.x % Chunk::WIDTH;
-        newChunkPosition.x += 1;
-    }
-
-    if (newBlockPosition.y < 0) {
-        newBlockPosition.y = Chunk::WIDTH - abs(newBlockPosition.y);
-        newChunkPosition.y -= 1;
-    }
-
-    if (newBlockPosition.y >= Chunk::WIDTH) {
-        newBlockPosition.y = newBlockPosition.y % Chunk::WIDTH;
-        newChunkPosition.y += 1;
-    }
-
-    return {newChunkPosition, newBlockPosition};
 }
 
 float BiomeInterpolatedHeightGen::lerp(float x, float a, float b) const {
