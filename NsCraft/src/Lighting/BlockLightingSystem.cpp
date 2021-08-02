@@ -13,23 +13,28 @@ BlockLightingSystem::BlockLightingSystem(const std::shared_ptr<World>& world)
 void BlockLightingSystem::onEvent(const BlockModifyEvent& event) {
 	if (m_world->doesChunkHaveAllNeighbors(event.chunkPosition)) {
 		auto& blockRegistry = BlockRegistry::getInstance();
+
 		auto& previousBlock = blockRegistry.getBlockFromID(event.previousBlock);
 		auto& newBlock = blockRegistry.getBlockFromID(event.newBlock);
 
 		Vector3 blockPosition = CoordinateConversion::chunkToWorld(event.chunkPosition, event.blockPosition, Chunk::WIDTH);
 
-		if (newBlock.getLuminocity() > 0 &&
-			previousBlock.getLuminocity() == 0) {
-			addLight(blockPosition, newBlock.getLuminocity());
-		}
-		else if (newBlock.getLuminocity() == 0 &&
-			previousBlock.getLuminocity() > 0) {
-			removeLight(blockPosition);
-		}
-		else if (newBlock.getLuminocity() == 0 &&
-			previousBlock.getLuminocity() == 0) {
-			editBlock(blockPosition);
-		}
+		handleNaturalLight(blockPosition, previousBlock, newBlock);
+	}
+}
+
+void BlockLightingSystem::handleNaturalLight(const Vector3& blockPosition, const Block& previousBlock, const Block& newBlock) {
+	if (newBlock.getLuminocity() > 0 &&
+		previousBlock.getLuminocity() == 0) {
+		addLight(blockPosition, newBlock.getLuminocity());
+	}
+	else if (newBlock.getLuminocity() == 0 &&
+		previousBlock.getLuminocity() > 0) {
+		removeLight(blockPosition);
+	}
+	else if (newBlock.getLuminocity() == 0 &&
+		previousBlock.getLuminocity() == 0) {
+		editBlock(blockPosition);
 	}
 }
 
@@ -37,16 +42,16 @@ void BlockLightingSystem::addLight(const Vector3& blockPosition, std::uint8_t lu
 	m_world->setNaturalLightAt(blockPosition, luminocity);
 	m_lightBfsQueue.emplace(blockPosition);
 
-	updatePropogationQueue();
+	updateNaturalLightPropogation();
 }
 
 void BlockLightingSystem::removeLight(const Vector3& blockPosition) {
 	m_lightRemovalBfsQueue.emplace(blockPosition, m_world->getNaturalLightAt(blockPosition));
 	m_world->setNaturalLightAt(blockPosition, 0);
 
-	updateRemovalQueue();
+	updateNaturalLightRemoval();
 	// Block removal might add nodes to the light bfs queue so it needs to be updated as well.
-	updatePropogationQueue();
+	updateNaturalLightPropogation();
 }
 
 void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
@@ -67,7 +72,7 @@ void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
 	}
 }
 
-void BlockLightingSystem::updatePropogationQueue() {
+void BlockLightingSystem::updateNaturalLightPropogation() {
 	while (!m_lightBfsQueue.empty()) {
 		auto blockPosition = m_lightBfsQueue.front();
 		std::uint8_t lightValue = m_world->getNaturalLightAt(blockPosition);
@@ -88,7 +93,7 @@ void BlockLightingSystem::updatePropogationQueue() {
 	}
 }
 
-void BlockLightingSystem::updateRemovalQueue() {
+void BlockLightingSystem::updateNaturalLightRemoval() {
 	while (!m_lightRemovalBfsQueue.empty()) {
 		auto& lightRemovalNode = m_lightRemovalBfsQueue.front();
 		auto blockPosition = lightRemovalNode.position;

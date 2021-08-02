@@ -6,6 +6,7 @@
 
 class World;
 struct Vector3;
+class Block;
 
 class BlockLightingSystem : public IWorldObserver {
 private:
@@ -23,12 +24,14 @@ public:
 public:
 	void onEvent(const BlockModifyEvent& event) override;
 private:
+	void handleNaturalLight(const Vector3& blockPosition, const Block& previousBlock, const Block& newBlock);
+
 	void addLight(const Vector3& blockPosition, std::uint8_t luminocity);
 	void removeLight(const Vector3& blockPosition);
 	void editBlock(const Vector3& blockPosition);
 
-	void updatePropogationQueue();
-	void updateRemovalQueue();
+	void updateNaturalLightPropogation();
+	void updateNaturalLightRemoval();
 private:
 	std::shared_ptr<World> m_world;
 	std::queue<Vector3> m_lightBfsQueue;
