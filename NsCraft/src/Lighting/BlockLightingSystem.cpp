@@ -20,6 +20,7 @@ void BlockLightingSystem::onEvent(const BlockModifyEvent& event) {
 		Vector3 blockPosition = CoordinateConversion::chunkToWorld(event.chunkPosition, event.blockPosition, Chunk::WIDTH);
 
 		handleNaturalLight(blockPosition, previousBlock, newBlock);
+		handleSkyLight(blockPosition, newBlock);
 	}
 }
 
@@ -35,6 +36,23 @@ void BlockLightingSystem::handleNaturalLight(const Vector3& blockPosition, const
 	else if (newBlock.getLuminocity() == 0 &&
 		previousBlock.getLuminocity() == 0) {
 		editBlock(blockPosition);
+	}
+}
+
+void BlockLightingSystem::handleSkyLight(const Vector3& blockPosition, const Block& block) {
+	if (m_world->getSkyLightAt(blockPosition) > 0) {
+		if (block.isCompletelyOpaque()) {
+			removeSkyLight(blockPosition);
+		}
+		else if (block.getOpacity() > 0) {
+			filterSkyLight(blockPosition);
+		}
+		else {
+			allowSkyLight(blockPosition);
+		}
+	}
+	else if (block.getOpacity() == 0) {
+		allowSkyLight(blockPosition);
 	}
 }
 
@@ -70,6 +88,28 @@ void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
 			removeLight(neighborPos);
 		}
 	}
+}
+
+void BlockLightingSystem::allowSkyLight(const Vector3& blockPosition) {
+	for (auto& neighborOffset : Directions::List) {
+		m_world->setSkyLightAt(blockPosition + neighborOffset, m_world->getSkyLightAt(blockPosition + neighborOffset));
+		m_skyLightBfsQueue.emplace(blockPosition + neighborOffset);
+
+		updateSkyLightPropopgation();
+	}
+}
+
+void BlockLightingSystem::removeSkyLight(const Vector3& blockPosition) {
+	m_skyLightRemovalBfsQueue.emplace(blockPosition, m_world->getSkyLightAt(blockPosition));
+	m_world->setSkyLightAt(blockPosition, 0);
+
+	updateSkyLightRemoval();
+	updateSkyLightPropopgation();
+}
+
+void BlockLightingSystem::filterSkyLight(const Vector3& blockPosition) {
+	removeSkyLight(blockPosition);
+	allowSkyLight(blockPosition);
 }
 
 void BlockLightingSystem::updateNaturalLightPropogation() {
@@ -111,6 +151,57 @@ void BlockLightingSystem::updateNaturalLightRemoval() {
 			}
 			else if (neighborLightValue >= lightValue) {
 				m_lightBfsQueue.emplace(neighborPos);
+			}
+		}
+	}
+}
+
+void BlockLightingSystem::updateSkyLightPropopgation() {
+	while (!m_skyLightBfsQueue.empty()) {
+		auto blockPosition = m_skyLightBfsQueue.front();
+		std::uint8_t lightValue = m_world->getSkyLightAt(blockPosition);
+		m_skyLightBfsQueue.pop();
+
+		for (auto& neighborOffset : Directions::List) {
+			auto neighborPos = blockPosition + neighborOffset;
+
+			auto& blockRegistry = BlockRegistry::getInstance();
+			auto& neighborBlock = blockRegistry.getBlockFromID(m_world->getBlockIDAt(neighborPos));
+
+			if (!neighborBlock.isCompletelyOpaque()) {
+				if (lightValue == 15 && neighborOffset == Directions::Down) {
+					m_world->setSkyLightAt(neighborPos, lightValue - neighborBlock.getOpacity());
+					m_skyLightBfsQueue.emplace(neighborPos);
+				}
+				else if (m_world->getSkyLightAt(neighborPos) + neighborBlock.getOpacity() + 2 <= lightValue) {
+					m_world->setSkyLightAt(neighborPos, lightValue - neighborBlock.getOpacity() - 1);
+					m_skyLightBfsQueue.emplace(neighborPos);
+				}
+			}
+		}
+	}
+}
+
+void BlockLightingSystem::updateSkyLightRemoval() {
+	while (!m_skyLightRemovalBfsQueue.empty()) {
+		auto& lightRemovalNode = m_skyLightRemovalBfsQueue.front();
+
+		auto blockPosition = lightRemovalNode.position;
+		std::uint8_t lightValue = lightRemovalNode.value;
+
+		m_skyLightRemovalBfsQueue.pop();
+
+		for (auto& neighborOffset : Directions::List) {
+			auto neighborPos = blockPosition + neighborOffset;
+
+			std::uint8_t neighborLightValue = m_world->getSkyLightAt(neighborPos);
+
+			if ((neighborLightValue != 0 && neighborLightValue < lightValue) || (lightValue == 15 && neighborOffset == Directions::Down)) {
+				m_world->setSkyLightAt(neighborPos, 0);
+				m_skyLightRemovalBfsQueue.emplace(neighborPos, neighborLightValue);
+			}
+			else if (neighborLightValue >= lightValue) {
+				m_skyLightBfsQueue.emplace(neighborPos);
 			}
 		}
 	}
