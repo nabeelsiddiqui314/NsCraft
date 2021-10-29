@@ -61,3 +61,7 @@ void Material::setBlendMode(const BlendMode& blendMode) {
 BlendMode Material::getBlendMode() const {
 	return m_blendMode;
 }
+
+std::shared_ptr<Shader> Material::getShader() const {
+	return m_shader;
+}

@@ -6,7 +6,6 @@
 
 class Shader;
 class Texture;
-class Renderer;
 
 enum class CullMode {
 	BACK = 0,
@@ -21,7 +20,6 @@ enum class BlendMode {
 };
 
 class Material {
-	friend Renderer;
 public:
 	Material(const std::shared_ptr<Shader>& shader);
 	~Material() = default;
@@ -40,6 +38,8 @@ public:
 
 	void setBlendMode(const BlendMode& blendMode);
 	BlendMode getBlendMode() const;
+
+	std::shared_ptr<Shader> getShader() const;
 private:
 	std::shared_ptr<Shader> m_shader;
 	std::unordered_map<std::string, float> m_scalarUniforms;
