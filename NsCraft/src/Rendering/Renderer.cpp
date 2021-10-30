@@ -50,7 +50,7 @@ namespace Renderer {
 		s_renderRequests.push_back(request);
 	}
 
-	void render() {
+	void end() {
 		std::sort(s_renderRequests.begin(), s_renderRequests.end(), [](const RenderRequest& lVal, const RenderRequest& rVal) {
 			return (int)lVal.material->getBlendMode() < (int)rVal.material->getBlendMode();
 			});
