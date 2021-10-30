@@ -20,10 +20,8 @@ namespace Renderer {
 		glm::mat4 modelMatrix;
 	};
 
-	namespace {
-		CameraMatrices s_cameraMatrices;
-		std::vector<RenderRequest> s_renderRequests;
-	}
+	static CameraMatrices s_cameraMatrices;
+	static std::vector<RenderRequest> s_renderRequests;
 
 
 	void init() {
