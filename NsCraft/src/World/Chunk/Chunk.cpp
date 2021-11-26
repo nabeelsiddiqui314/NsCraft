@@ -68,6 +68,25 @@ std::uint8_t Chunk::getNaturalLight(const Vector3& position) const {
 	return m_lightNodes[getIndex(position)].getNaturalLight();
 }
 
+void Chunk::fillWithBlock(Block_ID blockID) {
+	m_blocks.fill(blockID);
+}
+
+void Chunk::fillWithSkyLight(std::uint8_t value) {
+	LightNode node;
+	node.setSkyLight(value);
+
+	m_lightNodes.fill(node);
+}
+
+void Chunk::fillWithNaturalLight(std::uint8_t value) {
+	LightNode node;
+	node.setNaturalLight(value);
+
+	m_lightNodes.fill(node);
+}
+
+
 bool Chunk::isFullyInvisible() const {
 	return m_invisibleBlockCount == WIDTH * WIDTH * WIDTH;
 }

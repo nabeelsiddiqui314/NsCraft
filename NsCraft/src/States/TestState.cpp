@@ -98,7 +98,7 @@ TestState::TestState()
 	{
 		auto& block = blockRegistry.registerBlock("water");
 		block.setMeshGenerator(std::make_shared<LiquidMeshGenerator>(waterTex));
-		block.setOpacity(0);
+		block.setOpacity(3);
 		block.setMaterial(liquidM);
 	}
 

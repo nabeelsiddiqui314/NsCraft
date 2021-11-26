@@ -22,6 +22,10 @@ public:
 	std::uint8_t getSkyLight(const Vector3& position) const;
 	std::uint8_t getNaturalLight(const Vector3& position) const;
 
+	void fillWithBlock(Block_ID blockID);
+	void fillWithSkyLight(std::uint8_t value);
+	void fillWithNaturalLight(std::uint8_t value);
+
 	bool isFullyInvisible() const;
 	bool isFullyOpaque() const;
 private:

@@ -5,7 +5,7 @@
 #include "../Math/Vector3.h"
 
 class World;
-struct Vector3;
+struct Vector2;
 class Block;
 
 class BlockLightingSystem : public IWorldObserver {
@@ -22,6 +22,7 @@ public:
 	BlockLightingSystem(const std::shared_ptr<World>& world);
 	~BlockLightingSystem() = default;
 public:
+	void onEvent(const ChunkLoadEvent& event) override;
 	void onEvent(const BlockModifyEvent& event) override;
 private:
 	void handleNaturalLight(const Vector3& blockPosition, const Block& previousBlock, const Block& newBlock);
@@ -40,6 +41,11 @@ private:
 
 	void updateSkyLightPropopgation();
 	void updateSkyLightRemoval();
+
+	void lightColumn(const Vector2& columnPosition);
+
+	bool hasColumnGenerated(const Vector2& columnPosition) const;
+	bool haveNeighborsGenerated(const Vector2& columnPosition) const;
 private:
 	std::shared_ptr<World> m_world;
 

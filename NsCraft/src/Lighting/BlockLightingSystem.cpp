@@ -6,9 +6,22 @@
 #include "../World/Chunk/Chunk.h"
 #include "../Math/Directions.h"
 #include "../Math/CoordinateConversion.h"
+#include "LightDefs.h"
 
 BlockLightingSystem::BlockLightingSystem(const std::shared_ptr<World>& world)
 	: m_world(world) {}
+
+void BlockLightingSystem::onEvent(const ChunkLoadEvent& event) {
+	for (int x = -1; x <= 1; x++) {
+		for (int z= -1; z <= 1; z++) {
+			Vector2 columnPosition = { event.chunkPosition.x + x, event.chunkPosition.z + z };
+
+			if (hasColumnGenerated(columnPosition) && haveNeighborsGenerated(columnPosition)) {
+				lightColumn(columnPosition);
+			}
+		}
+	}
+}
 
 void BlockLightingSystem::onEvent(const BlockModifyEvent& event) {
 	if (m_world->doesChunkHaveAllNeighbors(event.chunkPosition)) {
@@ -162,6 +175,10 @@ void BlockLightingSystem::updateSkyLightPropopgation() {
 		std::uint8_t lightValue = m_world->getSkyLightAt(blockPosition);
 		m_skyLightBfsQueue.pop();
 
+		if (blockPosition.y >= m_world->getMaxHeight() * Chunk::WIDTH) {
+			continue;
+		}
+
 		for (auto& neighborOffset : Directions::List) {
 			auto neighborPos = blockPosition + neighborOffset;
 
@@ -205,4 +222,56 @@ void BlockLightingSystem::updateSkyLightRemoval() {
 			}
 		}
 	}
+}
+
+void BlockLightingSystem::lightColumn(const Vector2& columnPosition) {
+	Vector3 lowestEmptyChunkPosition;
+
+	for (int y = m_world->getMaxHeight() - 1; y >= 0; y--) {
+		Vector3 chunkPosition = { columnPosition.x, y, columnPosition.y };
+
+		if (!m_world->isChunkFullyInvisible(chunkPosition)) {
+			chunkPosition.y++;
+			lowestEmptyChunkPosition = chunkPosition;
+			break;
+		}
+		else {
+			m_world->fillChunkWithSkyLight(chunkPosition, 15);
+		}
+	}
+
+	Vector3 blockPosition = CoordinateConversion::chunkToWorld(lowestEmptyChunkPosition, {0, 0, 0}, Chunk::WIDTH);
+
+	for (int x = 0; x < Chunk::WIDTH; x++) {
+		for (int z = 0; z < Chunk::WIDTH; z++) {
+			Vector3 offset = {x, 0, z};
+
+			m_world->setSkyLightAt(blockPosition + offset, 15);
+			m_skyLightBfsQueue.emplace(blockPosition + offset);
+		}
+	}
+
+	updateSkyLightPropopgation();
+}
+
+bool BlockLightingSystem::hasColumnGenerated(const Vector2& columnPosition) const {
+	for (int y = 0; y < m_world->getMaxHeight(); y++) {
+		if (!m_world->doesChunkExist({ columnPosition.x, y, columnPosition.y })) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool BlockLightingSystem::haveNeighborsGenerated(const Vector2& columnPosition) const {
+	for (int x = -1; x <= 1; x++) {
+		for (int z = -1; z <= 1; z++) {
+			if (!hasColumnGenerated({ columnPosition.x + x, columnPosition.y + z })) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }

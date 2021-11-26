@@ -41,6 +41,10 @@ public:
 	std::uint8_t getSkyLightAt(const Vector3& position) const;
 	std::uint8_t getNaturalLightAt(const Vector3& position) const;
 
+	void fillChunkWithBlock(const Vector3& position, Block_ID blockID);
+	void fillChunkWithSkyLight(const Vector3& position, std::uint8_t value);
+	void fillChunkWithNaturalLight(const Vector3& position, std::uint8_t value);
+
 	bool isChunkFullyInvisible(const Vector3& position) const;
 	bool isChunkFullyOpaque(const Vector3& position) const;
 	

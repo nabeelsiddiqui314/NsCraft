@@ -124,7 +124,7 @@ void World::setSkyLightAt(const Vector3& position, std::uint8_t value) {
 		ChunkModifyEvent chunkModEvent;
 		chunkModEvent.chunkPosition = chunkPosition;
 		chunkModEvent.blockPosition = blockPosition;
-
+		
 		notifyObservers(chunkModEvent);
 	}
 }
@@ -161,6 +161,24 @@ std::uint8_t World::getNaturalLightAt(const Vector3& position) const {
 	}
 
 	return 0;
+}
+
+void World::fillChunkWithBlock(const Vector3& position, Block_ID blockID) {
+	if (doesChunkExist(position)) {
+		m_chunkMap.at(position)->fillWithBlock(blockID);
+	}
+}
+
+void World::fillChunkWithSkyLight(const Vector3& position, std::uint8_t value) {
+	if (doesChunkExist(position)) {
+		m_chunkMap.at(position)->fillWithSkyLight(value);
+	}
+}
+
+void World::fillChunkWithNaturalLight(const Vector3& position, std::uint8_t value) {
+	if (doesChunkExist(position)) {
+		m_chunkMap.at(position)->fillWithNaturalLight(value);
+	}
 }
 
 bool World::isChunkFullyInvisible(const Vector3& position) const {
