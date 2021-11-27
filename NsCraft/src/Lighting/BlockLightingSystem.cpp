@@ -57,34 +57,30 @@ void BlockLightingSystem::handleSkyLight(const Vector3& blockPosition, const Blo
 void BlockLightingSystem::handleNaturalLight(const Vector3& blockPosition, const Block& previousBlock, const Block& newBlock) {
 	if (newBlock.getLuminocity() > 0 &&
 		previousBlock.getLuminocity() == 0) {
-		m_lightPropogator.addNaturalLight(blockPosition, newBlock.getLuminocity());
+		addNaturalLight(blockPosition, newBlock.getLuminocity());
 	}
 	else if (newBlock.getLuminocity() == 0 &&
 		previousBlock.getLuminocity() > 0) {
-		m_lightPropogator.removeNaturalLight(blockPosition);
+		removeNaturalLight(blockPosition);
 	}
 	else if (newBlock.getLuminocity() == 0 &&
 		previousBlock.getLuminocity() == 0) {
-		editBlock(blockPosition);
+		updateNaturalLight(blockPosition);
 	}
-
-	m_lightPropogator.updateLights();
 }
 
-void BlockLightingSystem::addLight(const Vector3& blockPosition, std::uint8_t luminocity) {
+void BlockLightingSystem::addNaturalLight(const Vector3& blockPosition, std::uint8_t luminocity) {
 	m_lightPropogator.addNaturalLight(blockPosition, luminocity);
-
 	m_lightPropogator.updateLights();
 }
 
-void BlockLightingSystem::removeLight(const Vector3& blockPosition) {
+void BlockLightingSystem::removeNaturalLight(const Vector3& blockPosition) {
 	m_lightPropogator.removeNaturalLight(blockPosition);
-
 	m_lightPropogator.updateLights();
 }
 
-void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
-	removeLight(blockPosition);
+void BlockLightingSystem::updateNaturalLight(const Vector3& blockPosition) {
+	removeNaturalLight(blockPosition);
 
 	for (auto& neigborOffset : Directions::List) {
 		auto neighborPos = blockPosition + neigborOffset;
@@ -93,10 +89,10 @@ void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
 		auto& neigborBlock = blockRegistry.getBlockFromID(m_world->getBlockIDAt(neighborPos));
 
 		if (neigborBlock.getLuminocity() > 0) {
-			addLight(neighborPos, neigborBlock.getLuminocity());
+			addNaturalLight(neighborPos, neigborBlock.getLuminocity());
 		}
 		else {
-			removeLight(neighborPos);
+			removeNaturalLight(neighborPos);
 		}
 	}
 }
@@ -104,14 +100,12 @@ void BlockLightingSystem::editBlock(const Vector3& blockPosition) {
 void BlockLightingSystem::allowSkyLight(const Vector3& blockPosition) {
 	for (auto& neighborOffset : Directions::List) {
 		m_lightPropogator.addSkyLight(blockPosition + neighborOffset, m_world->getSkyLightAt(blockPosition + neighborOffset));
-
 		m_lightPropogator.updateLights();
 	}
 }
 
 void BlockLightingSystem::removeSkyLight(const Vector3& blockPosition) {
 	m_lightPropogator.removeSkyLight(blockPosition);
-
 	m_lightPropogator.updateLights();
 }
 

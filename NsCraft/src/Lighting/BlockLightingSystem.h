@@ -17,9 +17,9 @@ private:
 	void handleSkyLight(const Vector3& blockPosition, const Block& block);
 	void handleNaturalLight(const Vector3& blockPosition, const Block& previousBlock, const Block& newBlock);
 
-	void addLight(const Vector3& blockPosition, std::uint8_t luminocity);
-	void removeLight(const Vector3& blockPosition);
-	void editBlock(const Vector3& blockPosition);
+	void addNaturalLight(const Vector3& blockPosition, std::uint8_t luminocity);
+	void removeNaturalLight(const Vector3& blockPosition);
+	void updateNaturalLight(const Vector3& blockPosition);
 	
 	void allowSkyLight(const Vector3& blockPosition);
 	void removeSkyLight(const Vector3& blockPosition);
