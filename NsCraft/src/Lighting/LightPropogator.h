@@ -34,6 +34,8 @@ private:
 
 	void updateSkyLightPropopgation();
 	void updateSkyLightRemoval();
+
+	bool isBlockPositionOutOfBounds(const Vector3& blockPosition) const;
 private:
 	std::shared_ptr<World> m_world;
 

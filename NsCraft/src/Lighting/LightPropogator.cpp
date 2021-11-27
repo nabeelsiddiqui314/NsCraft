@@ -2,9 +2,9 @@
 #include "../World/Chunk/World.h"
 #include "../World/Blocks/BlockRegistry.h"
 #include "../World/Blocks/Block.h"
+#include "../World/Chunk/Chunk.h"
 #include "../Math/Directions.h"
 #include "LightDefs.h"
-#include "../World/Chunk/Chunk.h"
 
 LightPropogator::LightPropogator(const std::shared_ptr<World>& world) 
 	: m_world(world) {}
@@ -41,7 +41,11 @@ void LightPropogator::updateNaturalLightPropogation() {
 	while (!m_lightBfsQueue.empty()) {
 		auto blockPosition = m_lightBfsQueue.front();
 		std::uint8_t lightValue = m_world->getNaturalLightAt(blockPosition);
+
 		m_lightBfsQueue.pop();
+
+		if (isBlockPositionOutOfBounds(blockPosition))
+			continue;
 
 		for (auto& neighborOffset : Directions::List) {
 			auto neighborPos = blockPosition + neighborOffset;
@@ -61,9 +65,14 @@ void LightPropogator::updateNaturalLightPropogation() {
 void LightPropogator::updateNaturalLightRemoval() {
 	while (!m_lightRemovalBfsQueue.empty()) {
 		auto& lightRemovalNode = m_lightRemovalBfsQueue.front();
+
 		auto blockPosition = lightRemovalNode.position;
 		std::uint8_t lightValue = lightRemovalNode.value;
+
 		m_lightRemovalBfsQueue.pop();
+
+		if (isBlockPositionOutOfBounds(blockPosition))
+			continue;
 
 		for (auto& neighborOffset : Directions::List) {
 			auto neighborPos = blockPosition + neighborOffset;
@@ -85,11 +94,11 @@ void LightPropogator::updateSkyLightPropopgation() {
 	while (!m_skyLightBfsQueue.empty()) {
 		auto blockPosition = m_skyLightBfsQueue.front();
 		std::uint8_t lightValue = m_world->getSkyLightAt(blockPosition);
+
 		m_skyLightBfsQueue.pop();
 
-		if (blockPosition.y >= m_world->getMaxHeight() * Chunk::WIDTH) {
+		if (isBlockPositionOutOfBounds(blockPosition))
 			continue;
-		}
 
 		for (auto& neighborOffset : Directions::List) {
 			auto neighborPos = blockPosition + neighborOffset;
@@ -120,6 +129,9 @@ void LightPropogator::updateSkyLightRemoval() {
 
 		m_skyLightRemovalBfsQueue.pop();
 
+		if (isBlockPositionOutOfBounds(blockPosition))
+			continue;
+
 		for (auto& neighborOffset : Directions::List) {
 			auto neighborPos = blockPosition + neighborOffset;
 
@@ -134,4 +146,8 @@ void LightPropogator::updateSkyLightRemoval() {
 			}
 		}
 	}
+}
+
+bool LightPropogator::isBlockPositionOutOfBounds(const Vector3& blockPosition) const {
+	return blockPosition.y < 0 || blockPosition.y >= m_world->getMaxHeight() * Chunk::WIDTH;
 }
