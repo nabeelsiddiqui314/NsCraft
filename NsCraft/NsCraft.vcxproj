@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\EventSystem\Subject.cpp" />
     <ClCompile Include="src\Lighting\BlockLightingSystem.cpp" />
     <ClCompile Include="src\Lighting\LightPropogator.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -80,10 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\EventSystem\Event.h" />
-    <ClInclude Include="src\EventSystem\EventDispatcher.h" />
-    <ClInclude Include="src\EventSystem\IEventListener.h" />
-    <ClInclude Include="src\EventSystem\Subject.h" />
     <ClInclude Include="src\Geometry\BlockFaces.h" />
     <ClInclude Include="src\Lighting\BlockLightingSystem.h" />
     <ClInclude Include="src\Lighting\LightDefs.h" />
