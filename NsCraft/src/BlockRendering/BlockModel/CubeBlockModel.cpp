@@ -1,5 +1,5 @@
-#include "CubeMeshGenerator.h"
-#include "ChunkMesh.h"
+#include "CubeBlockModel.h"
+#include "../../Rendering/Mesh/ChunkMesh.h"
 #include "../../World/Blocks/BlockRegistry.h"
 #include "../../World/Blocks/Block.h"
 #include "../../Geometry/BlockFaces.h"
@@ -7,12 +7,12 @@
 #include "../../World/Chunk/PaddedChunk.h"
 #include "../../Math/Vector2.h"
 
-CubeMeshGenerator::CubeMeshGenerator(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture)
+CubeBlockModel::CubeBlockModel(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture)
 	: m_topTexture(topTexture),
       m_sideTexture(sideTexture),
       m_bottomTexture(bottomTexture) {}
 
-void CubeMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
+void CubeBlockModel::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
 	auto tryAddFace = [&](const Vector3& faceDirection, GLuint texture, const BlockFace& face) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 
@@ -34,7 +34,7 @@ void CubeMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, c
 	tryAddFace(Directions::Back, m_sideTexture,   BlockFaces::Back);
 }
 
-std::array<GLfloat, 4> CubeMeshGenerator::getFaceAmbientLighting(const PaddedChunk& chunk, const Vector3& blockPosition, const Vector3& faceDirection) const {
+std::array<GLfloat, 4> CubeBlockModel::getFaceAmbientLighting(const PaddedChunk& chunk, const Vector3& blockPosition, const Vector3& faceDirection) const {
 	std::array<GLfloat, 4> ambientLight;
 
 	auto& blockRegistry = BlockRegistry::getInstance();
@@ -67,7 +67,7 @@ std::array<GLfloat, 4> CubeMeshGenerator::getFaceAmbientLighting(const PaddedChu
 	return ambientLight;
 }
 
-std::tuple<Vector3, Vector3, Vector3> CubeMeshGenerator::computeVertexNeighbors(const Vector3& faceDirection, const Vector2& vertex) const {
+std::tuple<Vector3, Vector3, Vector3> CubeBlockModel::computeVertexNeighbors(const Vector3& faceDirection, const Vector2& vertex) const {
 	Vector3 side1, side2, corner;
 
 	if (faceDirection == Directions::Up || faceDirection == Directions::Down) {
@@ -93,7 +93,7 @@ std::tuple<Vector3, Vector3, Vector3> CubeMeshGenerator::computeVertexNeighbors(
 	return { side1, side2, corner };
 }
 
-float CubeMeshGenerator::getAmbientOcclusion(bool side1, bool side2, bool corner) const {
+float CubeBlockModel::getAmbientOcclusion(bool side1, bool side2, bool corner) const {
 	if (side1 && side2) {
 		return 0.0f;
 	}

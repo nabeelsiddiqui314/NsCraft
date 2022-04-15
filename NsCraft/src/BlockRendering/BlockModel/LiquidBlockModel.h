@@ -1,11 +1,11 @@
 #pragma once
-#include "IMeshGenerator.h"
+#include "IBlockModel.h"
 #include <GL/glew.h>
 
-class CrossMeshGenerator : public IMeshGenerator {
+class LiquidBlockModel : public IBlockModel {
 public:
-	CrossMeshGenerator(GLuint texture);
-	~CrossMeshGenerator() = default;
+	LiquidBlockModel(GLuint texture);
+	~LiquidBlockModel() = default;
 public:
 	void generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) override;
 private:

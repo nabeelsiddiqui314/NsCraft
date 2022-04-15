@@ -1,15 +1,15 @@
-#include "LiquidMeshGenerator.h"
-#include "ChunkMesh.h"
+#include "LiquidBlockModel.h"
+#include "../../Rendering/Mesh/ChunkMesh.h"
 #include "../../World/Blocks/BlockRegistry.h"
 #include "../../World/Blocks/Block.h"
 #include "../../Geometry/BlockFaces.h"
 #include "../../Math/Directions.h"
 #include "../../World/Chunk/PaddedChunk.h"
 
-LiquidMeshGenerator::LiquidMeshGenerator(GLuint texture) 
+LiquidBlockModel::LiquidBlockModel(GLuint texture)
 	: m_texture(texture) {}
 
-void LiquidMeshGenerator::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
+void LiquidBlockModel::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
 	auto tryAddFace = [&](const Vector3& neighborOffset, const BlockFace& face) {
 		auto& blockRegistry = BlockRegistry::getInstance();
 

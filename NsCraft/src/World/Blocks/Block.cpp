@@ -6,12 +6,12 @@ Block::Block()
       m_luminocity(0) {
 }
 
-void Block::setMeshGenerator(const MeshGeneratorPtr& meshGenerator) {
-	m_meshGenerator = meshGenerator;
+void Block::setBlockModel(const BlockModelPtr& blockModel) {
+	m_blockModel = blockModel;
 }
 
-Block::MeshGeneratorPtr Block::getMeshGenerator() const {
-	return m_meshGenerator;
+Block::BlockModelPtr Block::getBlockModel() const {
+	return m_blockModel;
 }
 
 void Block::setMaterial(const MaterialPtr& material) {
@@ -31,7 +31,7 @@ std::uint8_t Block::getOpacity() const {
 }
 
 bool Block::isInvisible() const {
-	return !m_meshGenerator;
+	return !m_blockModel;
 }
 
 bool Block::isCompletelyOpaque() const {

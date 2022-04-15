@@ -8,8 +8,8 @@
 #include "../Rendering/Mesh/ChunkMeshingSystem.h"
 #include "../Rendering/ChunkRenderer.h"
 #include "../World/Blocks/Block.h"
-#include "../Rendering/Mesh/CubeMeshGenerator.h"
-#include "../Rendering/Mesh/LiquidMeshGenerator.h"
+#include "../BlockRendering/BlockModel/CubeBlockModel.h"
+#include "../BlockRendering/BlockModel/LiquidBlockModel.h"
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
@@ -61,28 +61,28 @@ TestState::TestState()
 
 	{
 		auto& block = blockRegistry.registerBlock("grass");
-		block.setMeshGenerator(std::make_shared<CubeMeshGenerator>(grassTopTex, grassSideTex, dirtTex));
+		block.setBlockModel(std::make_shared<CubeBlockModel>(grassTopTex, grassSideTex, dirtTex));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setMaterial(solidM);
 	}
 
 	{
 		auto& block = blockRegistry.registerBlock("dirt");
-		block.setMeshGenerator(std::make_shared<CubeMeshGenerator>(dirtTex, dirtTex, dirtTex));
+		block.setBlockModel(std::make_shared<CubeBlockModel>(dirtTex, dirtTex, dirtTex));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setMaterial(solidM);
 	}
 
 	{
 		auto& block = blockRegistry.registerBlock("bedrock");
-		block.setMeshGenerator(std::make_shared<CubeMeshGenerator>(bedrockTex, bedrockTex, bedrockTex));
+		block.setBlockModel(std::make_shared<CubeBlockModel>(bedrockTex, bedrockTex, bedrockTex));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setMaterial(solidM);
 	}
 
 	{
 		auto& block = blockRegistry.registerBlock("lightTest");
-		block.setMeshGenerator(std::make_shared<CubeMeshGenerator>(bedrockTex, bedrockTex, bedrockTex));
+		block.setBlockModel(std::make_shared<CubeBlockModel>(bedrockTex, bedrockTex, bedrockTex));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setLuminocity(LightDefs::MAX_LUMINOCITY);
 		block.setMaterial(solidM);
@@ -90,14 +90,14 @@ TestState::TestState()
 
 	{
 		auto& block = blockRegistry.registerBlock("sand");
-		block.setMeshGenerator(std::make_shared<CubeMeshGenerator>(sandTex, sandTex, sandTex));
+		block.setBlockModel(std::make_shared<CubeBlockModel>(sandTex, sandTex, sandTex));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setMaterial(solidM);
 	}
 
 	{
 		auto& block = blockRegistry.registerBlock("water");
-		block.setMeshGenerator(std::make_shared<LiquidMeshGenerator>(waterTex));
+		block.setBlockModel(std::make_shared<LiquidBlockModel>(waterTex));
 		block.setOpacity(3);
 		block.setMaterial(liquidM);
 	}

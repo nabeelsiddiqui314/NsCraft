@@ -9,7 +9,7 @@
 #include "../../World/Blocks/Block.h"
 #include "../../World/Chunk/Chunk.h"
 #include "../../World/Chunk/PaddedChunk.h"
-#include "IMeshGenerator.h"
+#include "../../BlockRendering/BlockModel/IBlockModel.h"
 #include <vector>
 
 ChunkMeshingSystem::ChunkMeshingSystem(const std::shared_ptr<World>& world, ChunkRenderer& renderer)
@@ -131,7 +131,7 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 						auto mesh = meshes->getOrCreateSubMesh(block.getMaterial());
 
 						mesh->setCurrentOrigin(blockPosition);
-						block.getMeshGenerator()->generateMesh({x, y, z}, *mesh, paddedChunk);
+						block.getBlockModel()->generateMesh({x, y, z}, *mesh, paddedChunk);
 					}
 				}
 			}

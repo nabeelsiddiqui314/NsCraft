@@ -2,14 +2,14 @@
 #include <GL/glew.h>
 #include <tuple>
 #include <array>
-#include "IMeshGenerator.h"
+#include "IBlockModel.h"
 
 struct Vector2;
 
-class CubeMeshGenerator : public IMeshGenerator {
+class CubeBlockModel : public IBlockModel {
 public:
-	CubeMeshGenerator(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture);
-	~CubeMeshGenerator() = default;
+	CubeBlockModel(GLuint topTexture, GLuint sideTexture, GLuint bottomTexture);
+	~CubeBlockModel() = default;
 public:
 	void generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) override;
 private:

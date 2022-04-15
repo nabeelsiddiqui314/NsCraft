@@ -30,9 +30,9 @@
     <ClCompile Include="src\OpenGL\TextureArray.cpp" />
     <ClCompile Include="src\OpenGL\TextureCube.cpp" />
     <ClCompile Include="src\Rendering\Camera\OrthographpicCamera.cpp" />
-    <ClCompile Include="src\Rendering\Mesh\CrossMeshGenerator.cpp" />
+    <ClCompile Include="src\BlockRendering\BlockModel\CrossBlockModel.cpp" />
     <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp" />
-    <ClCompile Include="src\Rendering\Mesh\LiquidMeshGenerator.cpp" />
+    <ClCompile Include="src\BlockRendering\BlockModel\LiquidBlockModel.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
     <ClCompile Include="src\Math\Frustum.cpp" />
@@ -51,7 +51,7 @@
     <ClCompile Include="src\Rendering\ChunkRenderer.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMesh.cpp" />
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp" />
-    <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp" />
+    <ClCompile Include="src\BlockRendering\BlockModel\CubeBlockModel.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureAtlas.cpp" />
     <ClCompile Include="src\States\TestState.cpp" />
     <ClCompile Include="src\States\StateMachine.cpp" />
@@ -92,9 +92,9 @@
     <ClInclude Include="src\OpenGL\TextureCube.h" />
     <ClInclude Include="src\Rendering\Camera\ICamera.h" />
     <ClInclude Include="src\Rendering\Camera\OrthographpicCamera.h" />
-    <ClInclude Include="src\Rendering\Mesh\CrossMeshGenerator.h" />
+    <ClInclude Include="src\BlockRendering\BlockModel\CrossBlockModel.h" />
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
-    <ClInclude Include="src\Rendering\Mesh\LiquidMeshGenerator.h" />
+    <ClInclude Include="src\BlockRendering\BlockModel\LiquidBlockModel.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
     <ClInclude Include="src\Math\Frustum.h" />
@@ -115,8 +115,8 @@
     <ClInclude Include="src\Rendering\Mesh\ChunkMesh.h" />
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h" />
     <ClInclude Include="src\Rendering\Mesh\CubeFaces.h" />
-    <ClInclude Include="src\Rendering\Mesh\CubeMeshGenerator.h" />
-    <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h" />
+    <ClInclude Include="src\BlockRendering\BlockModel\CubeBlockModel.h" />
+    <ClInclude Include="src\BlockRendering\BlockModel\IBlockModel.h" />
     <ClInclude Include="src\Rendering\Mesh\Quad.h" />
     <ClInclude Include="src\Rendering\Texture\TextureAtlas.h" />
     <ClInclude Include="src\States\TestState.h" />

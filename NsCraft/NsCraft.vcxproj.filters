@@ -123,9 +123,6 @@
     <ClCompile Include="src\Rendering\Mesh\ChunkMeshingSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Rendering\Mesh\CubeMeshGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Rendering\Texture\TextureAtlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -145,12 +142,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Mesh\CrossMeshGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Rendering\Mesh\LiquidMeshGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\World\Generation\Heightmap\BiomeInterpolatedHeightGen.cpp">
@@ -184,6 +175,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Lighting\LightPropogator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlockRendering\BlockModel\CrossBlockModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlockRendering\BlockModel\CubeBlockModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BlockRendering\BlockModel\LiquidBlockModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -320,12 +320,6 @@
     <ClInclude Include="src\Rendering\Mesh\ChunkMeshingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Rendering\Mesh\CubeMeshGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\Mesh\IMeshGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Rendering\Texture\TextureAtlas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -357,12 +351,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\Mesh\CrossMeshGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Rendering\Mesh\LiquidMeshGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\World\Generation\Heightmap\BiomeInterpolatedHeightGen.h">
@@ -414,6 +402,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Lighting\LightPropogator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockRendering\BlockModel\CrossBlockModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockRendering\BlockModel\CubeBlockModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockRendering\BlockModel\IBlockModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockRendering\BlockModel\LiquidBlockModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
