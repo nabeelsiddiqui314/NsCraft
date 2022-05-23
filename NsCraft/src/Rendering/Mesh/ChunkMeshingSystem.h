@@ -22,6 +22,7 @@ private:
 	void enqueueChunkToMesh(const Vector3& chunkPosition);
 	void meshChunk(const Vector3& chunkPosition);
 	bool isChunkOccluded(const Vector3& position);
+	bool isChunkPositionValid(const Vector3& chunkPosition);
 private:
 	std::shared_ptr<World> m_world;
 	ChunkRenderer& m_renderer;

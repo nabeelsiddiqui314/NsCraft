@@ -92,11 +92,12 @@ void ChunkMeshingSystem::enqueueChunkToMesh(const Vector3& chunkPosition) {
 		for (int x = -1; x <= 1; x++) {
 			for (int z = -1; z <= 1; z++) {
 				for (int y = -1; y <= 1; y++) {
-					if (chunkPosition.y == 0 && y < 0 ||
-						chunkPosition.y == m_world->getMaxHeight() - 1 && y > 0) {
+					Vector3 neighborChunkPosition = chunkPosition + Vector3(x, y, z);
+
+					if (!isChunkPositionValid(neighborChunkPosition)) {
 						continue;
 					}
-					if (!m_world->doesChunkExist(chunkPosition + Vector3(x, y, z))) {
+					if (!m_world->doesChunkExist(neighborChunkPosition)) {
 						return;
 					}
 				}
@@ -131,7 +132,7 @@ void ChunkMeshingSystem::meshChunk(const Vector3& chunkPosition) {
 						auto mesh = meshes->getOrCreateSubMesh(block.getMaterial());
 
 						mesh->setCurrentOrigin(blockPosition);
-						block.getBlockModel()->generateMesh({x, y, z}, *mesh, paddedChunk);
+						block.getBlockModel()->generateMesh(blockPosition, *mesh, paddedChunk);
 					}
 				}
 			}
@@ -151,4 +152,8 @@ bool ChunkMeshingSystem::isChunkOccluded(const Vector3& position) {
 		   m_world->isChunkFullyOpaque(position + Directions::Right) &&
 		   m_world->isChunkFullyOpaque(position + Directions::Front) &&
 		   m_world->isChunkFullyOpaque(position + Directions::Back);
+}
+
+bool ChunkMeshingSystem::isChunkPositionValid(const Vector3& chunkPosition) {
+	return chunkPosition.y >= 0 && chunkPosition.y < m_world->getMaxHeight();
 }
