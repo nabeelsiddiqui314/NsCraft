@@ -3,7 +3,8 @@
 #include "World.h"
 #include "../../Math/CoordinateConversion.h"
 
-PaddedChunk::PaddedChunk(const Vector3& chunkPosition, const World& world) {
+PaddedChunk::PaddedChunk(const Vector3& chunkPosition, const World& world) 
+    : m_position(chunkPosition) {
     for (int x = -1; x <= 1; x++) {
         for (int y = -1; y <= 1; y++) {
             for (int z = -1; z <= 1; z++) {
@@ -27,4 +28,8 @@ ChunkNode PaddedChunk::getNode(const Vector3& position) const {
     }
 
     return node;
+}
+
+Vector3 PaddedChunk::getPosition() const {
+    return m_position;
 }

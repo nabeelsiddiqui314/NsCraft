@@ -10,6 +10,7 @@
 #include "../World/Blocks/Block.h"
 #include "../BlockRendering/BlockModel/CubeBlockModel.h"
 #include "../BlockRendering/BlockModel/LiquidBlockModel.h"
+#include "../BlockRendering/BlockModel/ModelVariants.h"
 #include "../World/Generation/ChunkGenerator/MonoBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/RandomBlockGenerator.h"
 #include "../World/Generation/ChunkGenerator/TerrainGenPipeline.h"
@@ -59,9 +60,16 @@ TestState::TestState()
 
 	auto& airBlock = blockRegistry.registerBlock("air");
 
+	auto model1 = std::make_shared<CubeBlockModel>(grassTopTex, grassSideTex, dirtTex);
+	auto model2 = std::make_shared<CubeBlockModel>(grassSideTex, grassSideTex, dirtTex);
+	auto model3 = std::make_shared<CubeBlockModel>(dirtTex, grassSideTex, dirtTex);
+
 	{
 		auto& block = blockRegistry.registerBlock("grass");
-		block.setBlockModel(std::make_shared<CubeBlockModel>(grassTopTex, grassSideTex, dirtTex));
+
+		VariantList list = { {model1, 250}, { model2, 7}, { model3, 5} };
+
+		block.setBlockModel(std::make_shared<ModelVariants>(list));
 		block.setOpacity(LightDefs::MAX_OPACITY);
 		block.setMaterial(solidM);
 	}

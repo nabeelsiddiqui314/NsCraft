@@ -22,6 +22,8 @@ public:
 	~PaddedChunk() = default;
 public:
 	ChunkNode getNode(const Vector3& position) const;
+	Vector3 getPosition() const;
 private:
 	std::unordered_map<Vector3, ChunkPtr> m_neighborhood;
+	Vector3 m_position;
 };

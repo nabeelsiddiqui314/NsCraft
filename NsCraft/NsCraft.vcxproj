@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\BlockRendering\BlockModel\ModelVariants.cpp" />
     <ClCompile Include="src\Lighting\BlockLightingSystem.cpp" />
     <ClCompile Include="src\Lighting\LightPropogator.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -79,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\BlockRendering\BlockModel\ModelVariants.h" />
     <ClInclude Include="src\Geometry\BlockFaces.h" />
     <ClInclude Include="src\Lighting\BlockLightingSystem.h" />
     <ClInclude Include="src\Lighting\LightDefs.h" />

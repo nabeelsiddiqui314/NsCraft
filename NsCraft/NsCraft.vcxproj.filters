@@ -186,6 +186,9 @@
     <ClCompile Include="src\BlockRendering\BlockModel\LiquidBlockModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\BlockRendering\BlockModel\ModelVariants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -414,6 +417,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BlockRendering\BlockModel\LiquidBlockModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BlockRendering\BlockModel\ModelVariants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
