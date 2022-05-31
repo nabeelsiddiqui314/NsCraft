@@ -1,6 +1,8 @@
 #include "ModelVariants.h"
-#include "../../World/Chunk/PaddedChunk.h"
 #include <numeric>
+#include "../../World/Chunk/PaddedChunk.h"
+#include "../../Math/CoordinateConversion.h"
+#include "../../World/Chunk/Chunk.h"
 
 ModelVariants::ModelVariants(const VariantList& variants)
 	: m_variants(variants) {
@@ -11,8 +13,10 @@ ModelVariants::ModelVariants(const VariantList& variants)
 
 void ModelVariants::generateMesh(const Vector3& position, ChunkMesh& mesh, const PaddedChunk& chunk) {
 	static std::hash<Vector3> hasher;
-	srand(hasher(position));
-	int randomNumber = rand() % m_weightSum;
+
+	Vector3 blockWorldPosition = CoordinateConversion::chunkToWorld(chunk.getPosition(), position, Chunk::WIDTH);
+
+	int randomNumber = hasher(blockWorldPosition) % m_weightSum;
 
 	for (auto& variant : m_variants.list) {
 		if (randomNumber < variant.weight) {
