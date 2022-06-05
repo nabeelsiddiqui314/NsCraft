@@ -35,6 +35,7 @@
     <ClCompile Include="src\Rendering\Mesh\FullChunkMesh.cpp" />
     <ClCompile Include="src\BlockRendering\BlockModel\LiquidBlockModel.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Rendering\Renderer2D.cpp" />
     <ClCompile Include="src\Rendering\Texture\TextureCoords.cpp" />
     <ClCompile Include="src\Math\Frustum.cpp" />
     <ClCompile Include="src\Math\Noise\SimplexNoise.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="src\BlockRendering\BlockModel\CrossBlockModel.h" />
     <ClInclude Include="src\Rendering\Mesh\FullChunkMesh.h" />
     <ClInclude Include="src\BlockRendering\BlockModel\LiquidBlockModel.h" />
+    <ClInclude Include="src\Rendering\Renderer2D.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
     <ClInclude Include="src\Rendering\Texture\TextureCoords.h" />
     <ClInclude Include="src\Math\Frustum.h" />
@@ -160,6 +162,8 @@
   <ItemGroup>
     <None Include="shaders\chunkShader.fs" />
     <None Include="shaders\chunkShader.vs" />
+    <None Include="shaders\colorShader.fs" />
+    <None Include="shaders\colorShader.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

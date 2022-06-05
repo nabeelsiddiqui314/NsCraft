@@ -2,6 +2,7 @@
 #include "IState.h"
 #include <memory>
 #include "../Rendering/Camera/PerspectiveCamera.h"
+#include "../Rendering/Camera/OrthographpicCamera.h"
 #include <SFML/System/Vector2.hpp>
 #include "../Rendering/ChunkRenderer.h"
 
@@ -22,6 +23,7 @@ public:
 	bool allowRenderingBelow() override;
 private:
 	PerspectiveCamera m_camera;
+	OrthographicCamera m_orthoCamera;
 	std::unique_ptr<ChunkRenderer> m_chunkRenderer;
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;

@@ -26,12 +26,13 @@
 #include "../World/Generation/Biome/Biome.h"
 #include "../Lighting/LightDefs.h"
 #include "../Rendering/Renderer.h"
+#include "../Rendering/Renderer2D.h"
 #include "../OpenGL/TextureArray.h"
 #include "../OpenGL/Shader.h"
 #include "../OpenGL/Material.h"
 
 TestState::TestState() 
-	: m_camera(800.0f / 600.0f, 80.0f) {
+	: m_camera(800.0f / 600.0f, 80.0f), m_orthoCamera({-0.5f, 0.5f, -0.5f, 0.5f}) {
 	auto texture = std::make_shared<TextureArray>(16, 16);
 
 	auto dirtTex = texture->addTexture("res/dirt.png");
@@ -62,12 +63,12 @@ TestState::TestState()
 
 	auto model1 = std::make_shared<CubeBlockModel>(grassTopTex, grassSideTex, dirtTex);
 	auto model2 = std::make_shared<CubeBlockModel>(grassSideTex, grassSideTex, dirtTex);
-	auto model3 = std::make_shared<CubeBlockModel>(dirtTex, grassSideTex, dirtTex);
+	auto model3 = std::make_shared<CubeBlockModel>(bedrockTex, grassSideTex, dirtTex);
 
 	{
 		auto& block = blockRegistry.registerBlock("grass");
 
-		VariantList list = { {model1, 250}, { model2, 7}, { model3, 5} };
+		VariantList list = { {model1, 99}, { model2, 1} };
 
 		block.setBlockModel(std::make_shared<ModelVariants>(list));
 		block.setOpacity(LightDefs::MAX_OPACITY);
@@ -183,6 +184,7 @@ TestState::TestState()
 	m_world->registerObserver(m_blockLightingSystem);
 
 	Renderer::init();
+	Renderer2D::init();
 }
 
 bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) {
@@ -294,6 +296,12 @@ void TestState::render() {
 	Renderer::begin(m_camera);
 
 	m_chunkRenderer->renderChunks(m_camera.getFrustum());
+
+	Renderer::end();
+
+	Renderer::begin(m_orthoCamera);
+	
+	Renderer2D::drawRect({ 0.0f, 0.0f }, { 0.5f, 0.5f }, {0.7f, 0.1f, 0.0f});
 
 	Renderer::end();
 }
