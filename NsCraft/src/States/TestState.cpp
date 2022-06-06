@@ -32,7 +32,7 @@
 #include "../OpenGL/Material.h"
 
 TestState::TestState() 
-	: m_camera(800.0f / 600.0f, 80.0f), m_orthoCamera({-0.5f, 0.5f, -0.5f, 0.5f}) {
+	: m_camera(800.0f / 600.0f, 80.0f) {
 	auto texture = std::make_shared<TextureArray>(16, 16);
 
 	auto dirtTex = texture->addTexture("res/dirt.png");
@@ -183,6 +183,9 @@ TestState::TestState()
 	m_world->registerObserver(m_chunkMeshingSystem);
 	m_world->registerObserver(m_blockLightingSystem);
 
+	m_crosshairTex = std::make_shared<Texture2D>();
+	m_crosshairTex->loadFromPath("res/crosshair.png");
+
 	Renderer::init();
 	Renderer2D::init();
 }
@@ -301,7 +304,7 @@ void TestState::render() {
 
 	Renderer::begin(m_orthoCamera);
 	
-	Renderer2D::drawRect({ 0.0f, 0.0f }, { 0.5f, 0.5f }, {0.7f, 0.1f, 0.0f});
+	Renderer2D::drawRect({ 0.0f, 0.0f }, { 0.1f, 0.1f }, m_crosshairTex);
 
 	Renderer::end();
 }

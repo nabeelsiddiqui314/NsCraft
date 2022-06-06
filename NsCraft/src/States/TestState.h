@@ -5,6 +5,7 @@
 #include "../Rendering/Camera/OrthographpicCamera.h"
 #include <SFML/System/Vector2.hpp>
 #include "../Rendering/ChunkRenderer.h"
+#include "../OpenGL/Texture2D.h"
 
 class World;
 class ChunkMeshingSystem;
@@ -28,6 +29,8 @@ private:
 	std::shared_ptr<World> m_world;
 	std::shared_ptr<ChunkMeshingSystem> m_chunkMeshingSystem;
 	std::shared_ptr<BlockLightingSystem> m_blockLightingSystem;
+
+	std::shared_ptr<Texture2D> m_crosshairTex;
 
 	sf::Vector2i m_lastMousePos;
 

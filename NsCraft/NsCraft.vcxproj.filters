@@ -434,5 +434,7 @@
     <None Include="shaders\chunkShader.vs" />
     <None Include="shaders\basicShader.vs" />
     <None Include="shaders\colorShader.fs" />
+    <None Include="shaders\textureShader.fs" />
+    <None Include="shaders\textureShader.vs" />
   </ItemGroup>
 </Project>
