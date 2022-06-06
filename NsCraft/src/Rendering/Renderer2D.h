@@ -2,9 +2,6 @@
 #include <glm/glm.hpp>
 #include <memory>
 
-class Texture2D;
-class OrthographicCamera;
-
 namespace Renderer2D {
 	void init();
 

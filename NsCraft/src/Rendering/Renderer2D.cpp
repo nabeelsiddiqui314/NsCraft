@@ -29,7 +29,7 @@ namespace Renderer2D {
 		s_quadVao->addVertexBuffer(verticesBuffer, 2);
 		s_quadVao->setIndexBuffer(indexBuffer);
 
-		auto colorShader = std::make_shared<Shader>("shaders/colorShader.vs", "shaders/colorShader.fs");
+		auto colorShader = std::make_shared<Shader>("shaders/basicShader.vs", "shaders/colorShader.fs");
 		s_colorMaterial = std::make_shared<Material>(colorShader);
 	}
 
