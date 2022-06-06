@@ -1,7 +1,10 @@
 #include "OrthographpicCamera.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-OrthographicCamera::OrthographicCamera(const Projection& projection) 
+OrthographicCamera::OrthographicCamera() 
+    : OrthographicCamera({ -0.5f, 0.5f, -0.5f, 0.5f }) {}
+
+OrthographicCamera::OrthographicCamera(const Projection& projection)
     : m_position(0.0f), m_rotation(0.0f) {
     setProjection(projection);
     updateView();

@@ -8,12 +8,12 @@ struct Projection {
 
 class OrthographicCamera : public ICamera {
 public:
+	OrthographicCamera();
 	OrthographicCamera(const Projection& projection);
 	~OrthographicCamera() = default;
 public:
 	glm::mat4 getView() const override;
 	glm::mat4 getProjection() const override;
-
 	void setProjection(const Projection& projection);
 
 	void setPosition(const glm::vec2& position);
