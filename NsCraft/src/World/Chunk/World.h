@@ -16,7 +16,7 @@ class World {
 private:
 	typedef std::shared_ptr<Chunk> ChunkPtr;
 	typedef std::unique_ptr<IChunkGenerator> ChunkGeneratorPtr;
-	typedef std::function<void(const Vector3&)> ForEachFunc;
+	typedef std::function<bool(const Vector3&)> Predicate;
 	typedef std::weak_ptr<IWorldObserver> ObserverPtr;
 public:
 	World(ChunkGeneratorPtr&& chunkGenerator, int maxHeight);
@@ -25,9 +25,9 @@ public:
 	void loadChunk(const Vector3& position);
 	void unloadChunk(const Vector3& position);
 
-	ChunkPtr getChunk(const Vector3& position) const;
+	void unloadChunkIf(const Predicate& predicate);
 
-	void forEachChunk(const ForEachFunc& func) const;
+	ChunkPtr getChunk(const Vector3& position) const;
 	
 	bool doesChunkExist(const Vector3& position) const;
 	bool doesChunkHaveAllNeighbors(const Vector3& position);

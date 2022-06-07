@@ -211,12 +211,15 @@ bool TestState::handleEvent(StateMachine& stateMachine, const sf::Event& event) 
 		break;
 	case sf::Event::Resized:
 		Renderer::resizeViewport(event.size.width, event.size.height);
-		m_camera.setAspectRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
+		float aspectRatio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
+		m_camera.setAspectRatio(aspectRatio);
+		m_orthoCamera.setProjection({-aspectRatio / 2.0f, aspectRatio / 2.0f, -0.5f, 0.5f });
 		break;
 	}
 
 	return false;
 }
+
 void TestState::update(StateMachine& stateMachine, float deltaTime) {
 	const float speed = 50.0f * deltaTime;
 	
@@ -260,11 +263,9 @@ void TestState::update(StateMachine& stateMachine, float deltaTime) {
 		}
 	}
 
-	m_world->forEachChunk([&](const Vector3& position) {
-		if (position.x < chunkPosX - loadDistance || position.x > chunkPosX + loadDistance ||
-			position.z < chunkPosZ - loadDistance || position.z > chunkPosZ + loadDistance) {
-			m_world->unloadChunk(position);
-		}
+	m_world->unloadChunkIf([&](const Vector3& position) {
+		return position.x < chunkPosX - loadDistance || position.x > chunkPosX + loadDistance ||
+			position.z < chunkPosZ - loadDistance || position.z > chunkPosZ + loadDistance;
 	});
 
 	Vector3 camPos = Vector3(floor(m_camera.getPosition().x), floor(m_camera.getPosition().y), floor(m_camera.getPosition().z));

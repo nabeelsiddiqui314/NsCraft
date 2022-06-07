@@ -39,18 +39,31 @@ void World::unloadChunk(const Vector3& position) {
 	}
 }
 
+void World::unloadChunkIf(const Predicate& predicate) {
+	for (auto iter = m_chunkMap.begin(); iter != m_chunkMap.end();) {
+		
+		Vector3 position = iter->first;
+
+		if (predicate(position)) {
+			iter = m_chunkMap.erase(iter);
+
+			ChunkUnloadEvent event;
+			event.chunkPosition = position;
+
+			notifyObservers(event);
+		}
+		else {
+			iter++;
+		}
+	}
+}
+
 World::ChunkPtr World::getChunk(const Vector3& position) const {
 	if (doesChunkExist(position)) {
 		return m_chunkMap.at(position);
 	}
 
 	return nullptr;
-}
-
-void World::forEachChunk(const ForEachFunc& func) const {
-	for (auto& [position, chunk] : m_chunkMap) {
-		func(position);
-	}
 }
 
 bool World::doesChunkExist(const Vector3& position) const {
