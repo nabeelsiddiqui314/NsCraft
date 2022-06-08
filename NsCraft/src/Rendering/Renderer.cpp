@@ -18,6 +18,7 @@ namespace Renderer {
 		std::shared_ptr<VertexArray> vao;
 		std::shared_ptr<Material> material;
 		glm::mat4 modelMatrix;
+		bool discardtranslation;
 	};
 
 	static CameraMatrices s_cameraMatrices;
@@ -39,11 +40,12 @@ namespace Renderer {
 		s_cameraMatrices.projection = camera.getProjection();
 	}
 
-	void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, const glm::mat4& modelMatrix) {
+	void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, const glm::mat4& modelMatrix, bool discardtranslation) {
 		RenderRequest request;
 		request.vao = vao;
 		request.material = material;
 		request.modelMatrix = modelMatrix;
+		request.discardtranslation = discardtranslation;
 
 		s_renderRequests.push_back(request);
 	}
@@ -91,7 +93,15 @@ namespace Renderer {
 
 			shader->bind();
 			shader->setUniformMat4("u_model", modelMatrix);
-			shader->setUniformMat4("u_view", s_cameraMatrices.view);
+
+			if (request.discardtranslation) {
+				auto viewWithoutTranslation = glm::mat4(glm::mat3(s_cameraMatrices.view));
+				shader->setUniformMat4("u_view", viewWithoutTranslation);
+			}
+			else {
+				shader->setUniformMat4("u_view", s_cameraMatrices.view);
+			}
+
 			shader->setUniformMat4("u_projection", s_cameraMatrices.projection);
 
 			material->bind();

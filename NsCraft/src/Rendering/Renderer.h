@@ -13,6 +13,7 @@ namespace Renderer {
 
 	void resizeViewport(std::uint32_t windowWidth, std::uint32_t windowHeight);
 	void begin(const ICamera& camera);
-	void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, const glm::mat4& modelMatrix = glm::mat4(1.0f));
+	void submit(const std::shared_ptr<VertexArray>& vao, const std::shared_ptr<Material>& material, 
+		        const glm::mat4& modelMatrix = glm::mat4(1.0f), bool discardtranslation = false);
 	void end();
 }
